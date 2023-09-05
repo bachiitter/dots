@@ -59,11 +59,11 @@ require('lazy').setup({
   },
 
   { 'tpope/vim-sleuth' },
-  { 'numToStr/Comment.nvim',        opts = {} },
-  { 'folke/which-key.nvim',         opts = {} },
+  { 'numToStr/Comment.nvim', opts = {} },
+  { 'folke/which-key.nvim', opts = {} },
 
   -- Markdown preview
-  { 'ellisonleao/glow.nvim',        config = true,          cmd = 'Glow' },
+  { 'ellisonleao/glow.nvim', config = true, cmd = 'Glow' },
   { 'simrat39/symbols-outline.nvim' },
   { 'iamcco/markdown-preview.nvim', cmd = 'MarkdownPreview' },
 
@@ -179,7 +179,7 @@ end
 
 --- [[ Remove all trailing whitespace on save ]]
 local TrimWhiteSpaceGrp =
-    vim.api.nvim_create_augroup('TrimWhiteSpaceGrp', { clear = true })
+  vim.api.nvim_create_augroup('TrimWhiteSpaceGrp', { clear = true })
 vim.api.nvim_create_autocmd('BufWritePre', {
   command = [[:%s/\s\+$//e]],
   group = TrimWhiteSpaceGrp,
@@ -191,7 +191,7 @@ vim.cmd [[au BufEnter * set fo-=c fo-=r fo-=o]]
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group =
-    vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+  vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
     vim.highlight.on_yank()

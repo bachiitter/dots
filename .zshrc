@@ -31,7 +31,8 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
-alias vpn_c="protonvpn-cli connect IS-CA#1"
+alias vpn_ca="protonvpn-cli connect IS-CA#1"
+alias vpn_de="protonvpn-cli connect SE-DE#1"
 
 #exa
 alias ls="exa -l -g --icons"

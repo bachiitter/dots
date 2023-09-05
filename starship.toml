@@ -1,0 +1,38 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+[character]
+success_symbol = "[](bold green)"
+error_symbol = "[](bold red)"
+disabled = true
+
+[git_metrics]
+disabled = false
+added_style = "green"
+deleted_style = "red"
+
+[git_status]
+format = "([$all_status$ahead_behind]($style) )"
+conflicted = "🏳"
+ahead = "🏎💨"
+behind = "😰"
+diverged = "😵"
+up_to_date = "[](green)"
+untracked = "🤷"
+stashed = "📦"
+modified = "📝"
+staged = '[++\($count\)](green)'
+renamed = "👅"
+deleted = "🗑"
+
+[nodejs]
+disabled = true
+
+[username]
+style_user = "white bold"
+style_root = "black bold"
+format = "⠷ "
+disabled = false
+show_always = true
+
+[package]
+disabled = true

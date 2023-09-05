@@ -1,0 +1,32 @@
+[user]
+	name = nèiliǎn de
+	email = "143877686+neiilian@users.noreply.github.com"
+	username = neiilian
+	signingkey = 4ACE947584A0D8AE
+[github]
+  user   = neiilian
+[init]
+	defaultBranch = main
+[credential]
+	helper = /usr/lib/git-core/git-credential-libsecret
+[core]
+	editor = nvim --wait
+[commit]
+	gpgsign = true
+[pull]
+  rebase = false
+[push]
+  autoSetupRemote = true
+[gpg]
+	program = gpg2
+[tag]
+  gpgsign = true
+[commit]
+  gpgsign = true
+[help]
+	autocorrect = 1
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f

@@ -391,16 +391,7 @@ local servers = {
   },
   astro = {},
   pyright = {},
-  tailwindcss = {
-    tailwindCSS = {
-      experimental = {
-        classRegex = {
-          'cva\\(([^)]*)\\)',
-          '["\'`]([^"\'`]*).*?["\'`]',
-        },
-      },
-    },
-  },
+  tailwindcss = {},
   tsserver = {
     init_options = {
       preferences = {
@@ -418,7 +409,7 @@ mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
   'eslint_d',
   'gofumpt',
-  'prettierd',
+  'prettier',
   'stylua',
 }
 

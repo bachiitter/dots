@@ -383,9 +383,7 @@ local servers = {
     },
   },
 
-  gopls = {
-    lsp_cfg = false,
-  },
+  gopls = {},
   astro = {},
   pyright = {},
   tailwindcss = {},

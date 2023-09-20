@@ -404,6 +404,7 @@ mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
   'eslint_d',
   'gofumpt',
+  'goimports',
   'prettier',
   'stylua',
 }

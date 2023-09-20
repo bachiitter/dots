@@ -360,6 +360,9 @@ end
 
 local util = require 'lspconfig/util'
 
+local cfg = require('go.lsp').config()
+require('lspconfig').gopls.setup(cfg)
+
 local servers = {
   jsonls = {
     json = {
@@ -381,13 +384,7 @@ local servers = {
   },
 
   gopls = {
-    gopls = {
-      completeUnimported = true,
-      usePlaceholders = true,
-      analyses = {
-        unusedparams = true,
-      },
-    },
+    lsp_cfg = false,
   },
   astro = {},
   pyright = {},

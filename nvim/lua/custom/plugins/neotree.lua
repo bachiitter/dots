@@ -1,5 +1,5 @@
 vim.cmd [[ let g:neo_tree_remove_legacy_commands = 1 ]]
-vim.keymap.set('n', '<leader>e', '<cmd>:Neotree toggle<CR>', {})
+vim.keymap.set('n', '<leader>nt', '<cmd>:Neotree toggle<CR>', {})
 
 return {
   'nvim-neo-tree/neo-tree.nvim',

@@ -141,7 +141,7 @@ opts.shiftwidth = 2
 opts.expandtab = true
 opts.smartindent = true
 
-opts.mouse = ''
+opts.mouse = 'a'
 
 opts.clipboard = 'unnamedplus'
 

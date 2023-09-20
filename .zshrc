@@ -4,10 +4,7 @@ export ZSH="$HOME/.oh-my-zsh"
 export VISUAL="nvim"
 export EDITOR="nvim"
 
-#locale
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-export LANGUAGE=en_US.UTF-8
+ZSH_THEME=""
 
 #path
 if [ -d "$HOME/.bin" ] ;
@@ -18,14 +15,6 @@ if [ -d "$HOME/.local/bin" ] ;
   then PATH="$HOME/.local/bin:$PATH"
 fi
 
-if [ -d "$HOME/Applications" ] ;
-  then PATH="$HOME/Applications:$PATH"
-fi
-
-
-#theme
-ZSH_THEME="robbyrussell"
-
 #plugins
 plugins=(git)
 
@@ -33,6 +22,7 @@ source $ZSH/oh-my-zsh.sh
 
 alias vpn_ca="protonvpn-cli connect IS-CA#1"
 alias vpn_de="protonvpn-cli connect SE-DE#1"
+alias vpn_jp="protonvpn-cli connect CH-JP#1"
 
 #exa
 alias ls="exa -l -g --icons"

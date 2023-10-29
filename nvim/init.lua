@@ -358,8 +358,6 @@ local on_attach = function(_, bufnr)
   end, { desc = 'Format current buffer with LSP' })
 end
 
-local util = require 'lspconfig/util'
-
 local cfg = require('go.lsp').config()
 require('lspconfig').gopls.setup(cfg)
 
@@ -375,7 +373,13 @@ local servers = {
   },
   lua_ls = {
     Lua = {
-      workspace = { checkThirdParty = false },
+      workspace = {
+        checkThirdParty = false,
+        library = {
+          [vim.fn.expand '$VIMRUNTIME/lua'] = true,
+          [vim.fn.stdpath 'config' .. '/lua'] = true,
+        },
+      },
       telemetry = { enable = false },
       diagnostics = {
         globals = { 'vim' },
@@ -387,6 +391,10 @@ local servers = {
   astro = {},
   pyright = {},
   tailwindcss = {},
+  html = {},
+  cssls = {},
+  prismals = {},
+  emmet_ls = {},
   tsserver = {
     init_options = {
       preferences = {

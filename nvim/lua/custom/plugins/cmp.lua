@@ -1,5 +1,6 @@
 return {
   'hrsh7th/nvim-cmp',
+  event = 'InsertEnter',
   dependencies = {
     'L3MON4D3/LuaSnip',
     'saadparwaiz1/cmp_luasnip',
@@ -7,6 +8,7 @@ return {
 
     -- Adds LSP completion capabilities
     'hrsh7th/cmp-path',
+    'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-nvim-lsp',
     'rafamadriz/friendly-snippets',
   },
@@ -45,7 +47,9 @@ return {
     }
 
     cmp.setup {
-
+      completion = {
+        completeopt = 'menu,menuone,preview,noselect',
+      },
       snippet = {
         expand = function(args)
           luasnip.lsp_expand(args.body)
@@ -55,7 +59,7 @@ return {
         format = function(_, vim_item)
           -- Kind icons
           vim_item.kind =
-              string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
+            string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
           return vim_item
         end,
       },
@@ -75,6 +79,7 @@ return {
       },
       sources = {
         { name = 'nvim_lsp' },
+        { name = 'buffer' },
         { name = 'luasnip' },
         { name = 'path' },
       },

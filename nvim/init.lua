@@ -99,7 +99,7 @@ end
 
 --- [[ Remove all trailing whitespace on save ]]
 local TrimWhiteSpaceGrp =
-    vim.api.nvim_create_augroup("TrimWhiteSpaceGrp", { clear = true })
+  vim.api.nvim_create_augroup("TrimWhiteSpaceGrp", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePre", {
   command = [[:%s/\s\+$//e]],
   group = TrimWhiteSpaceGrp,
@@ -111,7 +111,7 @@ vim.cmd [[au BufEnter * set fo-=c fo-=r fo-=o]]
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group =
-    vim.api.nvim_create_augroup("YankHighlight", { clear = true })
+  vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
     vim.highlight.on_yank()
@@ -159,20 +159,3 @@ map("n", "<leader>Y", [["+Y]])
 -- New empty line
 map("n", "<leader>o", "o<Esc>", {})
 map("n", "<leader>O", "O<Esc>", {})
-
--- Diagnostic keymaps
-vim.keymap.set(
-  "n",
-  "[d",
-  vim.diagnostic.goto_prev
-)
-vim.keymap.set(
-  "n",
-  "]d",
-  vim.diagnostic.goto_next
-)
-vim.keymap.set(
-  "n",
-  "<leader>e",
-  vim.diagnostic.open_float
-)

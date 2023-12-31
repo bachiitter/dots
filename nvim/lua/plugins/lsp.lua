@@ -42,22 +42,33 @@ return {
       local lspconfig = require "lspconfig"
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-      vim.keymap.set("n", "gd", vim.lsp.buf.definition)
-      vim.keymap.set("n", "K", vim.lsp.buf.hover)
-      vim.keymap.set("n", "ca", vim.lsp.buf.code_action)
-      vim.keymap.set("n", "gI", vim.lsp.buf.implementation)
-      vim.keymap.set("n", "D", vim.lsp.buf.type_definition)
+      local on_attach = function(client, bufnr)
+        local opts = { buffer = bufnr, remap = false }
+
+        vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+        vim.keymap.set("n", "e", vim.diagnostic.open_float, opts)
+        vim.keymap.set("n", "[d", vim.diagnostic.goto_next, opts)
+        vim.keymap.set("n", "]d", vim.diagnostic.goto_prev, opts)
+        vim.keymap.set("n", "ca", vim.lsp.buf.code_action, opts)
+        vim.keymap.set("n", "gI", vim.lsp.buf.implementation, opts)
+        vim.keymap.set("n", "rn", vim.lsp.buf.rename, opts)
+        vim.keymap.set("n", "D", vim.lsp.buf.type_definition, opts)
+      end
 
       lspconfig.lua_ls.setup {
         capabilities = capabilities,
+        on_attach = on_attach,
       }
 
       lspconfig.tailwindcss.setup {
         capabilities = capabilities,
+        on_attach = on_attach,
       }
 
       lspconfig.gopls.setup {
         capabilities = capabilities,
+        on_attach = on_attach,
       }
 
       lspconfig.jsonls.setup {
@@ -68,11 +79,13 @@ return {
           },
           validate = { enable = true },
           capabilities = capabilities,
+          on_attach = on_attach,
         },
       }
 
       lspconfig.tsserver.setup {
         capabilities = capabilities,
+        on_attach = on_attach,
         init_options = {
           preferences = {
             disableSuggestions = true,

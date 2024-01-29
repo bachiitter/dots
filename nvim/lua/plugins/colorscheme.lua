@@ -1,7 +1,9 @@
 return {
-  "RRethy/nvim-base16",
+  "gambhirsharma/vesper.nvim",
+  lazy = false,
   priority = 1000,
+  name = "vesper",
   config = function()
-    vim.cmd.colorscheme "base16-grayscale-dark"
+    vim.cmd [[colorscheme vesper]]
   end,
 }

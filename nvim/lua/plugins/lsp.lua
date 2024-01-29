@@ -34,7 +34,7 @@ return {
       {
         "folke/neodev.nvim",
         config = function()
-          require("neodev").setup()
+          require("neodev").setup {}
         end,
       },
     },
@@ -42,7 +42,7 @@ return {
       local lspconfig = require "lspconfig"
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-      local on_attach = function(client, bufnr)
+      local on_attach = function(_, bufnr)
         local opts = { buffer = bufnr, remap = false }
 
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
@@ -72,15 +72,13 @@ return {
       }
 
       lspconfig.jsonls.setup {
-        json = {
-          schemas = require("schemastore").json.schemas(),
-          format = {
-            enable = true,
-          },
-          validate = { enable = true },
-          capabilities = capabilities,
-          on_attach = on_attach,
+        schemas = require("schemastore").json.schemas(),
+        format = {
+          enable = true,
         },
+        validate = { enable = true },
+        capabilities = capabilities,
+        on_attach = on_attach,
       }
 
       lspconfig.tsserver.setup {
@@ -104,7 +102,15 @@ return {
         sources = {
           null_ls.builtins.formatting.stylua,
           null_ls.builtins.formatting.prettier,
-          null_ls.builtins.diagnostics.eslint_d,
+          null_ls.builtins.diagnostics.eslint_d.with {
+            condition = function(utils)
+              return utils.root_has_file {
+                ".eslintrc.js",
+                ".eslintrc.cjs",
+                "package.json",
+              }
+            end,
+          },
           null_ls.builtins.code_actions.eslint_d,
           null_ls.builtins.formatting.gofumpt,
           null_ls.builtins.formatting.goimports,

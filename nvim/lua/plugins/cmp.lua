@@ -59,6 +59,9 @@ return {
           return vim_item
         end,
       },
+      completion = {
+        completeopt = "menu,menuone,noinsert",
+      },
       mapping = cmp.mapping.preset.insert {
         ["<C-n>"] = cmp.mapping.select_next_item {
           behavior = cmp.SelectBehavior.Select,
@@ -74,6 +77,7 @@ return {
         ["<S-Tab>"] = nil,
       },
       sources = {
+        { name = "copilot" },
         { name = "nvim_lsp" },
         { name = "buffer" },
         { name = "luasnip" },

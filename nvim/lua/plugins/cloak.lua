@@ -10,6 +10,7 @@ return {
         {
           file_pattern = {
             ".env*",
+            "wrangler.toml",
             ".dev.vars",
           },
           cloak_pattern = "=.+",

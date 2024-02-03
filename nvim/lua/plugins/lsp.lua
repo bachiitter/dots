@@ -57,6 +57,19 @@ return {
       end
 
       lspconfig.lua_ls.setup {
+        Lua = {
+          telemetry = { enable = false },
+          diagnostics = {
+            globals = { "vim" },
+          },
+          workspace = {
+            -- make language server aware of runtime files
+            library = {
+              [vim.fn.expand "$VIMRUNTIME/lua"] = true,
+              [vim.fn.stdpath "config" .. "/lua"] = true,
+            },
+          },
+        },
         capabilities = capabilities,
         on_attach = on_attach,
       }
@@ -102,16 +115,8 @@ return {
         sources = {
           null_ls.builtins.formatting.stylua,
           null_ls.builtins.formatting.prettier,
-          null_ls.builtins.diagnostics.eslint_d.with {
-            condition = function(utils)
-              return utils.root_has_file {
-                ".eslintrc.js",
-                ".eslintrc.cjs",
-                "package.json",
-              }
-            end,
-          },
-          null_ls.builtins.code_actions.eslint_d,
+          null_ls.builtins.diagnostics.eslint,
+          null_ls.builtins.code_actions.eslint,
           null_ls.builtins.formatting.gofumpt,
           null_ls.builtins.formatting.goimports,
         },

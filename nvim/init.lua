@@ -24,7 +24,7 @@ require("lazy").setup("plugins", {
     enabled = true,
   },
   change_detection = {
-    enabled = true,
+    notify = false,
   },
   ui = {
     icons = {
@@ -50,7 +50,7 @@ require("lazy").setup("plugins", {
 })
 
 -- [[ Options ]]
-local opts = vim.o
+local opts = vim.opt
 
 opts.hlsearch = false
 
@@ -61,15 +61,14 @@ opts.tabstop = 2
 opts.softtabstop = 2
 opts.shiftwidth = 2
 opts.expandtab = true
+
 opts.smartindent = true
 
-opts.mouse = "a"
+opts.wrap = false
 
 opts.clipboard = "unnamedplus"
 
-opts.breakindent = true
-
-opts.undofile = true
+opts.undofile = false
 opts.swapfile = false
 opts.backup = false
 
@@ -79,16 +78,14 @@ opts.smartcase = true
 opts.scrolloff = 8
 opts.signcolumn = "yes"
 
-opts.updatetime = 250
-opts.timeout = true
-opts.timeoutlen = 300
+opts.updatetime = 50
 
 opts.termguicolors = true
 opts.background = "dark"
 
 opts.cursorline = true
 
-vim.opt.fillchars:append { eob = " " }
+vim.opt.fillchars = { eob = " " }
 
 -- [[ Create autocmd ]]
 local autocmd = vim.api.nvim_create_autocmd

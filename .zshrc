@@ -79,3 +79,6 @@ esac
 # pnpm end
 # Turso
 export PATH="/home/bachitter/.turso:$PATH"
+
+# sst
+export PATH=/home/bachitter/.sst/bin:$PATH

@@ -2,7 +2,6 @@
 	name = nèiliǎn de
 	email = "143877686+neiilian@users.noreply.github.com"
 	username = neiilian
-	signingkey = 4ACE947584A0D8AE
 [github]
   user   = neiilian
 [init]
@@ -11,8 +10,6 @@
 	helper = /usr/lib/git-core/git-credential-libsecret
 [core]
 	editor = nvim --wait
-[commit]
-	gpgsign = true
 [pull]
   rebase = false
 [push]

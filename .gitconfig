@@ -2,12 +2,11 @@
 	name = nèiliǎn de
 	email = "143877686+neiilian@users.noreply.github.com"
 	username = neiilian
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFVTSKvNaoTKfc/xHIn0CLhHTbELwMI/LYbQ13OGCB5S
 [github]
   user   = neiilian
 [init]
 	defaultBranch = main
-[credential]
-	helper = /usr/lib/git-core/git-credential-libsecret
 [core]
 	editor = nvim --wait
 [pull]
@@ -16,6 +15,7 @@
   autoSetupRemote = true
 [gpg]
 	program = gpg2
+	format = ssh
 [tag]
   gpgsign = true
 [commit]
@@ -27,3 +27,5 @@
 	process = git-lfs filter-process
 	required = true
 	clean = git-lfs clean -- %f
+[gpg "ssh"]
+	program = /opt/1Password/op-ssh-sign

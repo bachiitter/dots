@@ -473,6 +473,7 @@ local servers = {
     },
     validate = { enable = true },
   },
+  prismals = {},
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },

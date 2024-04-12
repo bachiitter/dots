@@ -12,6 +12,8 @@ return {
         --   null_ls.builtins.code_actions.eslint,
         null_ls.builtins.formatting.gofumpt,
         null_ls.builtins.formatting.goimports,
+        null_ls.builtins.formatting.biome,
+        null_ls.builtins.formatting.prismaFmt
       },
       on_attach = function(client, bufnr)
         if client.name == 'tsserver' then
@@ -31,4 +33,3 @@ return {
     }
   end,
 }
-

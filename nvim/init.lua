@@ -1,6 +1,3 @@
----@diagnostic disable: unknown-diag-code
----@diagnostic disable-next-line: unknown-diag-code
-
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -344,6 +341,11 @@ require('lazy').setup({
           end, { 'i', 's' }),
         },
         sources = {
+          {
+            name = 'lazydev',
+            -- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
+            group_index = 0,
+          },
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'path' },
@@ -371,6 +373,7 @@ require('lazy').setup({
       require('mini.surround').setup()
       local statusline = require 'mini.statusline'
       statusline.setup { use_icons = vim.g.have_nerd_font }
+      ---@diagnostic disable-next-line: duplicate-set-field
       statusline.section_location = function()
         return '%2l:%-2v'
       end
@@ -415,8 +418,8 @@ require('lazy').setup({
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
   -- require 'kickstart.plugins.debug',
-  require 'kickstart.plugins.indent_line',
-  require 'kickstart.plugins.lint',
+  -- require 'kickstart.plugins.indent_line',
+  -- require 'kickstart.plugins.lint',
   { import = 'custom.plugins' },
 }, {
   ui = {

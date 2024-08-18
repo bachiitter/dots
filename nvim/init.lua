@@ -21,6 +21,7 @@ vim.opt.updatetime = 250
 vim.opt.timeoutlen = 300
 vim.opt.splitright = true
 vim.opt.splitbelow = true
+vim.opt.wrap = false
 vim.opt.list = true
 vim.opt.listchars = { tab = '  ', trail = ' ', nbsp = ' ' }
 vim.opt.inccommand = 'split'
@@ -215,6 +216,17 @@ require('lazy').setup({
         end,
       })
 
+      local tsserver_inlay_hints = {
+        includeInlayEnumMemberValueHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayParameterNameHints = 'all',
+        includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+      }
+
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
       local servers = {
@@ -222,8 +234,20 @@ require('lazy').setup({
           gofumpt = true,
         },
         biome = {},
+        cssls = {},
+        jsonls = {},
         tailwindcss = {},
-        tsserver = {},
+        tsserver = {
+          settings = {
+            maxTsServerMemory = 12288,
+            typescript = {
+              inlayHints = tsserver_inlay_hints,
+            },
+            javascript = {
+              inlayHints = tsserver_inlay_hints,
+            },
+          },
+        },
         lua_ls = {
           settings = {
             Lua = {
@@ -286,7 +310,9 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        -- go = { 'goimports', 'gofumpt' },
+        go = { 'goimports', 'gofumpt' },
+        typescript = { 'biome', 'prettierd', 'prettier' },
+        typescriptreact = { 'biome', 'prettierd', 'prettier' },
         javascript = { { 'prettierd', 'prettier', stop_after_first = true } },
       },
     },
@@ -334,7 +360,7 @@ require('lazy').setup({
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
           ['<CR>'] = cmp.mapping.confirm { select = true },
-          ['<C-Space>'] = cmp.mapping.complete {},
+          ['<C-Space>'] = cmp.mapping.complete(),
           ['<C-l>'] = cmp.mapping(function()
             if luasnip.expand_or_locally_jumpable() then
               luasnip.expand_or_jump()

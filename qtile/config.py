@@ -52,8 +52,6 @@ keys = [
     Key([mod, "control"], "l", lazy.layout.grow_right()),
     Key([mod, "control"], "j", lazy.layout.grow_down()),
     Key([mod, "control"], "k", lazy.layout.grow_up()),
-    # Launch terminal
-    Key([mod], "Return", lazy.spawn(myTerminal)),
     # Toggle layouts
     Key([mod], "Tab", lazy.next_layout()),
     # Close focused window
@@ -63,7 +61,7 @@ keys = [
     # Restart qtile
     Key([mod, "shift"], "e", lazy.restart()),
     # Launch rofi
-    Key([mod, "shift"], "Return", lazy.spawn(
+    Key([mod], "Space", lazy.spawn(
         "rofi -show drun")),
     # Take screenshot(Scrot)
     Key([mod], "Print", lazy.spawn("flameshot full")),

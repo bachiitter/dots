@@ -1,8 +1,0 @@
-{
-    "diagnostics.disable": [
-        "undefined-global",
-        "miss-sep-in-table",
-        "trailing-space",
-        "unknown-diag-code"
-    ]
-}

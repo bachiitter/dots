@@ -5,7 +5,7 @@ from libqtile import bar, hook, layout
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.dgroups import simple_key_binder
 from libqtile.lazy import lazy
-from theme import grayscale
+from theme import catppuccin
 
 myFont = "Ubuntu Bold"
 myTerminal = "alacritty"
@@ -15,7 +15,7 @@ widget_defaults = dict(
     font=myFont,
     fontsize=11,
     padding=5,
-    foreground=grayscale["foreground"]
+    foreground=catppuccin["foreground"]
 )
 
 decor = {
@@ -26,13 +26,13 @@ decor = {
     "padding_y": 3,
     "padding_x": 5,
     "rounded": False,
-    "inactive": grayscale['white'],
-    "active": grayscale["blue"],
-    "highlight_color": grayscale["yellow"],
-    "this_current_screen_border": grayscale["red"],
-    "block_hightlight_text_color": grayscale["red"],
-    "background": grayscale["background"],
-    "foreground": grayscale["foreground"],
+    "inactive": catppuccin['inactive_border_color'],
+    "active": catppuccin["active_border_color"],
+    "highlight_color": catppuccin["yellow"],
+    "this_current_screen_border": catppuccin["red"],
+    "block_hightlight_text_color": catppuccin["red"],
+    "background": catppuccin["background"],
+    "foreground": catppuccin["foreground"],
     "font": "Font Awesome 6 Free Solid",
 }
 
@@ -93,15 +93,15 @@ groups = [
 dgroups_key_binder = simple_key_binder("mod4")
 
 layouts = [
-    layout.MonadTall(border_focus=grayscale["blue"],
-                     border_normal=grayscale["background"],
+    layout.MonadTall(border_focus=catppuccin["blue"],
+                     border_normal=catppuccin["background"],
                      margin=0,
                      border_width=3,
                      border_on_single=True
                      ),
     layout.Max(),
-    layout.Columns(border_focus=grayscale["blue"],
-                    border_normal=grayscale["background"],
+    layout.Columns(border_focus=catppuccin["blue"],
+                    border_normal=catppuccin["background"],
                     margin=0,
                     border_width=3,
                     border_on_single=True
@@ -144,8 +144,8 @@ floating_layout = layout.Floating(
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
     ],
-    border_focus=grayscale["cyan"],
-    border_normal=grayscale["background"],
+    border_focus=catppuccin["cyan"],
+    border_normal=catppuccin["background"],
     margin=0,
     border_width=0,
     border_on_single=False

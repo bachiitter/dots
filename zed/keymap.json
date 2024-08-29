@@ -1,0 +1,44 @@
+[
+  {
+    "context": "Editor && VimControl && !VimWaiting && !menu",
+    "bindings": {
+      "space c a": "editor::ToggleCodeActions",
+      "space q": "diagnostics::Deploy",
+      "K": "editor::Hover",
+      "space s f": "file_finder::Toggle",
+      "space o": "tab_switcher::Toggle",
+      "space /": "workspace::NewSearch",
+      "space t": "workspace::NewCenterTerminal",
+      "g b": "editor::ToggleComments",
+      "space c": "pane::CloseActiveItem",
+      "space D": "editor::GoToTypeDefinition",
+      "space f": "editor::Format"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == visual && !VimWaiting && !VimObject",
+    "bindings": {
+      "shift-j": "editor::MoveLineDown",
+      "shift-k": "editor::MoveLineUp"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-z": "workspace::ToggleZoom",
+      "cmd-k": [
+        "projects::OpenRecent",
+        {
+          "create_new_window": false
+        }
+      ],
+      "ctrl-x": "tab_switcher::CloseSelectedItem"
+    }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "cmd-t": "workspace::NewTerminal"
+    }
+  }
+]

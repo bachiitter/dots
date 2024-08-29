@@ -1,0 +1,81 @@
+{
+  "theme": "Tokyo Night",
+  "ui_font_family": "JetBrainsMono Nerd Font",
+  "ui_font_size": 14,
+  "ui_font_weight": 500,
+  "buffer_font_size": 12,
+  "buffer_font_family": "JetBrainsMono Nerd Font",
+  "buffer_font_weight": 400,
+  "relative_line_numbers": true,
+  "use_autoclose": true,
+  "tab_size": 2,
+  "cursor_blink": false,
+  "preferred_line_length": 90,
+  "scrollbar": {
+    "show": "never"
+  },
+  "git": {
+    "inline_blame": {
+      "enabled": true,
+      "delay_ms": 500
+    }
+  },
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  "outline_panel": {
+    "button": true,
+    "dock": "right"
+  },
+  "calls": {
+    "share_on_join": false
+  },
+  "chat_panel": {
+    "button": false
+  },
+  "collaboration_panel": {
+    "button": false
+  },
+  "project_panel": {
+    "dock": "right"
+  },
+  "terminal": {
+    "font_family": "JetBrainsMono Nerd Font",
+    "alternate_scroll": "off",
+    "blinking": "terminal_controlled",
+    "copy_on_select": true,
+    "line_height": "standard",
+    "toolbar": {
+      "title": true
+    },
+    "working_directory": "current_project_directory"
+  },
+  "assistant": {
+    "button": false,
+    "version": "2"
+  },
+  "features": {
+    "copilot": false,
+    "inline_completion_provider": "none"
+  },
+  "tab_bar": {
+    "show": true
+  },
+  "toolbar": {
+    "breadcrumbs": true,
+    "selections_menu": false,
+    "quick_actions": false
+  },
+  "formatter": {
+    "language_server": {
+      "name": "biome"
+    }
+  },
+  "vim_mode": true,
+  "lsp": {
+    "gopls": {
+      "gofumpt": true
+    }
+  }
+}

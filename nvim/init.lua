@@ -31,6 +31,13 @@ vim.cmd 'set expandtab'
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
+vim.opt.completeopt = 'menu,menuone,noinsert,preview'
+vim.opt.fillchars = 'eob: '
+
+vim.cmd 'set termguicolors'
+vim.cmd.colorscheme 'quiet'
+vim.cmd.hi 'Keyword gui=bold'
+vim.cmd.hi 'Comment gui=italic'
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
@@ -277,7 +284,6 @@ require('lazy').setup({
       }
     end,
   },
-
   { -- Autoformat
     'stevearc/conform.nvim',
     lazy = false,
@@ -383,19 +389,15 @@ require('lazy').setup({
       }
     end,
   },
-
+  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
   {
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
     'folke/tokyonight.nvim',
     priority = 1000,
     init = function()
       vim.cmd.colorscheme 'tokyonight-night'
-      vim.cmd.hi 'Comment gui=none'
     end,
   },
-
-  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
-
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
     config = function()
@@ -424,11 +426,9 @@ require('lazy').setup({
         'javascript',
         'json',
         'lua',
-        'luadoc',
         'markdown',
         'tsx',
         'typescript',
-        'vim',
         'vimdoc',
       },
       auto_install = true,
@@ -442,15 +442,6 @@ require('lazy').setup({
       require('nvim-treesitter.configs').setup(opts)
     end,
   },
-
-  -- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for Kickstart
-  --
-  --  Here are some example plugins that I've included in the Kickstart repository.
-  --  Uncomment any of the lines below to enable them (you will need to restart nvim).
-  --
-  -- require 'kickstart.plugins.debug',
-  -- require 'kickstart.plugins.indent_line',
-  -- require 'kickstart.plugins.lint',
   { import = 'custom.plugins' },
 }, {
   ui = {

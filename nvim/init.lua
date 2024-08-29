@@ -1,3 +1,4 @@
+-- Set Leader key to space
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -5,39 +6,69 @@ vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
+-- Line numbers
 vim.opt.number = true
 vim.opt.relativenumber = true
-vim.opt.mouse = 'a'
-vim.opt.showmode = false
-vim.opt.clipboard = 'unnamedplus'
+
+-- Disable mouse mode
+vim.opt.mouse = ''
+
+-- Enable break indent
 vim.opt.breakindent = true
+
+-- Disable current mode display
+vim.opt.showmode = false
+
+-- Set clipboard to use system
+vim.opt.clipboard = 'unnamedplus'
+
+-- Save undo history
 vim.opt.undofile = true
+
+-- Case insensitive searching UNLESS /C or capital in search
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+
+-- Decrease update time
 vim.opt.signcolumn = 'yes'
 vim.opt.updatetime = 250
-vim.opt.timeoutlen = 300
-vim.opt.splitright = true
-vim.opt.splitbelow = true
+
+-- Disable text wrap
 vim.opt.wrap = false
+
+-- Sets how neovim will display certain whitespace characters in the editor.
+--  See `:help 'list'`
+--  and `:help 'listchars'`
 vim.opt.list = true
 vim.opt.listchars = { tab = '  ', trail = ' ', nbsp = ' ' }
+
+-- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
+
+-- Show which line your cursor is on
 vim.opt.cursorline = true
+
+-- Minimal number of screen lines to keep above and below cursor
 vim.opt.scrolloff = 10
+
+-- Set highlight on search
+-- Clear highlights on search when pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+-- Tab stops
 vim.cmd 'set expandtab'
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
-vim.opt.completeopt = 'menu,menuone,noinsert,preview'
+
+-- Set completeopt to have better completion experience
+vim.opt.completeopt = 'menuone,noinsert'
+
+-- Removes ~
 vim.opt.fillchars = 'eob: '
 
 vim.cmd 'set termguicolors'
-vim.cmd.colorscheme 'quiet'
-vim.cmd.hi 'Keyword gui=bold'
-vim.cmd.hi 'Comment gui=italic'
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
@@ -363,7 +394,10 @@ require('lazy').setup({
             luasnip.lsp_expand(args.body)
           end,
         },
-        completion = { completeopt = 'menu,menuone,noinsert' },
+        view = {
+          entries = 'native'
+        },
+        completion = { completeopt = 'menuone,noinsert' },
         mapping = cmp.mapping.preset.insert {
           ['<C-n>'] = cmp.mapping.select_next_item(),
           ['<C-p>'] = cmp.mapping.select_prev_item(),

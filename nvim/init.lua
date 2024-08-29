@@ -272,7 +272,13 @@ require('lazy').setup({
         'gofumpt',
         'goimports',
       })
-      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+      require('mason-tool-installer').setup {
+        auto_update = true,
+        run_on_start = true,
+        start_delay = 3000,
+        debounce_hours = 12,
+        ensure_installed = ensure_installed,
+      }
       require('mason-lspconfig').setup {
         handlers = {
           function(server_name)

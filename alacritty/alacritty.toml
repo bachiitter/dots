@@ -7,7 +7,7 @@ draw_bold_text_with_bright_colors = false
 TERM = "xterm-256color"
 
 [font]
-size = 7.0
+size = 11.0
 
 [font.italic]
 family = "JetBrainsMono Nerd Font"
@@ -33,6 +33,10 @@ y = 0
 x = 0
 y = 0
 
+[shell]
+args = ["-l"]
+program = "${pkgs.zsh}/bin/zsh"
+
 [window]
 dynamic_title = false
 opacity = 1
@@ -46,4 +50,3 @@ y = 12
 
 [selection]
 save_to_clipboard = true
-

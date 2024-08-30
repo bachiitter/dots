@@ -4,6 +4,14 @@ export ZSH="$HOME/.oh-my-zsh"
 export VISUAL="nvim"
 export EDITOR="nvim"
 
+# Preferred editor for local and remote sessions
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+fi
+
+
 ZSH_THEME=""
 
 #path
@@ -19,6 +27,10 @@ fi
 plugins=(git fzf zsh-exa)
 
 source $ZSH/oh-my-zsh.sh
+
+#git
+alias clone ="git clone"
+alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches"
 
 #exa
 alias ls="exa -l -g --icons"
@@ -36,3 +48,13 @@ export STARSHIP_CONFIG=~/dots/starship.toml
 #golang
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+
+# sst
+export PATH=/home/bachitter/.sst/bin:$PATH
+
+# bun completions
+[ -s "/home/bachitter/.bun/_bun" ] && source "/home/bachitter/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

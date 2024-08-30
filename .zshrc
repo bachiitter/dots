@@ -11,7 +11,6 @@ else
   export EDITOR='nvim'
 fi
 
-
 ZSH_THEME=""
 
 #path

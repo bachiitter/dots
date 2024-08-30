@@ -24,12 +24,11 @@ if [ -d "$HOME/.local/bin" ] ;
 fi
 
 #plugins
-plugins=(git fzf zsh-exa)
+plugins=(git fzf)
 
 source $ZSH/oh-my-zsh.sh
 
 #git
-alias clone ="git clone"
 alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches"
 
 #exa

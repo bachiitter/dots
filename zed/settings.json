@@ -52,8 +52,12 @@
     "working_directory": "current_project_directory"
   },
   "assistant": {
-    "button": false,
-    "version": "2"
+    "button": true,
+    "version": "2",
+    "default_model": {
+      "provider": "zed.dev",
+      "model": "claude-3-5-sonnet-20240620"
+    }
   },
   "features": {
     "copilot": false,

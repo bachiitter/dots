@@ -42,7 +42,7 @@ dynamic_title = false
 opacity = 1
 dynamic_padding = false
 #decorations = "None"
-decorations = "Buttonless"
+#decorations = "Buttonless"
 
 [window.padding]
 x = 12

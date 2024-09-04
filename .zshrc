@@ -1,5 +1,7 @@
 export ZSH="$HOME/.oh-my-zsh"
 
+export TERM=xterm
+
 #editor/term
 export VISUAL="nvim"
 export EDITOR="nvim"

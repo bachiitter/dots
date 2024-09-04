@@ -2,4 +2,6 @@ nvim/plugin/packer_compiled.lua
 lazy-lock.json
 __pycache__
 
+zed/prompts
+zed/embeddings
 zed/conversations

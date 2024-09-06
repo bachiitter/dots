@@ -25,7 +25,7 @@ if [ -d "$HOME/.local/bin" ] ;
 fi
 
 #plugins
-plugins=(git fzf)
+plugins=(git fzf nvm)
 
 source $ZSH/oh-my-zsh.sh
 

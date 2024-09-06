@@ -1,4 +1,4 @@
-import = ["~/dots/alacritty/tokyonight.toml"]
+import = ["~/.config/alacritty/catppuccin-mocha.toml"]
 
 [colors]
 draw_bold_text_with_bright_colors = false
@@ -33,16 +33,6 @@ y = 0
 x = 0
 y = 0
 
-[shell]
-args = ["-l"]
-program = "${pkgs.zsh}/bin/zsh"
-
-[window]
-dynamic_title = false
-opacity = 1
-dynamic_padding = false
-#decorations = "None"
-#decorations = "Buttonless"
 
 [window.padding]
 x = 12

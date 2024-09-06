@@ -429,11 +429,12 @@ require('lazy').setup({
   },
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
   {
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
+    'catppuccin/nvim',
+    lazy = false,
+    name = 'catppuccin',
     priority = 1000,
-    init = function()
-      vim.cmd.colorscheme 'tokyonight-night'
+    config = function()
+      vim.cmd.colorscheme 'catppuccin-mocha'
     end,
   },
   { -- Collection of various small independent plugins/modules

@@ -32,11 +32,6 @@ source $ZSH/oh-my-zsh.sh
 #git
 alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches"
 
-#exa
-alias ls="exa -l -g --icons"
-alias la="exa -l -a -g --icons"
-alias llt="exa -1 --icons --tree --git-ignore"
-
 # linux
 #enable wifi
 alias wifi_on="sudo rfkill unblock wifi && sudo ip link set wlo1 up"
@@ -44,6 +39,10 @@ alias wifi_on="sudo rfkill unblock wifi && sudo ip link set wlo1 up"
 #starship settings
 eval "$(starship init zsh)"
 export STARSHIP_CONFIG=~/dots/starship.toml
+
+#nvm
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
 #golang
 export GOPATH=$HOME/go

@@ -68,17 +68,17 @@ vim.opt.completeopt = 'menuone,noinsert'
 -- Removes ~
 vim.opt.fillchars = 'eob: '
 
-vim.cmd 'set termguicolors'
+vim.g.background = 'light'
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- TIP: Disable arrow keys in normal mode
-vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move left!!"<CR>')
-vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move right!!"<CR>')
-vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move up!!"<CR>')
-vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move down!!"<CR>')
+-- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move left!!"<CR>')
+-- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move right!!"<CR>')
+-- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move up!!"<CR>')
+-- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move down!!"<CR>')
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
@@ -352,7 +352,7 @@ require('lazy').setup({
         go = { 'goimports', 'gofumpt' },
         typescript = { 'biome', 'prettierd', 'prettier' },
         typescriptreact = { 'biome', 'prettierd', 'prettier' },
-        javascript = { { 'prettierd', 'prettier', stop_after_first = true } },
+        javascript = { { 'biome', 'prettierd', 'prettier', stop_after_first = true } },
       },
     },
   },
@@ -442,6 +442,8 @@ require('lazy').setup({
     config = function()
       require('mini.ai').setup { n_lines = 500 }
       require('mini.surround').setup()
+      require('mini.pairs').setup()
+      require('mini.comment').setup()
       local statusline = require 'mini.statusline'
       statusline.setup { use_icons = vim.g.have_nerd_font }
       ---@diagnostic disable-next-line: duplicate-set-field

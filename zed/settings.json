@@ -1,9 +1,9 @@
 {
-  "theme": "Tokyo Night",
+  "theme": "Catppuccin Mocha",
   "ui_font_family": "JetBrainsMono Nerd Font",
-  "ui_font_size": 14,
+  "ui_font_size": 13,
   "ui_font_weight": 500,
-  "buffer_font_size": 12,
+  "buffer_font_size": 11,
   "buffer_font_family": "JetBrainsMono Nerd Font",
   "buffer_font_weight": 400,
   "relative_line_numbers": true,

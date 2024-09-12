@@ -1,6 +1,6 @@
 export ZSH="$HOME/.oh-my-zsh"
 
-export TERM=xterm
+export TERM=xterm-256color
 
 #editor/term
 export VISUAL="nvim"
@@ -42,6 +42,8 @@ alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%
 # linux
 #enable wifi
 alias wifi_on="sudo rfkill unblock wifi && sudo ip link set wlo1 up"
+
+alias tmux='TERM=xterm-256color tmux'
 
 #starship settings
 eval "$(starship init zsh)"

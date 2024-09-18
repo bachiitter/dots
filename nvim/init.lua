@@ -77,7 +77,7 @@ vim.opt.completeopt = 'menuone,noinsert'
 vim.opt.fillchars = 'eob: '
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
+--vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- TIP: Disable arrow keys in normal mode
@@ -325,15 +325,29 @@ require('lazy').setup({
             },
           },
         },
-        nil_ls = {},
         tailwindcss = {},
+        --[[
         ts_ls = {
-          settings = {
+         settings = {
             typescript = {
               inlayHints = tsserver_inlay_hints,
             },
             javascript = {
               inlayHints = tsserver_inlay_hints,
+            },
+          },
+        },
+       --]]
+        vtsls = {
+          settings = {
+            typescript = {
+              inlayHints = tsserver_inlay_hints,
+              updateImportsOnFileMove = 'prompt',
+              preferences = {
+                preferTypeOnlyAutoImports = true,
+                useAliasesForRenames = false,
+                renameShorthandProperties = false,
+              },
             },
           },
         },
@@ -441,7 +455,7 @@ require('lazy').setup({
           ['<C-p>'] = cmp.mapping.select_prev_item(),
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          ['<C-y>'] = cmp.mapping.confirm { select = true },
+          ['<CR>'] = cmp.mapping.confirm { select = true },
           ['<C-Space>'] = cmp.mapping.complete(),
           ['<C-l>'] = cmp.mapping(function()
             if luasnip.expand_or_locally_jumpable() then

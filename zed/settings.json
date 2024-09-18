@@ -15,7 +15,7 @@
 	"buffer_font_family": "JetBrainsMono Nerd Font",
 	"buffer_font_weight": 400,
 	"buffer_line_height": {
-		"custom": 1.5
+		"custom": 1.7
 	},
 	"relative_line_numbers": true,
 	"use_autoclose": true,

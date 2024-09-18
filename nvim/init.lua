@@ -344,6 +344,7 @@ require('lazy').setup({
               inlayHints = tsserver_inlay_hints,
               updateImportsOnFileMove = 'prompt',
               preferences = {
+                disableSuggestions = true,
                 preferTypeOnlyAutoImports = true,
                 useAliasesForRenames = false,
                 renameShorthandProperties = false,

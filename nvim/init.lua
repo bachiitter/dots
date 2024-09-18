@@ -33,6 +33,14 @@ vim.opt.smartcase = true
 vim.opt.signcolumn = 'yes'
 vim.opt.updatetime = 250
 
+-- Decrease mapped sequence wait time
+-- Displays which-key popup sooner
+vim.opt.timeoutlen = 300
+
+-- Configure how new splits should be opened
+vim.opt.splitright = true
+vim.opt.splitbelow = true
+
 -- Disable text wrap
 vim.opt.wrap = false
 
@@ -68,8 +76,6 @@ vim.opt.completeopt = 'menuone,noinsert'
 -- Removes ~
 vim.opt.fillchars = 'eob: '
 
-vim.g.background = 'light'
-
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
@@ -94,6 +100,30 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
     vim.highlight.on_yank()
+  end,
+})
+
+-- [[ Go auto format on save ]]
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = '*.go',
+  callback = function()
+    local params = vim.lsp.util.make_range_params()
+    params.context = { only = { 'source.organizeImports' } }
+    -- buf_request_sync defaults to a 1000ms timeout. Depending on your
+    -- machine and codebase, you may want longer. Add an additional
+    -- argument after params if you find that you have to write the file
+    -- twice for changes to be saved.
+    -- E.g., vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 3000)
+    local result = vim.lsp.buf_request_sync(0, 'textDocument/codeAction', params)
+    for cid, res in pairs(result or {}) do
+      for _, r in pairs(res.result or {}) do
+        if r.edit then
+          local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or 'utf-16'
+          vim.lsp.util.apply_workspace_edit(r.edit, enc)
+        end
+      end
+    end
+    vim.lsp.buf.format { async = false }
   end,
 })
 
@@ -126,13 +156,12 @@ require('lazy').setup({
     config = function() -- This is the function that runs, AFTER loading
       require('which-key').setup()
       require('which-key').add {
-        { '<leader>c', group = '[C]ode' },
+        { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
         { '<leader>d', group = '[D]ocument' },
         { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },
         { '<leader>w', group = '[W]orkspace' },
         { '<leader>t', group = '[T]oggle' },
-        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       }
     end,
   },
@@ -212,7 +241,7 @@ require('lazy').setup({
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
-      'williamboman/mason.nvim',
+      { 'williamboman/mason.nvim', config = true },
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       'hrsh7th/cmp-nvim-lsp',
@@ -233,18 +262,29 @@ require('lazy').setup({
           map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
           map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
           map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-          map('K', vim.lsp.buf.hover, 'Hover Documentation')
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+
           local client = vim.lsp.get_client_by_id(event.data.client_id)
-          if client and client.server_capabilities.documentHighlightProvider then
+          if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+            local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
               buffer = event.buf,
+              group = highlight_augroup,
               callback = vim.lsp.buf.document_highlight,
             })
 
             vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
               buffer = event.buf,
+              group = highlight_augroup,
               callback = vim.lsp.buf.clear_references,
+            })
+
+            vim.api.nvim_create_autocmd('LspDetach', {
+              group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
+              callback = function(event2)
+                vim.lsp.buf.clear_references()
+                vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
+              end,
             })
           end
         end,
@@ -264,24 +304,17 @@ require('lazy').setup({
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
       local servers = {
-        gopls = {
-          gofumpt = true,
-        },
         biome = {},
         cssls = {},
-        jsonls = {},
-        tailwindcss = {},
-        tsserver = {
+        html = {},
+        gopls = {
           settings = {
-            maxTsServerMemory = 12288,
-            typescript = {
-              inlayHints = tsserver_inlay_hints,
-            },
-            javascript = {
-              inlayHints = tsserver_inlay_hints,
+            gopls = {
+              gofumpt = true,
             },
           },
         },
+        jsonls = {},
         lua_ls = {
           settings = {
             Lua = {
@@ -289,6 +322,18 @@ require('lazy').setup({
                 callSnippet = 'Replace',
               },
               -- diagnostics = { disable = { 'missing-fields' } },
+            },
+          },
+        },
+        nil_ls = {},
+        tailwindcss = {},
+        ts_ls = {
+          settings = {
+            typescript = {
+              inlayHints = tsserver_inlay_hints,
+            },
+            javascript = {
+              inlayHints = tsserver_inlay_hints,
             },
           },
         },
@@ -302,10 +347,6 @@ require('lazy').setup({
         'goimports',
       })
       require('mason-tool-installer').setup {
-        auto_update = true,
-        run_on_start = true,
-        start_delay = 3000,
-        debounce_hours = 12,
         ensure_installed = ensure_installed,
       }
       require('mason-lspconfig').setup {
@@ -321,12 +362,13 @@ require('lazy').setup({
   },
   { -- Autoformat
     'stevearc/conform.nvim',
-    lazy = false,
+    event = { 'BufWritePre' },
+    cmd = { 'ConformInfo' },
     keys = {
       {
         '<leader>f',
         function()
-          require('conform').format { async = true, lsp_format = 'fallback' }
+          require('conform').format { async = true, lsp_format = 'fallback', stop_after_first = true }
         end,
         mode = '',
         desc = '[F]ormat buffer',
@@ -348,11 +390,12 @@ require('lazy').setup({
         }
       end,
       formatters_by_ft = {
+        css = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
         lua = { 'stylua' },
-        go = { 'goimports', 'gofumpt' },
-        typescript = { 'biome', 'prettierd', 'prettier' },
-        typescriptreact = { 'biome', 'prettierd', 'prettier' },
-        javascript = { { 'biome', 'prettierd', 'prettier', stop_after_first = true } },
+        javascript = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+        json = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+        typescript = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
+        typescriptreact = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
       },
     },
   },
@@ -392,16 +435,13 @@ require('lazy').setup({
             luasnip.lsp_expand(args.body)
           end,
         },
-        view = {
-          entries = 'native',
-        },
         completion = { completeopt = 'menuone,noinsert' },
         mapping = cmp.mapping.preset.insert {
           ['<C-n>'] = cmp.mapping.select_next_item(),
           ['<C-p>'] = cmp.mapping.select_prev_item(),
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          ['<CR>'] = cmp.mapping.confirm { select = true },
+          ['<C-y>'] = cmp.mapping.confirm { select = true },
           ['<C-Space>'] = cmp.mapping.complete(),
           ['<C-l>'] = cmp.mapping(function()
             if luasnip.expand_or_locally_jumpable() then
@@ -427,7 +467,6 @@ require('lazy').setup({
       }
     end,
   },
-  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
   {
     'catppuccin/nvim',
     lazy = false,
@@ -461,13 +500,14 @@ require('lazy').setup({
         'astro',
         'bash',
         'css',
-        'dockerfile',
+        'diff',
         'go',
         'html',
         'javascript',
         'json',
         'lua',
         'markdown',
+        'nix',
         'tsx',
         'typescript',
         'vimdoc',
@@ -475,9 +515,8 @@ require('lazy').setup({
       auto_install = true,
       highlight = {
         enable = true,
-        additional_vim_regex_highlighting = { 'ruby' },
       },
-      indent = { enable = true, disable = { 'ruby' } },
+      indent = { enable = true },
     },
     config = function(_, opts)
       require('nvim-treesitter.configs').setup(opts)

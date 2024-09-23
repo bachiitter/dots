@@ -311,6 +311,7 @@ require('lazy').setup({
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
       local servers = {
+        astro = {},
         biome = {},
         cssls = {},
         html = {},
@@ -412,6 +413,7 @@ require('lazy').setup({
         }
       end,
       formatters_by_ft = {
+        astro = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
         css = { 'biome', 'prettierd', 'prettier', stop_after_first = true },
         lua = { 'stylua' },
         javascript = { 'biome', 'prettierd', 'prettier', stop_after_first = true },

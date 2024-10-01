@@ -44,6 +44,16 @@ alias gp="git push"
 alias gs="git status"
 alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches"
 
+alias web="cd ~/personal/portfolio && tmux new -s web"
+alias sweb="tmux attach-session -t web"
+
+alias bmrks="cd ~/analog/bookmarks && tmux new -s bmrks"
+alias sbmrks="tmux attach-session -t bmrks"
+
+alias cms="cd ~/analog/cms && tmux new -s cms"
+alias scms="tmux attach-session -t cms"
+
+
 # linux
 #enable wifi
 alias wifi_on="sudo rfkill unblock wifi && sudo ip link set wlo1 up"

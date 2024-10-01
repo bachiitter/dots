@@ -1,0 +1,58 @@
+[user]
+  name = Bachitter
+  email = 143877686+bachiitter@users.noreply.github.com
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFVTSKvNaoTKfc/xHIn0CLhHTbELwMI/LYbQ13OGCB5S
+
+[alias]
+  unstage = reset HEAD --
+  last = log -1 HEAD
+  amend = commit --amend
+  undo = reset --soft HEAD^
+
+[help]
+  autocorrect = 1
+
+[rerere]
+  enabled = true
+
+[core]
+  editor = nvim
+
+[diff]
+  tool = nvim -d
+
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  ui = true
+
+[push]
+  autoSetupRemote = true
+
+[remote]
+  pushDefault = origin
+
+[branch]
+  autosetuprebase = always
+
+[commit]
+  verbose = true
+  gpgsign = true
+
+[init]
+  defaultBranch = main
+
+[pull]
+  rebase = true
+
+[gpg]
+  format = ssh
+
+[gpg "ssh"]
+  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true

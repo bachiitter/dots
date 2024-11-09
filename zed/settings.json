@@ -1,17 +1,4 @@
 {
-  "ssh_connections": [
-    {
-      "host": "64.227.96.72",
-      "username": "root",
-      "projects": [
-        {
-          "paths": [
-            "~/demo"
-          ]
-        }
-      ]
-    }
-  ],
   "assistant": {
     "version": "2",
     "default_model": {
@@ -38,7 +25,8 @@
   "git": {
     "inline_blame": {
       "enabled": true,
-      "delay_ms": 500
+      "delay_ms": 500,
+      "show_commit_summary": false
     }
   },
   "telemetry": {
@@ -95,7 +83,7 @@
       "initialization_options": {
         "usePlaceholders": false,
         // "buildFlags": ["-tags=debug"],
-        "completeUnimported": true,
+        "completeUnimported": false,
         "experimentalPostfixCompletions": true,
         "hints": {
           "assignVariableTypes": false,
@@ -114,6 +102,17 @@
     "use_multiline_find": true
   },
   "preview_tabs": {
+    "enabled": false,
     "enable_preview_from_code_navigation": false
+  },
+  "inlay_hints": {
+    "enabled": true
+  },
+  "dev": {
+    "vertical_scroll_margin": 0,
+    "scroll_beyond_last_line": "off",
+    "inline_completions": {
+      "disabled_globs": [".env", "*.md", "*.json"]
+    }
   }
 }

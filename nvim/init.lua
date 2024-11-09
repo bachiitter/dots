@@ -93,6 +93,12 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+-- Toggle InlayHints
+
+vim.keymap.set('n', '<leader>ih', function()
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end, { desc = 'Toggle [I]nlay [H]ints' })
+
 -- [[ Basic Autocommands ]]
 -- Highlight when yanking (copying) text
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -305,7 +311,6 @@ require('lazy').setup({
         includeInlayParameterNameHintsWhenArgumentMatchesName = true,
         includeInlayPropertyDeclarationTypeHints = true,
         includeInlayVariableTypeHints = true,
-        includeInlayVariableTypeHintsWhenTypeMatchesName = true,
       }
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -319,6 +324,15 @@ require('lazy').setup({
           settings = {
             gopls = {
               gofumpt = true,
+              hints = {
+                rangeVariableTypes = true,
+                parameterNames = true,
+                constantValues = true,
+                assignVariableTypes = true,
+                compositeLiteralFields = true,
+                compositeLiteralTypes = true,
+                functionTypeParameters = true,
+              },
             },
           },
         },
@@ -329,14 +343,16 @@ require('lazy').setup({
               completion = {
                 callSnippet = 'Replace',
               },
+              hint = {
+                enable = true, -- necessary
+              },
               -- diagnostics = { disable = { 'missing-fields' } },
             },
           },
         },
         tailwindcss = {},
-        --[[
-        ts_ls = {
-         settings = {
+        --[[ ts_ls = {
+          settings = {
             typescript = {
               inlayHints = tsserver_inlay_hints,
             },
@@ -344,12 +360,18 @@ require('lazy').setup({
               inlayHints = tsserver_inlay_hints,
             },
           },
-        },
-       --]]
+        },]]
         vtsls = {
           settings = {
             typescript = {
-              inlayHints = tsserver_inlay_hints,
+              inlayHints = {
+                parameterNames = { enabled = 'all' },
+                parameterTypes = { enabled = true },
+                variableTypes = { enabled = true },
+                propertyDeclarationTypes = { enabled = true },
+                functionLikeReturnTypes = { enabled = true },
+                enumMemberValues = { enabled = true },
+              },
               updateImportsOnFileMove = 'prompt',
               preferences = {
                 disableSuggestions = true,

@@ -1,128 +1,119 @@
 {
-	"assistant": {
-		"button": true,
-		"version": "2",
-		"default_model": {
-			"provider": "zed.dev",
-			"model": "claude-3-5-sonnet-20240620"
-		}
-	},
-	"theme": "Catppuccin Mocha",
-	"ui_font_family": "JetBrainsMono Nerd Font",
-	"ui_font_size": 13,
-	"ui_font_weight": 500,
-	"buffer_font_size": 11,
-	"buffer_font_family": "JetBrainsMono Nerd Font",
-	"buffer_font_weight": 400,
-	"buffer_line_height": {
-		"custom": 1.7
-	},
-	"relative_line_numbers": true,
-	"use_autoclose": true,
-	"tab_size": 2,
-	"cursor_blink": false,
-	"preferred_line_length": 90,
-	"scrollbar": {
-		"show": "never"
-	},
-	"git": {
-		"inline_blame": {
-			"enabled": true,
-			"delay_ms": 500
-		}
-	},
-	"telemetry": {
-		"diagnostics": false,
-		"metrics": false
-	},
-	"outline_panel": {
-		"button": true,
-		"dock": "right"
-	},
-	"calls": {
-		"share_on_join": false
-	},
-	"chat_panel": {
-		"button": false
-	},
-	"collaboration_panel": {
-		"button": false
-	},
-	"project_panel": {
-		"dock": "right"
-	},
-	"terminal": {
-		"font_family": "JetBrainsMono Nerd Font",
-		"alternate_scroll": "off",
-		"blinking": "on",
-		"copy_on_select": true,
-		"line_height": "standard",
-		"toolbar": {
-			"title": true
-		},
-		"env": {
-			"GIT_EDITOR": "zed --wait"
-		},
-		"working_directory": "current_project_directory"
-	},
-
-	"features": {
-		"copilot": false,
-		"inline_completion_provider": "none"
-	},
-	"tab_bar": {
-		"show": true
-	},
-	"toolbar": {
-		"breadcrumbs": true,
-		"selections_menu": false,
-		"quick_actions": false
-	},
-	"formatter": {
-		"language_server": {
-			"name": "biome"
-		}
-	},
-	"vim_mode": true,
-	"lsp": {
-		"gopls": {
-			"initialization_options": {
-				"usePlaceholders": true,
-				// "buildFlags": ["-tags=debug"],
-				"completeUnimported": true,
-				"experimentalPostfixCompletions": true,
-				"hints": {
-					"assignVariableTypes": false,
-					"compositeLiteralFields": false,
-					"compositeLiteralTypes": false,
-					"constantValues": true,
-					"functionTypeParameters": true,
-					"parameterNames": true,
-					"rangeVariableTypes": true
-				}
-			}
-		}
-	},
-	"languages": {
-		"TypeScript": {
-			"code_actions_on_format": {
-				"source.fixAll.eslint": true,
-				"source.organizeImports": true
-			}
-		},
-		"TSX": {
-			"code_actions_on_format": {
-				"source.fixAll": true,
-				"source.fixAll.eslint": true,
-				"source.organizeImports": true
-			}
-		}
-	},
-	"vim": {
-		"use_system_clipboard": "always",
-		"use_multiline_find": true
-	},
-	"preview_tabs": {
-		"enable_preview_from_code_navigation": false
-	}
+  "ssh_connections": [
+    {
+      "host": "64.227.96.72",
+      "username": "root",
+      "projects": [
+        {
+          "paths": [
+            "~/demo"
+          ]
+        }
+      ]
+    }
+  ],
+  "assistant": {
+    "version": "2",
+    "default_model": {
+      "provider": "zed.dev",
+      "model": "claude-3-5-sonnet-20240620"
+    }
+  },
+  "theme": "Catppuccin Mocha",
+  "ui_font_family": "BlexMono Nerd Font",
+  "ui_font_size": 13,
+  "buffer_font_size": 12,
+  "buffer_font_family": "BlexMono Nerd Font",
+  "buffer_line_height": {
+    "custom": 1.75
+  },
+  "relative_line_numbers": true,
+  "use_autoclose": true,
+  "tab_size": 2,
+  "cursor_blink": false,
+  "preferred_line_length": 90,
+  "scrollbar": {
+    "show": "never"
+  },
+  "git": {
+    "inline_blame": {
+      "enabled": true,
+      "delay_ms": 500
+    }
+  },
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  "outline_panel": {
+    "button": true,
+    "dock": "right"
+  },
+  "calls": {
+    "share_on_join": false
+  },
+  "chat_panel": {
+    "button": false
+  },
+  "collaboration_panel": {
+    "button": false
+  },
+  "project_panel": {
+    "dock": "right"
+  },
+  "terminal": {
+    "font_family": "BlexMono Nerd Font",
+    "alternate_scroll": "off",
+    "blinking": "off",
+    "copy_on_select": true,
+    "line_height": {
+      "custom": 1.75
+    },
+    "toolbar": {
+      "title": true
+    },
+    "env": {
+      "GIT_EDITOR": "zed --wait"
+    },
+    "working_directory": "current_project_directory"
+  },
+  "features": {
+    "copilot": false,
+    "inline_completion_provider": "none"
+  },
+  "tab_bar": {
+    "show": true
+  },
+  "toolbar": {
+    "breadcrumbs": true,
+    "selections_menu": false,
+    "quick_actions": false
+  },
+  "vim_mode": true,
+  "lsp": {
+    "gopls": {
+      "initialization_options": {
+        "usePlaceholders": false,
+        // "buildFlags": ["-tags=debug"],
+        "completeUnimported": true,
+        "experimentalPostfixCompletions": true,
+        "hints": {
+          "assignVariableTypes": false,
+          "compositeLiteralFields": false,
+          "compositeLiteralTypes": false,
+          "constantValues": true,
+          "functionTypeParameters": true,
+          "parameterNames": true,
+          "rangeVariableTypes": true
+        }
+      }
+    }
+  },
+  "vim": {
+    "use_system_clipboard": "always",
+    "use_multiline_find": true
+  },
+  "preview_tabs": {
+    "enable_preview_from_code_navigation": false
+  }
 }

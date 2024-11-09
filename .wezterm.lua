@@ -6,11 +6,11 @@ local config = wezterm.config_builder()
 
 -- Font
 config.font = wezterm.font_with_fallback({
-	"JetBrainsMono Nerd Font",
+	{ family = "BlexMono Nerd Font", weight = "Medium" },
 })
 
 config.font_size = 11.5
-config.line_height = 1
+config.line_height = 1.5
 config.cell_width = 1
 config.custom_block_glyphs = false
 

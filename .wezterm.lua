@@ -6,24 +6,24 @@ local config = wezterm.config_builder()
 
 -- Font
 config.font = wezterm.font_with_fallback({
-	{ family = "BlexMono Nerd Font", weight = "Medium" },
+  { family = "CommitMono Nerd Font", weight = "Medium" },
 })
 
 config.font_size = 11.5
-config.line_height = 1.5
+config.line_height = 1.75
 config.cell_width = 1
 config.custom_block_glyphs = false
 
 -- Color Scheme
-config.color_scheme = "Catppuccin Mocha"
+config.color_scheme = 'Black Metal (Bathory) (base16)'
 
 -- Window
 -- config.window_decorations = "NONE"
 config.window_padding = {
-	left = 2,
-	right = 2,
-	top = 2,
-	bottom = 2,
+  left = 2,
+  right = 2,
+  top = 2,
+  bottom = 2,
 }
 
 -- Tab bar

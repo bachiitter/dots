@@ -152,7 +152,7 @@ vim.opt.rtp:prepend(lazypath)
 -- [[ Configure and install plugins ]]
 require('lazy').setup({
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
-  {                   -- Adds git related signs to the gutter, as well as utilities for managing changes
+  { -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
     opts = {
@@ -172,19 +172,29 @@ require('lazy').setup({
     },
     config = true,
   },
-  {                     -- Useful plugin to show you pending keybinds.
+  { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     config = function() -- This is the function that runs, AFTER loading
       require('which-key').setup()
       require('which-key').add {
-        { '<leader>c', group = '[C]ode',     mode = { 'n', 'x' } },
+        { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
         { '<leader>d', group = '[D]ocument' },
         { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },
         { '<leader>w', group = '[W]orkspace' },
         { '<leader>t', group = '[T]oggle' },
       }
+    end,
+  },
+  {
+    'ThePrimeagen/refactoring.nvim',
+    lazy = false,
+    config = function()
+      require('refactoring').setup()
+      vim.keymap.set({ 'n', 'x' }, '<leader>rr', function()
+        require('telescope').extensions.refactoring.refactors()
+      end)
     end,
   },
   { -- Fuzzy Finder (files, lsp, etc)
@@ -201,7 +211,7 @@ require('lazy').setup({
         end,
       },
       { 'nvim-telescope/telescope-ui-select.nvim' },
-      { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
+      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
     config = function()
       require('telescope').setup {
@@ -259,7 +269,7 @@ require('lazy').setup({
       },
     },
   },
-  { 'Bilal2453/luvit-meta',   lazy = true },
+  { 'Bilal2453/luvit-meta', lazy = true },
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
@@ -267,7 +277,8 @@ require('lazy').setup({
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       'hrsh7th/cmp-nvim-lsp',
-      { 'j-hui/fidget.nvim',       opts = {} },
+      'b0o/schemastore.nvim',
+      { 'j-hui/fidget.nvim', opts = {} },
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -335,7 +346,14 @@ require('lazy').setup({
             },
           },
         },
-        jsonls = {},
+        jsonls = {
+          settings = {
+            json = {
+              schemas = require('schemastore').json.schemas(),
+              validate = { enable = true },
+            },
+          },
+        },
         lua_ls = {
           settings = {
             Lua = {
@@ -349,7 +367,30 @@ require('lazy').setup({
             },
           },
         },
-        tailwindcss = {},
+        tailwindcss = {
+          settings = {
+            scss = {
+              validate = false,
+            },
+            editor = {
+              quickSuggestions = { strings = true },
+              autoClosingQuotes = 'always',
+            },
+            tailwindCSS = {
+              experimental = {
+                classRegex = {
+                  [[[\S]*ClassName="([^"]*)]], -- <MyComponent containerClassName="..." />
+                  [[[\S]*ClassName={"([^"}]*)]], -- <MyComponent containerClassName={"..."} />
+                  [[[\S]*ClassName={"([^'}]*)]], -- <MyComponent containerClassName={'...'} />
+                },
+              },
+              includeLanguages = {
+                typescript = 'javascript',
+                typescriptreact = 'javascript',
+              },
+            },
+          },
+        },
         --[[ ts_ls = {
           settings = {
             typescript = {
@@ -449,10 +490,10 @@ require('lazy').setup({
     cmd = { 'TroubleToggle', 'Trouble' },
     opts = { use_diagnostic_signs = true },
     keys = {
-      { '<leader>xx', '<cmd>TroubleToggle document_diagnostics<cr>',  desc = 'Document Diagnostics (Trouble)' },
+      { '<leader>xx', '<cmd>TroubleToggle document_diagnostics<cr>', desc = 'Document Diagnostics (Trouble)' },
       { '<leader>xX', '<cmd>TroubleToggle workspace_diagnostics<cr>', desc = 'Workspace Diagnostics (Trouble)' },
-      { '<leader>xL', '<cmd>TroubleToggle loclist<cr>',               desc = 'Location List (Trouble)' },
-      { '<leader>xQ', '<cmd>TroubleToggle quickfix<cr>',              desc = 'Quickfix List (Trouble)' },
+      { '<leader>xL', '<cmd>TroubleToggle loclist<cr>', desc = 'Location List (Trouble)' },
+      { '<leader>xQ', '<cmd>TroubleToggle quickfix<cr>', desc = 'Quickfix List (Trouble)' },
     },
   },
   { -- Autocompletion
@@ -522,7 +563,7 @@ require('lazy').setup({
       require('mini.surround').setup()
       require('mini.pairs').setup()
       require('mini.comment').setup()
-      require('mini.base16').setup({
+      require('mini.base16').setup {
         palette = {
           base00 = '#000000',
           base01 = '#121212',
@@ -539,10 +580,9 @@ require('lazy').setup({
           base0C = '#aaaaaa',
           base0D = '#888888',
           base0E = '#999999',
-          base0F = '#444444'
-        }
-
-      })
+          base0F = '#444444',
+        },
+      }
     end,
   },
   { -- Highlight, edit, and navigate code

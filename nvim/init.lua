@@ -7,6 +7,7 @@ vim.g.have_nerd_font = true
 
 -- Colors
 vim.opt.termguicolors = true
+vim.opt.background = 'dark'
 
 -- [[ Setting options ]]
 -- Line numbers
@@ -187,16 +188,6 @@ require('lazy').setup({
       }
     end,
   },
-  {
-    'ThePrimeagen/refactoring.nvim',
-    lazy = false,
-    config = function()
-      require('refactoring').setup()
-      vim.keymap.set({ 'n', 'x' }, '<leader>rr', function()
-        require('telescope').extensions.refactoring.refactors()
-      end)
-    end,
-  },
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
@@ -367,6 +358,7 @@ require('lazy').setup({
             },
           },
         },
+        marksman = {},
         tailwindcss = {
           settings = {
             scss = {
@@ -379,9 +371,11 @@ require('lazy').setup({
             tailwindCSS = {
               experimental = {
                 classRegex = {
-                  [[[\S]*ClassName="([^"]*)]], -- <MyComponent containerClassName="..." />
-                  [[[\S]*ClassName={"([^"}]*)]], -- <MyComponent containerClassName={"..."} />
-                  [[[\S]*ClassName={"([^'}]*)]], -- <MyComponent containerClassName={'...'} />
+                  --  [[[\S]*ClassName="([^"]*)]], -- <MyComponent containerClassName="..." />
+                  --  [[[\S]*ClassName={"([^"}]*)]], -- <MyComponent containerClassName={"..."} />
+                  --  [[[\S]*ClassName={"([^'}]*)]], -- <MyComponent containerClassName={'...'} />
+                  { 'cva\\(([^)]*)\\)', '["\'`]([^"\'`]*).*?["\'`]' },
+                  { 'cx\\(([^)]*)\\)', "(?:'|\"|`)([^']*)(?:'|\"|`)" },
                 },
               },
               includeLanguages = {
@@ -431,10 +425,10 @@ require('lazy').setup({
         'gofumpt',
         'goimports',
       })
-      require('mason-tool-installer').setup {
-        ensure_installed = ensure_installed,
-      }
+
       require('mason-lspconfig').setup {
+        ensure_installed = ensure_installed,
+        automatic_installation = true,
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
@@ -502,12 +496,8 @@ require('lazy').setup({
     dependencies = {
       {
         'L3MON4D3/LuaSnip',
-        build = (function()
-          if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
-            return
-          end
-          return 'make install_jsregexp'
-        end)(),
+        version = 'v2.*',
+        build = 'make install_jsregexp',
       },
       'saadparwaiz1/cmp_luasnip',
       'hrsh7th/cmp-nvim-lsp',
@@ -555,7 +545,43 @@ require('lazy').setup({
       }
     end,
   },
+  -- {
+  --   'jasonlong/poimandres.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     require('poimandres').setup {
+  --       on_colors = function() end,
+  --       on_highlights = function() end,
+  --       transparent = true,
+  --     }
+  --   end,
 
+  --   -- optionally set the colorscheme within lazy config
+  --   init = function()
+  --     vim.cmd 'colorscheme poimandres'
+  --   end,
+  -- },
+  {
+    'datsfilipe/vesper.nvim',
+    config = function()
+      require('vesper').setup {
+        transparent = false, -- Boolean: Sets the background to transparent
+        italics = {
+          comments = true, -- Boolean: Italicizes comments
+          keywords = true, -- Boolean: Italicizes keywords
+          functions = true, -- Boolean: Italicizes functions
+          strings = true, -- Boolean: Italicizes strings
+          variables = true, -- Boolean: Italicizes variables
+        },
+        overrides = {}, -- A dictionary of group names, can be a function returning a dictionary or a table.
+        palette_overrides = {},
+      }
+    end,
+    init = function()
+      vim.cmd 'colorscheme vesper'
+    end,
+  },
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
     config = function()
@@ -563,26 +589,26 @@ require('lazy').setup({
       require('mini.surround').setup()
       require('mini.pairs').setup()
       require('mini.comment').setup()
-      require('mini.base16').setup {
-        palette = {
-          base00 = '#000000',
-          base01 = '#121212',
-          base02 = '#222222',
-          base03 = '#333333',
-          base04 = '#999999',
-          base05 = '#c1c1c1',
-          base06 = '#999999',
-          base07 = '#c1c1c1',
-          base08 = '#5f8787',
-          base09 = '#aaaaaa',
-          base0A = '#e78a53',
-          base0B = '#fbcb97',
-          base0C = '#aaaaaa',
-          base0D = '#888888',
-          base0E = '#999999',
-          base0F = '#444444',
-        },
-      }
+      -- require('mini.base16').setup {
+      --   palette = {
+      --     base00 = "#101010", -- Default Background
+      --     base01 = "#161616", -- Lighter Background (Used for status bars, line number, etc)
+      --     base02 = "#232323", -- Selection Background
+      --     base03 = "#8b8b8b", -- Comments, Invisibles, Line Highlighting
+      --     base04 = "#A0A0A0", -- Dark Foreground (Used for status bars)
+      --     base05 = "#FFFFFF", -- Default Foreground, Caret, Delimiters, Operators
+      --     base06 = "#FFFFFF", -- Light Foreground (Not often used)
+      --     base07 = "#FFFFFF", -- Light Background (Not often used)
+      --     base08 = "#FF8080", -- Variables, XML Tags, Markup Link Text, Markup Lists, Diff Deleted
+      --     base09 = "#FFC799", -- Integers, Boolean, Constants, XML Attributes, Markup Link Url
+      --     base0A = "#FFC799", -- Classes, Markup Bold, Search Text Background
+      --     base0B = "#99FFE4", -- Strings, Inherited Class, Markup Code, Git Added
+      --     base0C = "#A0A0A0", -- Support, Regular Expressions, Escape Characters, Markup Quotes
+      --     base0D = "#FFC799", -- Functions, Methods, Attribute IDs, Headings
+      --     base0E = "#A0A0A0", -- Keywords, Storage, Selector, Markup Italic, Diff Changed
+      --     base0F = "#FFC799", -- Deprecated, Opening/Closing Embedded Language Tags, e.g. <?php ?>
+      --   }
+      -- }
     end,
   },
   { -- Highlight, edit, and navigate code
@@ -601,6 +627,7 @@ require('lazy').setup({
         'json',
         'lua',
         'markdown',
+        'markdown_inline',
         'nix',
         'tsx',
         'typescript',
@@ -614,6 +641,7 @@ require('lazy').setup({
     },
     config = function(_, opts)
       require('nvim-treesitter.configs').setup(opts)
+      vim.treesitter.language.register('markdown', 'mdx')
     end,
   },
   { import = 'custom.plugins' },
@@ -635,6 +663,12 @@ require('lazy').setup({
     },
   },
 })
+
+vim.filetype.add {
+  extension = {
+    mdx = 'mdx',
+  },
+}
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

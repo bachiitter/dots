@@ -3,10 +3,10 @@
     "version": "2",
     "default_model": {
       "provider": "zed.dev",
-      "model": "claude-3-5-sonnet-20240620"
+      "model": "claude-3-5-sonnet-latest"
     }
   },
-  "theme": "Kanagawa Dragon",
+  "theme": "Vesper",
   "ui_font_family": "CommitMono Nerd Font",
   "ui_font_size": 13,
   "buffer_font_size": 11.5,
@@ -107,7 +107,7 @@
     "enable_preview_from_code_navigation": false
   },
   "inlay_hints": {
-    "enabled": true
+    "enabled": false
   },
   "dev": {
     "vertical_scroll_margin": 0,

@@ -23,6 +23,12 @@
     }
   },
   {
+    "context": "Editor && vim_mode == normal && !VimWaiting && !VimObject",
+    "bindings": {
+      "space u h": "editor::ToggleInlayHints"
+    }
+  },
+  {
     "context": "Workspace",
     "bindings": {
       "ctrl-z": "workspace::ToggleZoom",

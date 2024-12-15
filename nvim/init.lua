@@ -420,10 +420,7 @@ require('lazy').setup({
       require('mason').setup()
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        'stylua',
         'biome',
-        'gofumpt',
-        'goimports',
       })
 
       require('mason-lspconfig').setup {

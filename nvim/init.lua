@@ -201,20 +201,20 @@ require('lazy').setup({
           return vim.fn.executable 'make' == 1
         end,
       },
-      { 'nvim-telescope/telescope-ui-select.nvim' },
+      --    { 'nvim-telescope/telescope-ui-select.nvim' },
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
     config = function()
       require('telescope').setup {
-        extensions = {
-          ['ui-select'] = {
-            require('telescope.themes').get_dropdown(),
+        pickers = {
+          find_files = {
+            theme = 'ivy',
           },
         },
+        extensions = {
+          fzf = {},
+        },
       }
-
-      pcall(require('telescope').load_extension, 'fzf')
-      pcall(require('telescope').load_extension, 'ui-select')
 
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
@@ -371,11 +371,10 @@ require('lazy').setup({
             tailwindCSS = {
               experimental = {
                 classRegex = {
-                  --  [[[\S]*ClassName="([^"]*)]], -- <MyComponent containerClassName="..." />
-                  --  [[[\S]*ClassName={"([^"}]*)]], -- <MyComponent containerClassName={"..."} />
-                  --  [[[\S]*ClassName={"([^'}]*)]], -- <MyComponent containerClassName={'...'} />
                   { 'cva\\(([^)]*)\\)', '["\'`]([^"\'`]*).*?["\'`]' },
                   { 'cx\\(([^)]*)\\)', "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+                  { 'className=["\'`]([^"\']*)["\'`]', nil }, -- className in JSX/TSX
+                  { 'class=["\'`]([^"\']*)["\'`]', nil }, -- class attribute in HTML/Astro/Vue/Svelte
                 },
               },
               includeLanguages = {
@@ -385,16 +384,6 @@ require('lazy').setup({
             },
           },
         },
-        --[[ ts_ls = {
-          settings = {
-            typescript = {
-              inlayHints = tsserver_inlay_hints,
-            },
-            javascript = {
-              inlayHints = tsserver_inlay_hints,
-            },
-          },
-        },]]
         vtsls = {
           settings = {
             typescript = {
@@ -562,18 +551,7 @@ require('lazy').setup({
   {
     'datsfilipe/vesper.nvim',
     config = function()
-      require('vesper').setup {
-        transparent = false, -- Boolean: Sets the background to transparent
-        italics = {
-          comments = true, -- Boolean: Italicizes comments
-          keywords = true, -- Boolean: Italicizes keywords
-          functions = true, -- Boolean: Italicizes functions
-          strings = true, -- Boolean: Italicizes strings
-          variables = true, -- Boolean: Italicizes variables
-        },
-        overrides = {}, -- A dictionary of group names, can be a function returning a dictionary or a table.
-        palette_overrides = {},
-      }
+      require('vesper').setup {}
     end,
     init = function()
       vim.cmd 'colorscheme vesper'

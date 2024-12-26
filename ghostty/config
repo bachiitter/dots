@@ -7,6 +7,9 @@ adjust-cell-height = 45%
 adjust-underline-position = 15%
 adjust-font-baseline = 9%
 
+window-padding-x = 4
+window-padding-y = 4
+
 cursor-style = block
 adjust-cursor-height = 45%
 

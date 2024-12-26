@@ -1,8 +1,8 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
-add_newline = true
+add_newline = false
 format = """
-$character[](fg:#cad3f5)\
+$character[](fg:#fff)\
 $directory\
 $git_branch
 """
@@ -10,8 +10,8 @@ $git_branch
 # Enabled Modules
 [character]
 format = '$symbol'
-success_symbol = "[ ⠷ ](bg:#cad3f5 fg:#181926)"
-error_symbol = "[ ⠷ ](bg:#cad3f5 fg:#181926)"
+success_symbol = "[ 󰭟 ](fg:#fff)"
+error_symbol = "[ 󰭟 ](fg:#fff)"
 
 [directory]
 format = ' [$path]($style)[$read_only]($read_only_style) '

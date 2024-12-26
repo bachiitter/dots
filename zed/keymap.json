@@ -1,30 +1,20 @@
 [
   {
-    "context": "Editor && VimControl && !VimWaiting && !menu",
+    "context": "Editor && VimControl && !VimWaiting && !VimObject",
     "bindings": {
+      "space g d": "editor::GoToDefinition",
+      "space g r": "editor::FindAllReferences",
+      "space g shift-i": "editor::GoToImplementation",
+      "space shift-d": "editor::GoToTypeDefinition",
+      "space g shift-d": "editor::GoToDeclaration",
       "space c a": "editor::ToggleCodeActions",
-      "space q": "diagnostics::Deploy",
-      "K": "editor::Hover",
+      "shift-k": "editor::Hover",
+      "g c": "editor::ToggleComments",
       "space s f": "file_finder::Toggle",
-      "space space": "tab_switcher::Toggle",
       "space s g": "workspace::NewSearch",
-      "g b": "editor::ToggleComments",
-      "space c": "pane::CloseActiveItem",
-      "space D": "editor::GoToTypeDefinition",
-      "space f": "editor::Format"
-    }
-  },
-  {
-    "context": "Editor && vim_mode == visual && !VimWaiting && !VimObject",
-    "bindings": {
-      "shift-j": "editor::MoveLineDown",
-      "shift-k": "editor::MoveLineUp"
-    }
-  },
-  {
-    "context": "Editor && vim_mode == normal && !VimWaiting && !VimObject",
-    "bindings": {
-      "space u h": "editor::ToggleInlayHints"
+      "space space": "tab_switcher::Toggle",
+      "space i h": "editor::ToggleInlayHints",
+      "space q": "diagnostics::Deploy"
     }
   },
   {

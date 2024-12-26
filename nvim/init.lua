@@ -95,7 +95,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move up!!"<CR>')
 -- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move down!!"<CR>')
 
--- Keybinds to make split navigation easier.
+-- Keybinds to make split navigation easie
 --  Use CTRL+<hjkl> to switch between windows
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
@@ -361,7 +361,18 @@ require('lazy').setup({
           },
         },
         marksman = {},
-        tailwindcss = {},
+        tailwindcss = {
+          settings = {
+            tailwindCSS = {
+              experimental = {
+                classRegex = {
+                  { "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+                  { "cx\\(([^)]*)\\)",  "(?:'|\"|`)([^']*)(?:'|\"|`)" }
+                },
+              }
+            }
+          }
+        },
         vtsls = {
           settings = {
             typescript = {
@@ -407,10 +418,7 @@ require('lazy').setup({
     "luckasRanarison/tailwind-tools.nvim",
     name = "tailwind-tools",
     build = ":UpdateRemotePlugins",
-    config = function()
-      require("tailwind-tools").setup({
-      })
-    end
+    opts = {}
   },
   {
     'stevearc/conform.nvim',

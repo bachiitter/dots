@@ -74,6 +74,10 @@ return {
       },
       tailwindcss = {
         settings = {
+          editor = {
+            quickSuggestions = { strings = true },
+            autoClosingQuotes = 'always',
+          },
           tailwindCSS = {
             experimental = {
               classRegex = {

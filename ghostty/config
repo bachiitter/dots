@@ -12,6 +12,8 @@ adjust-font-baseline = 9%
 window-padding-x = 4
 window-padding-color = background
 window-inherit-font-size = false
+background-opacity = 1
+unfocused-split-opacity = 0.85
 
 cursor-style = block
 adjust-cursor-height = 45%

@@ -10,8 +10,8 @@ $git_branch
 # Enabled Modules
 [character]
 format = '$symbol'
-success_symbol = "[ 󰭟 ](fg:#fff)"
-error_symbol = "[ 󰭟 ](fg:#fff)"
+success_symbol = "[󰭟 ](fg:#fff)"
+error_symbol = "[󰭟 ](fg:#fff)"
 
 [directory]
 format = ' [$path]($style)[$read_only]($read_only_style) '

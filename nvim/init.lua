@@ -214,13 +214,51 @@ require('lazy').setup({
   --     vim.cmd 'colorscheme poimandres'
   --   end,
   -- },
+  -- {
+  --   'datsfilipe/vesper.nvim',
+  --   config = function()
+  --     require('vesper').setup {}
+  --   end,
+  --   init = function()
+  --     vim.cmd 'colorscheme vesper'
+  --   end,
+  -- },
   {
-    'datsfilipe/vesper.nvim',
+    "rebelot/kanagawa.nvim",
     config = function()
-      require('vesper').setup {}
-    end,
-    init = function()
-      vim.cmd 'colorscheme vesper'
+      require('kanagawa').setup({
+        compile = false,
+        undercurl = true,
+        commentStyle = { italic = true },
+        functionStyle = {},
+        keywordStyle = { italic = true },
+        statementStyle = { bold = true },
+        typeStyle = {},
+        transparent = false,
+        dimInactive = false,
+        terminalColors = true,
+        colors = {
+          palette = {},
+          theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
+        },
+        overrides = function(colors)
+          local theme = colors.theme
+          return {
+            Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 },
+            PmenuSel = { fg = "NONE", bg = theme.ui.bg_p2 },
+            PmenuSbar = { bg = theme.ui.bg_m1 },
+            PmenuThumb = { bg = theme.ui.bg_p2 },
+          }
+        end,
+        theme = "wave",
+        background = {
+          dark = "wave",
+          light = "lotus"
+        },
+      })
+
+
+      vim.cmd 'colorscheme kanagawa'
     end,
   },
   { import = 'custom.plugins' },

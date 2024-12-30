@@ -15,9 +15,25 @@ return {
   },
   config = function()
     require('telescope').setup {
+      defaults = {
+        file_ignore_patterns = {
+          "node_modules", "build", "dist", ".git"
+        },
+      },
       pickers = {
         find_files = {
           theme = 'ivy',
+          hidden = true,
+          find_command = {
+            "rg",
+            "--files",
+            "--hidden",
+            "--glob=!**/.git/*",
+            "--glob=!**/.idea/*",
+            "--glob=!**/.vscode/*",
+            "--glob=!**/build/*",
+            "--glob=!**/dist/*",
+          },
         },
       },
       extensions = {

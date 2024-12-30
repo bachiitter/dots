@@ -1,3 +1,9 @@
+# Shell integration
+
+if [[ -n $GHOSTTY_RESOURCES_DIR ]]; then
+  source $GHOSTTY_RESOURCES_DIR/shell-integration/zsh/ghostty-integration
+fi
+
 export ZSH="$HOME/.oh-my-zsh"
 
 export TERM=xterm-256color

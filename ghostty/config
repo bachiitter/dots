@@ -1,4 +1,4 @@
-theme = kanagawa wave
+#theme = kanagawa wave
 
 font-family = CommitMono Nerd Font
 font-style = Medium
@@ -9,6 +9,7 @@ adjust-cell-height = 45%
 adjust-underline-position = 15%
 adjust-font-baseline = 9%
 
+window-colorspace = display-p3
 window-padding-x = 8
 window-padding-color = background
 window-inherit-font-size = false
@@ -28,3 +29,31 @@ macos-non-native-fullscreen = true
 mouse-hide-while-typing = true
 
 shell-integration-features = no-cursor
+
+# Poimandres Storm theme
+cursor-color = #607487
+background = #252b37
+# black
+palette = 0=#1B1E28
+palette = 8=#506477
+# red
+palette = 1=#D0679D
+palette = 9=#D0679D
+# green
+palette = 2=#5DE4C7
+palette = 10=#5DE4C7
+# yellow
+palette = 3=#FFFAC2
+palette = 11=#FFFAC2
+# blue
+palette = 4=#89DDFF
+palette = 12=#ADD7FF
+# purple
+palette = 5=#FCC5E9
+palette = 13=#FCC5E9
+# aqua
+palette = 6=#89DDFF
+palette = 14=#ADD7FF
+# white
+palette = 7=#ffffff
+palette = 15=#ffffff

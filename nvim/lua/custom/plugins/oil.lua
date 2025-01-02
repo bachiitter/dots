@@ -10,13 +10,18 @@ return {
     end
 
     require("oil").setup {
-      columns = { "icon" },
+      columns = { "icon",
+        "permissions",
+        -- "size",
+        -- "mtime"
+      },
       keymaps = {
+        ["g?"] = { "actions.show_help", mode = "n" },
         ["<C-h>"] = false,
         ["<C-l>"] = false,
         ["<C-k>"] = false,
         ["<C-j>"] = false,
-        ["<M-h>"] = "actions.select_split",
+        ["<CR>"] = "actions.select_split",
       },
       win_options = {
         winbar = "%{v:lua.CustomOilBar()}",

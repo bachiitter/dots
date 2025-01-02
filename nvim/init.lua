@@ -7,7 +7,6 @@ vim.g.have_nerd_font = true
 
 -- Colors
 vim.opt.termguicolors = true
-vim.opt.background = 'dark'
 
 -- [[ Setting options ]]
 -- Line numbers
@@ -95,6 +94,8 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move up!!"<CR>')
 -- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move down!!"<CR>')
 
+
+
 -- Keybinds to make split navigation easie
 --  Use CTRL+<hjkl> to switch between windows
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
@@ -159,7 +160,17 @@ require('lazy').setup({
         topdelete = { text = '‾' },
         changedelete = { text = '~' },
       },
-    },
+      current_line_blame = true,
+      current_line_blame_opts = {
+        virt_text = true,
+        virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+        delay = 500,
+        ignore_whitespace = false,
+        virt_text_priority = 100,
+        use_focus = true,
+      },
+      current_line_blame_formatter = '<author>, <author_time:%R> - <summary>',
+    }
   },
   {
     'folke/which-key.nvim',

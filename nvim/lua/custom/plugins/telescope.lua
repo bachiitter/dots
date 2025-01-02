@@ -11,7 +11,8 @@ return {
         return vim.fn.executable 'make' == 1
       end,
     },
-    { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+    { 'nvim-telescope/telescope-ui-select.nvim' },
+    { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
   },
   config = function()
     require('telescope').setup {
@@ -37,11 +38,15 @@ return {
         },
       },
       extensions = {
+        ['ui-select'] = {
+          require('telescope.themes').get_dropdown(),
+        },
         fzf = {},
       },
     }
 
-    require('telescope').load_extension 'fzf'
+    pcall(require('telescope').load_extension 'fzf')
+    pcall(require('telescope').load_extension, 'ui-select')
 
     local builtin = require 'telescope.builtin'
     vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })

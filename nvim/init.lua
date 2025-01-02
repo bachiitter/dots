@@ -6,83 +6,83 @@ vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
 
 -- Colors
-vim.opt.termguicolors = true
+vim.o.termguicolors = true
 
 -- [[ Setting options ]]
 -- Line numbers
-vim.opt.number = true
-vim.opt.relativenumber = true
+vim.o.number = true
+vim.o.relativenumber = true
 
 -- Disable mouse mode
-vim.opt.mouse = ''
+vim.o.mouse = ''
 
 -- Enable break indent
-vim.opt.breakindent = true
+vim.o.breakindent = true
 
 -- Disable current mode display
-vim.opt.showmode = false
+vim.o.showmode = false
 
 -- Set clipboard to use system
-vim.opt.clipboard = 'unnamedplus'
+vim.o.clipboard = 'unnamedplus'
 
 -- Save undo history
-vim.opt.undofile = true
+vim.o.undofile = true
 
 -- Case insensitive searching UNLESS /C or capital in search
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
+vim.o.ignorecase = true
+vim.o.smartcase = true
 
 -- Decrease update time
-vim.opt.signcolumn = 'yes'
-vim.opt.updatetime = 100
+vim.o.signcolumn = 'yes'
+vim.o.updatetime = 100
 
 -- Decrease mapped sequence wait time
 -- Displays which-key popup sooner
-vim.opt.timeoutlen = 300
+vim.o.timeoutlen = 300
 
 -- Configure how new splits should be opened
-vim.opt.splitright = true
-vim.opt.splitbelow = true
+vim.o.splitright = true
+vim.o.splitbelow = true
 
 -- Disable text wrap
-vim.opt.wrap = false
+vim.o.wrap = false
 
 -- Code Folding
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
-vim.opt.foldenable = false -- Disable folding by default
+vim.o.foldmethod = 'expr'
+vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.o.foldenable = false -- Disable folding by default
 
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`
-vim.opt.list = true
-vim.opt.listchars = { tab = '  ', trail = ' ', nbsp = ' ' }
+vim.o.list = true
+-- vim.opt.listchars = { tab = '  ', trail = ' ', nbsp = ' ' }
 
 -- Preview substitutions live, as you type!
-vim.opt.inccommand = 'split'
+vim.o.inccommand = 'split'
 
 -- Show which line your cursor is on
-vim.opt.cursorline = true
+vim.o.cursorline = true
 
 -- Minimal number of screen lines to keep above and below cursor
-vim.opt.scrolloff = 10
+vim.o.scrolloff = 10
 
 -- Set highlight on search
 -- Clear highlights on search when pressing <Esc> in normal mode
-vim.opt.hlsearch = true
+vim.o.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Tab stops
 vim.cmd 'set expandtab'
-vim.opt.tabstop = 2
-vim.opt.softtabstop = 2
-vim.opt.shiftwidth = 2
+vim.o.tabstop = 2
+vim.o.softtabstop = 2
+vim.o.shiftwidth = 2
 
 -- Set completeopt to have better completion experience
-vim.opt.completeopt = 'menuone,noinsert'
+vim.o.completeopt = 'menuone,noinsert'
 
 -- Removes ~
-vim.opt.fillchars = 'eob: '
+vim.o.fillchars = 'eob: '
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
@@ -93,8 +93,6 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move right!!"<CR>')
 -- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move up!!"<CR>')
 -- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move down!!"<CR>')
-
-
 
 -- Keybinds to make split navigation easie
 --  Use CTRL+<hjkl> to switch between windows
@@ -175,17 +173,50 @@ require('lazy').setup({
   {
     'folke/which-key.nvim',
     event = 'VimEnter',
-    config = function()
-      require('which-key').setup()
-      require('which-key').add {
+    opts = {
+      delay = 0,
+      icons = {
+        mappings = vim.g.have_nerd_font,
+        keys = vim.g.have_nerd_font and {} or {
+          Up = '<Up> ',
+          Down = '<Down> ',
+          Left = '<Left> ',
+          Right = '<Right> ',
+          C = '<C-…> ',
+          M = '<M-…> ',
+          D = '<D-…> ',
+          S = '<S-…> ',
+          CR = '<CR> ',
+          Esc = '<Esc> ',
+          ScrollWheelDown = '<ScrollWheelDown> ',
+          ScrollWheelUp = '<ScrollWheelUp> ',
+          NL = '<NL> ',
+          BS = '<BS> ',
+          Space = '<Space> ',
+          Tab = '<Tab> ',
+          F1 = '<F1>',
+          F2 = '<F2>',
+          F3 = '<F3>',
+          F4 = '<F4>',
+          F5 = '<F5>',
+          F6 = '<F6>',
+          F7 = '<F7>',
+          F8 = '<F8>',
+          F9 = '<F9>',
+          F10 = '<F10>',
+          F11 = '<F11>',
+          F12 = '<F12>',
+        },
+      },
+      spec = {
         { '<leader>c', group = '[C]ode',     mode = { 'n', 'x' } },
         { '<leader>d', group = '[D]ocument' },
         { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },
         { '<leader>w', group = '[W]orkspace' },
         { '<leader>t', group = '[T]oggle' },
-      }
-    end,
+      },
+    },
   },
   {
     'folke/lazydev.nvim',
@@ -275,13 +306,26 @@ require('lazy').setup({
   { import = 'custom.plugins' },
 }, {
   ui = {
-    icons = vim.g.have_nerd_font and {} or {},
+    icons = vim.g.have_nerd_font and {} or {
+      cmd = '⌘',
+      config = '🛠',
+      event = '📅',
+      ft = '📂',
+      init = '⚙',
+      keys = '🗝',
+      plugin = '🔌',
+      runtime = '💻',
+      require = '🌙',
+      source = '📄',
+      start = '🚀',
+      task = '📌',
+      lazy = '💤 ',
+    },
   },
   performance = {
     rtp = {
       disabled_plugins = {
         'ftplugin',
-        'gzip',
         'matchit',
         'netrwPlugin',
         'tarPlugin',

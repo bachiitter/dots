@@ -1,3 +1,3 @@
-local set = vim.opt_local
+local set = vim.o
 
 set.tabstop = 2

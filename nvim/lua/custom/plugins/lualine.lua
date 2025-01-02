@@ -9,12 +9,12 @@ return {
       },
       sections = {
         lualine_a = { 'mode' },
-        lualine_b = { { 'branch', icons_enabled = false }, 'diagnostics' },
+        lualine_b = { 'branch', 'diagnostics' },
         lualine_c = {
           { 'filename', path = 1 },
         },
         lualine_x = { 'filetype' },
-        lualine_y = { 'progress', 'encoding', 'fileformat' },
+        lualine_y = { 'encoding', { 'fileformat', icons_enabled = false } },
         lualine_z = { 'location' },
       },
     }

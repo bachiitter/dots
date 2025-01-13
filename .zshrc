@@ -1,7 +1,7 @@
 # Shell integration
 
 if [[ -n $GHOSTTY_RESOURCES_DIR ]]; then
-  source $GHOSTTY_RESOURCES_DIR/shell-integration/zsh/ghostty-integration
+  source "$GHOSTTY_RESOURCES_DIR"/shell-integration/zsh/ghostty-integration
 fi
 
 export ZSH="$HOME/.oh-my-zsh"
@@ -52,6 +52,10 @@ alias glog="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%
 
 alias web="cd ~/personal/portfolio && tmux new -s web"
 alias sweb="tmux attach-session -t web"
+
+alias ui="cd ~/analog/orphos && tmux new -s orphos"
+alias sui="tmux attach-session -t orphos"
+
 
 alias bmrks="cd ~/analog/bookmarks && tmux new -s bmrks"
 alias sbmrks="tmux attach-session -t bmrks"

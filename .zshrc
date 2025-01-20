@@ -42,6 +42,14 @@ plugins=(git fzf nvm)
 
 source $ZSH/oh-my-zsh.sh
 
+#zsh
+alias reload="source ~/.zshrc"
+
+#eza
+alias ls="eza"
+alias ll="eza -l -g --git"
+alias llt="eza -1 --git --tree --git-ignore"
+
 #git
 alias ga="git add"
 alias gc="git commit"

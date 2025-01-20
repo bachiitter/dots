@@ -239,72 +239,36 @@ require('lazy').setup({
       { '<leader>xQ', '<cmd>TroubleToggle quickfix<cr>',              desc = 'Quickfix List (Trouble)' },
     },
   },
+  -- {
+  --   'jasonlong/poimandres.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     require('poimandres').setup {
+  --       on_colors = function() end,
+  --       on_highlights = function() end,
+  --       transparent = true,
+  --       terminal_colors = true,
+  --       style = "storm"
+  --     }
+  --   end,
+  --
+  --   -- optionally set the colorscheme within lazy config
+  --   init = function()
+  --     vim.cmd 'colorscheme poimandres'
+  --   end,
+  -- },
   {
-    'jasonlong/poimandres.nvim',
-    lazy = false,
-    priority = 1000,
+    'datsfilipe/vesper.nvim',
     config = function()
-      require('poimandres').setup {
-        on_colors = function() end,
-        on_highlights = function() end,
-        transparent = true,
-        terminal_colors = true,
-        style = "storm"
+      require('vesper').setup {
+        transparent = true
       }
     end,
-
-    -- optionally set the colorscheme within lazy config
     init = function()
-      vim.cmd 'colorscheme poimandres'
+      vim.cmd 'colorscheme vesper'
     end,
   },
-  -- {
-  --   'datsfilipe/vesper.nvim',
-  --   config = function()
-  --     require('vesper').setup {}
-  --   end,
-  --   init = function()
-  --     vim.cmd 'colorscheme vesper'
-  --   end,
-  -- },
-  -- {
-  --   "rebelot/kanagawa.nvim",
-  --   config = function()
-  --     require('kanagawa').setup({
-  --       compile = false,
-  --       undercurl = true,
-  --       commentStyle = { italic = true },
-  --       functionStyle = {},
-  --       keywordStyle = { italic = true },
-  --       statementStyle = { bold = true },
-  --       typeStyle = {},
-  --       transparent = false,
-  --       dimInactive = false,
-  --       terminalColors = true,
-  --       colors = {
-  --         palette = {},
-  --         theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
-  --       },
-  --       overrides = function(colors)
-  --         local theme = colors.theme
-  --         return {
-  --           Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg_p1 },
-  --           PmenuSel = { fg = "NONE", bg = theme.ui.bg_p2 },
-  --           PmenuSbar = { bg = theme.ui.bg_m1 },
-  --           PmenuThumb = { bg = theme.ui.bg_p2 },
-  --         }
-  --       end,
-  --       theme = "wave",
-  --       background = {
-  --         dark = "wave",
-  --         light = "lotus"
-  --       },
-  --     })
-  --
-  --
-  --     vim.cmd 'colorscheme kanagawa'
-  --   end,
-  -- },
   { import = 'custom.plugins' },
 }, {
   ui = {

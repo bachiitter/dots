@@ -1,6 +1,9 @@
 return {
   'nvim-treesitter/nvim-treesitter',
   build = ':TSUpdate',
+  dependencies = {
+    "nvim-treesitter/nvim-treesitter-context"
+  },
   main = 'nvim-treesitter.configs',
   opts = {
     ensure_installed = {
@@ -22,6 +25,7 @@ return {
   },
   config = function(_, opts)
     require('nvim-treesitter.configs').setup(opts)
+    require 'treesitter-context'.setup()
     vim.treesitter.language.register('markdown', 'mdx')
   end,
 }

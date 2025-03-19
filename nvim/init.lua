@@ -85,7 +85,10 @@ vim.o.completeopt = 'menuone,noinsert'
 vim.o.fillchars = 'eob: '
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
+vim.keymap.set('n', '<leader>e', function()
+    vim.diagnostic.open_float { scope = 'line' }
+  end,
+  { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- TIP: Disable arrow keys in normal mode
@@ -223,11 +226,10 @@ require('lazy').setup({
     ft = 'lua',
     opts = {
       library = {
-        { path = 'luvit-meta/library', words = { 'vim%.uv' } },
+        { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
       },
     },
   },
-  { 'Bilal2453/luvit-meta',   lazy = true },
   {
     'folke/trouble.nvim',
     cmd = { 'TroubleToggle', 'Trouble' },
@@ -239,36 +241,29 @@ require('lazy').setup({
       { '<leader>xQ', '<cmd>TroubleToggle quickfix<cr>',              desc = 'Quickfix List (Trouble)' },
     },
   },
-  -- {
-  --   'jasonlong/poimandres.nvim',
-  --   lazy = false,
-  --   priority = 1000,
-  --   config = function()
-  --     require('poimandres').setup {
-  --       on_colors = function() end,
-  --       on_highlights = function() end,
-  --       transparent = true,
-  --       terminal_colors = true,
-  --       style = "storm"
-  --     }
-  --   end,
-  --
-  --   -- optionally set the colorscheme within lazy config
-  --   init = function()
-  --     vim.cmd 'colorscheme poimandres'
-  --   end,
-  -- },
   {
-    'datsfilipe/vesper.nvim',
-    config = function()
-      require('vesper').setup {
-        transparent = true
-      }
-    end,
+    'jasonlong/poimandres.nvim',
+    lazy = false,
+    priority = 1000,
+    opts = {
+      transparent = true,
+      style = "storm"
+    },
     init = function()
-      vim.cmd 'colorscheme vesper'
+      vim.cmd 'colorscheme poimandres'
     end,
   },
+  -- {
+  --   'datsfilipe/vesper.nvim',
+  --   config = function()
+  --     require('vesper').setup {
+  --       transparent = true
+  --     }
+  --   end,
+  --   init = function()
+  --     vim.cmd 'colorscheme vesper'
+  --   end,
+  -- },
   { import = 'custom.plugins' },
 }, {
   ui = {
@@ -291,16 +286,19 @@ require('lazy').setup({
   performance = {
     rtp = {
       disabled_plugins = {
+        'gzip',
         'ftplugin',
         'matchit',
         'netrwPlugin',
         'tarPlugin',
         'tohtml',
         'tutor',
+        'zipPlugin'
       },
     },
   },
 })
+
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

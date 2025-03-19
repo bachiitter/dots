@@ -15,6 +15,9 @@ return {
     local cmp = require 'cmp'
     local luasnip = require 'luasnip'
     luasnip.config.setup {}
+    luasnip.filetype_extend("javascriptreact", { "html" })
+    luasnip.filetype_extend("typescriptreact", { "html" })
+
     cmp.setup {
       snippet = {
         expand = function(args)

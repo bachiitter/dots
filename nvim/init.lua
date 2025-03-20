@@ -33,7 +33,7 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 
 -- Decrease update time
-vim.o.signcolumn = 'yes'
+vim.o.signcolumn = 'no'
 vim.o.updatetime = 100
 
 -- Decrease mapped sequence wait time
@@ -105,7 +105,6 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- Toggle InlayHints
-
 vim.keymap.set('n', '<leader>ih', function()
   vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end, { desc = 'Toggle [I]nlay [H]ints' })
@@ -154,6 +153,7 @@ require('lazy').setup({
     'lewis6991/gitsigns.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
     opts = {
+      signcolumn = true,
       signs = {
         add = { text = '+' },
         change = { text = '~' },
@@ -232,25 +232,61 @@ require('lazy').setup({
   },
   {
     'folke/trouble.nvim',
-    cmd = { 'TroubleToggle', 'Trouble' },
-    opts = { use_diagnostic_signs = true },
+    opts = {
+    },
+    cmd = { 'Trouble' },
     keys = {
-      { '<leader>xx', '<cmd>TroubleToggle document_diagnostics<cr>',  desc = 'Document Diagnostics (Trouble)' },
+      { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>",          desc = "Diagnostics (Trouble)" },
       { '<leader>xX', '<cmd>TroubleToggle workspace_diagnostics<cr>', desc = 'Workspace Diagnostics (Trouble)' },
       { '<leader>xL', '<cmd>TroubleToggle loclist<cr>',               desc = 'Location List (Trouble)' },
       { '<leader>xQ', '<cmd>TroubleToggle quickfix<cr>',              desc = 'Quickfix List (Trouble)' },
     },
   },
+  -- {
+  --   'jasonlong/poimandres.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   opts = {
+  --     transparent = true,
+  --     style = "storm"
+  --   },
+  --   init = function()
+  --     vim.cmd 'colorscheme poimandres'
+  --   end,
+  -- },
   {
-    'jasonlong/poimandres.nvim',
-    lazy = false,
-    priority = 1000,
-    opts = {
-      transparent = true,
-      style = "storm"
-    },
-    init = function()
-      vim.cmd 'colorscheme poimandres'
+    "ellisonleao/gruvbox.nvim",
+    priority = 1000, -- Make sure to load this before all the other start plugins.
+    config = function()
+      ---@diagnostic disable-next-line: missing-fields
+      require("gruvbox").setup({
+        contrast = "soft"
+        --       transparent_mode = true,
+      })
+      vim.cmd.colorscheme("gruvbox")
+
+      -- vim.cmd([[
+      --     highlight SignColumn guibg=NONE ctermbg=NONE
+      --     highlight DiagnosticSignError guibg=NONE ctermbg=NONE
+      --     highlight DiagnosticSignWarn guibg=NONE ctermbg=NONE
+      --     highlight DiagnosticSignInfo guibg=NONE ctermbg=NONE
+      --     highlight DiagnosticSignHint guibg=NONE ctermbg=NONE
+      --
+      --     " For git signs if you're using gitsigns.nvim or similar
+      --     highlight GitSignsAdd guibg=NONE ctermbg=NONE
+      --     highlight GitSignsChange guibg=NONE ctermbg=NONE
+      --     highlight GitSignsDelete guibg=NONE ctermbg=NONE
+      --
+      --     " For older LSP diagnostic signs (pre Neovim 0.7)
+      --     highlight LspDiagnosticsSignError guibg=NONE ctermbg=NONE
+      --     highlight LspDiagnosticsSignWarning guibg=NONE ctermbg=NONE
+      --     highlight LspDiagnosticsSignInformation guibg=NONE ctermbg=NONE
+      --     highlight LspDiagnosticsSignHint guibg=NONE ctermbg=NONE
+      --  ]])
+      vim.cmd([[
+         highlight Normal guibg=none
+         highlight Normal ctermbg=none
+       ]])
     end,
   },
   -- {

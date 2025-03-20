@@ -1,4 +1,5 @@
-# theme = vesper
+theme = GruvboxDark
+window-theme = dark
 
 font-family = BlexMono Nerd Font
 font-style = Regular
@@ -7,13 +8,14 @@ font-feature = -liga
 
 adjust-cell-height = 65%
 
-window-colorspace = display-p3
+# window-colorspace = display-p3
 window-padding-x = 8
 window-padding-color = background
 window-inherit-font-size = false
-background-opacity = 0.95
-background-blur-radius = 20
 unfocused-split-opacity = 0.85
+
+background-opacity = 0.95
+background-blur-radius = 100
 
 window-save-state = always
 
@@ -29,30 +31,30 @@ mouse-hide-while-typing = true
 
 shell-integration-features = no-cursor, no-title, no-sudo
 
-# # Poimandres Storm theme
- cursor-color = #607487
- background = #252b37
-# # black
- palette = 0=#1B1E28
- palette = 8=#506477
-# # red
- palette = 1=#D0679D
- palette = 9=#D0679D
-# # green
- palette = 2=#5DE4C7
- palette = 10=#5DE4C7
-# # yellow
- palette = 3=#FFFAC2
- palette = 11=#FFFAC2
-# # blue
- palette = 4=#89DDFF
- palette = 12=#ADD7FF
-# # purple
- palette = 5=#FCC5E9
- palette = 13=#FCC5E9
-# # aqua
- palette = 6=#89DDFF
- palette = 14=#ADD7FF
-# # white
- palette = 7=#ffffff
- palette = 15=#ffffff
+# # # Poimandres Storm theme
+#  cursor-color = #607487
+#  background = #252b37
+# # # black
+#  palette = 0=#1B1E28
+#  palette = 8=#506477
+# # # red
+#  palette = 1=#D0679D
+#  palette = 9=#D0679D
+# # # green
+#  palette = 2=#5DE4C7
+#  palette = 10=#5DE4C7
+# # # yellow
+#  palette = 3=#FFFAC2
+#  palette = 11=#FFFAC2
+# # # blue
+#  palette = 4=#89DDFF
+#  palette = 12=#ADD7FF
+# # # purple
+#  palette = 5=#FCC5E9
+#  palette = 13=#FCC5E9
+# # # aqua
+#  palette = 6=#89DDFF
+#  palette = 14=#ADD7FF
+# # # white
+#  palette = 7=#ffffff
+#  palette = 15=#ffffff

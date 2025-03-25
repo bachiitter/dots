@@ -11,9 +11,9 @@ return {
         notification = {
           window = {
             winblend = 0,
-          }
-        }
-      }
+          },
+        },
+      },
     },
   },
   config = function()
@@ -88,18 +88,46 @@ return {
 
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+
+    local util = require 'lspconfig.util'
+
     local servers = {
       astro = {},
-      biome = {},
+      biome = {
+        cmd = { 'biome', 'lsp-proxy' },
+        filetypes = {
+          'astro',
+          'css',
+          'graphql',
+          'html',
+          'javascript',
+          'javascriptreact',
+          'json',
+          'jsonc',
+          'svelte',
+          'typescript',
+          'typescript.tsx',
+          'typescriptreact',
+          'vue',
+        },
+        root_dir = function(fname)
+          return util.root_pattern('biome.json', 'biome.jsonc')(fname)
+        end,
+        on_attach = function(client, _)
+          if client.name ~= 'biome' then
+            client.server_capabilities.documentFormattingProvider = false
+          end
+        end,
+      },
       cssls = {},
       emmet_language_server = {
         init_options = {
           syntaxProfiles = {
             html = {
-              attr_quotes = "single",
+              attr_quotes = 'single',
             },
             typescriptreact = {
-              attr_quotes = "single",
+              attr_quotes = 'single',
             },
           },
         },
@@ -129,13 +157,13 @@ return {
           tailwindCSS = {
             experimental = {
               classRegex = {
-                { "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
-                { "cn\\(([^)]*)\\)",  "(?:'|\"|`)([^']*)(?:'|\"|`)" },
-                { "cx\\(([^)]*)\\)",  "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+                { 'cva\\(([^)]*)\\)', '["\'`]([^"\'`]*).*?["\'`]' },
+                { 'cn\\(([^)]*)\\)', "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+                { 'cx\\(([^)]*)\\)', "(?:'|\"|`)([^']*)(?:'|\"|`)" },
               },
-            }
-          }
-        }
+            },
+          },
+        },
       },
       vtsls = {
         typescript = {

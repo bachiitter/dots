@@ -86,9 +86,8 @@ vim.o.fillchars = 'eob: '
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>e', function()
-    vim.diagnostic.open_float { scope = 'line' }
-  end,
-  { desc = 'Show diagnostic [E]rror messages' })
+  vim.diagnostic.open_float { scope = 'line' }
+end, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- TIP: Disable arrow keys in normal mode
@@ -116,6 +115,28 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
     vim.highlight.on_yank()
+  end,
+})
+
+-- [[ Biome auto format on save ]]
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = {
+    '*.astro',
+    '*.css',
+    '*.gql',
+    '*.html',
+    '*.js',
+    '*.jsx',
+    '*.json',
+    '*.jsonc',
+    '*.svelte',
+    '*.ts',
+    '*.tsx',
+    '*.vue',
+  },
+  callback = function(args)
+    -- This will trigger the LSP formatting, which in turn calls Biome’s formatting if available.
+    vim.lsp.buf.format({ bufnr = args.buf })
   end,
 })
 
@@ -150,78 +171,6 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   'tpope/vim-sleuth',
   {
-    'lewis6991/gitsigns.nvim',
-    event = { 'BufReadPre', 'BufNewFile' },
-    opts = {
-      signcolumn = true,
-      signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-      },
-      current_line_blame = true,
-      current_line_blame_opts = {
-        virt_text = true,
-        virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
-        delay = 500,
-        ignore_whitespace = false,
-        virt_text_priority = 100,
-        use_focus = true,
-      },
-      current_line_blame_formatter = '<author>, <author_time:%R> - <summary>',
-    }
-  },
-  {
-    'folke/which-key.nvim',
-    event = 'VimEnter',
-    opts = {
-      delay = 0,
-      icons = {
-        mappings = vim.g.have_nerd_font,
-        keys = vim.g.have_nerd_font and {} or {
-          Up = '<Up> ',
-          Down = '<Down> ',
-          Left = '<Left> ',
-          Right = '<Right> ',
-          C = '<C-…> ',
-          M = '<M-…> ',
-          D = '<D-…> ',
-          S = '<S-…> ',
-          CR = '<CR> ',
-          Esc = '<Esc> ',
-          ScrollWheelDown = '<ScrollWheelDown> ',
-          ScrollWheelUp = '<ScrollWheelUp> ',
-          NL = '<NL> ',
-          BS = '<BS> ',
-          Space = '<Space> ',
-          Tab = '<Tab> ',
-          F1 = '<F1>',
-          F2 = '<F2>',
-          F3 = '<F3>',
-          F4 = '<F4>',
-          F5 = '<F5>',
-          F6 = '<F6>',
-          F7 = '<F7>',
-          F8 = '<F8>',
-          F9 = '<F9>',
-          F10 = '<F10>',
-          F11 = '<F11>',
-          F12 = '<F12>',
-        },
-      },
-      spec = {
-        { '<leader>c', group = '[C]ode',     mode = { 'n', 'x' } },
-        { '<leader>d', group = '[D]ocument' },
-        { '<leader>r', group = '[R]ename' },
-        { '<leader>s', group = '[S]earch' },
-        { '<leader>w', group = '[W]orkspace' },
-        { '<leader>t', group = '[T]oggle' },
-      },
-    },
-  },
-  {
     'folke/lazydev.nvim',
     ft = 'lua',
     opts = {
@@ -230,76 +179,6 @@ require('lazy').setup({
       },
     },
   },
-  {
-    'folke/trouble.nvim',
-    opts = {
-    },
-    cmd = { 'Trouble' },
-    keys = {
-      { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>",          desc = "Diagnostics (Trouble)" },
-      { '<leader>xX', '<cmd>TroubleToggle workspace_diagnostics<cr>', desc = 'Workspace Diagnostics (Trouble)' },
-      { '<leader>xL', '<cmd>TroubleToggle loclist<cr>',               desc = 'Location List (Trouble)' },
-      { '<leader>xQ', '<cmd>TroubleToggle quickfix<cr>',              desc = 'Quickfix List (Trouble)' },
-    },
-  },
-  -- {
-  --   'jasonlong/poimandres.nvim',
-  --   lazy = false,
-  --   priority = 1000,
-  --   opts = {
-  --     transparent = true,
-  --     style = "storm"
-  --   },
-  --   init = function()
-  --     vim.cmd 'colorscheme poimandres'
-  --   end,
-  -- },
-  {
-    "ellisonleao/gruvbox.nvim",
-    priority = 1000, -- Make sure to load this before all the other start plugins.
-    config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      require("gruvbox").setup({
-        contrast = "soft"
-        --       transparent_mode = true,
-      })
-      vim.cmd.colorscheme("gruvbox")
-
-      -- vim.cmd([[
-      --     highlight SignColumn guibg=NONE ctermbg=NONE
-      --     highlight DiagnosticSignError guibg=NONE ctermbg=NONE
-      --     highlight DiagnosticSignWarn guibg=NONE ctermbg=NONE
-      --     highlight DiagnosticSignInfo guibg=NONE ctermbg=NONE
-      --     highlight DiagnosticSignHint guibg=NONE ctermbg=NONE
-      --
-      --     " For git signs if you're using gitsigns.nvim or similar
-      --     highlight GitSignsAdd guibg=NONE ctermbg=NONE
-      --     highlight GitSignsChange guibg=NONE ctermbg=NONE
-      --     highlight GitSignsDelete guibg=NONE ctermbg=NONE
-      --
-      --     " For older LSP diagnostic signs (pre Neovim 0.7)
-      --     highlight LspDiagnosticsSignError guibg=NONE ctermbg=NONE
-      --     highlight LspDiagnosticsSignWarning guibg=NONE ctermbg=NONE
-      --     highlight LspDiagnosticsSignInformation guibg=NONE ctermbg=NONE
-      --     highlight LspDiagnosticsSignHint guibg=NONE ctermbg=NONE
-      --  ]])
-      vim.cmd([[
-         highlight Normal guibg=none
-         highlight Normal ctermbg=none
-       ]])
-    end,
-  },
-  -- {
-  --   'datsfilipe/vesper.nvim',
-  --   config = function()
-  --     require('vesper').setup {
-  --       transparent = true
-  --     }
-  --   end,
-  --   init = function()
-  --     vim.cmd 'colorscheme vesper'
-  --   end,
-  -- },
   { import = 'custom.plugins' },
 }, {
   ui = {
@@ -329,7 +208,7 @@ require('lazy').setup({
         'tarPlugin',
         'tohtml',
         'tutor',
-        'zipPlugin'
+        'zipPlugin',
       },
     },
   },

@@ -23,7 +23,9 @@ vim.o.breakindent = true
 vim.o.showmode = false
 
 -- Set clipboard to use system
-vim.o.clipboard = 'unnamedplus'
+vim.schedule(function()
+  vim.opt.clipboard = 'unnamedplus'
+end)
 
 -- Save undo history
 vim.o.undofile = true
@@ -84,6 +86,15 @@ vim.o.completeopt = 'menuone,noinsert'
 -- Removes ~
 vim.o.fillchars = 'eob: '
 
+-- Change the window title
+vim.opt.title = true -- set the title of window to the value of the titlestring
+vim.opt.titlestring = '%<%F' -- what the title of the window will be set to
+
+-- never hide stuff, like the ticks in markdown files
+vim.opt.conceallevel = 0
+vim.opt_local.conceallevel = 0
+vim.opt_global.conceallevel = 0
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>e', function()
   vim.diagnostic.open_float { scope = 'line' }
@@ -96,17 +107,18 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move up!!"<CR>')
 -- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move down!!"<CR>')
 
+-- Remap j/k to handle wrapped lines
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set('v', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+vim.keymap.set('v', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+
 -- Keybinds to make split navigation easie
 --  Use CTRL+<hjkl> to switch between windows
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
-
--- Toggle InlayHints
-vim.keymap.set('n', '<leader>ih', function()
-  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-end, { desc = 'Toggle [I]nlay [H]ints' })
 
 -- [[ Basic Autocommands ]]
 -- Highlight when yanking (copying) text
@@ -115,47 +127,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
     vim.highlight.on_yank()
-  end,
-})
-
--- [[ Biome auto format on save ]]
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = {
-    '*.astro',
-    '*.css',
-    '*.gql',
-    '*.html',
-    '*.js',
-    '*.jsx',
-    '*.json',
-    '*.jsonc',
-    '*.svelte',
-    '*.ts',
-    '*.tsx',
-    '*.vue',
-  },
-  callback = function(args)
-    -- This will trigger the LSP formatting, which in turn calls Biome’s formatting if available.
-    vim.lsp.buf.format({ bufnr = args.buf })
-  end,
-})
-
--- [[ Go auto format on save ]]
-vim.api.nvim_create_autocmd('BufWritePre', {
-  pattern = '*.go',
-  callback = function()
-    local params = vim.lsp.util.make_range_params()
-    params.context = { only = { 'source.organizeImports' } }
-    local result = vim.lsp.buf_request_sync(0, 'textDocument/codeAction', params)
-    for cid, res in pairs(result or {}) do
-      for _, r in pairs(res.result or {}) do
-        if r.edit then
-          local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or 'utf-16'
-          vim.lsp.util.apply_workspace_edit(r.edit, enc)
-        end
-      end
-    end
-    vim.lsp.buf.format { async = false }
   end,
 })
 
@@ -197,6 +168,8 @@ require('lazy').setup({
       task = '📌',
       lazy = '💤 ',
     },
+    border = 'single',
+    backdrop = 100,
   },
   performance = {
     rtp = {
@@ -213,7 +186,6 @@ require('lazy').setup({
     },
   },
 })
-
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

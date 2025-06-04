@@ -1,12 +1,12 @@
 return {
   'nvim-treesitter/nvim-treesitter',
   build = ':TSUpdate',
-  dependencies = {
-  },
+  dependencies = {},
   main = 'nvim-treesitter.configs',
   opts = {
     ensure_installed = {
       'astro',
+      'bash',
       'css',
       'go',
       'html',

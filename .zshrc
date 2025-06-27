@@ -26,10 +26,30 @@ source $ZSH/oh-my-zsh.sh
 #zsh
 alias reload="source ~/.zshrc"
 
-#eza
-alias ls="eza"
-alias ll="eza -l -g --git"
-alias llt="eza -1 --git --tree --git-ignore"
+# history setup
+HISTFILE=$HOME/.zhistory
+SAVEHIST=1000
+HISTSIZE=999
+setopt share_history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+setopt hist_verify
+
+# completion using arrow keys (based on history)
+bindkey '^[[A' history-search-backward
+bindkey '^[[B' history-search-forward
+
+# completion using vim keys
+bindkey '^k' history-search-backward
+bindkey '^j' history-search-forward
+
+# Source zsh plugins
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Alias / keyboard shortcuts
+alias cd="z"
+alias ls="eza --icons=always"
 
 alias web="cd ~/personal/portfolio && tmux new -s web"
 alias sweb="tmux attach-session -t web"
@@ -49,6 +69,8 @@ alias sgdt="tmux attach-session -t digest"
 
 
 #alias tmux='TERM=xterm-256color tmux'
+
+eval "$(zoxide init zsh)"
 
 #starship settings
 eval "$(starship init zsh)"

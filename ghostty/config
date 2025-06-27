@@ -1,12 +1,14 @@
 #theme = GruvboxDark
 #window-theme = dark
 
-font-family = BlexMono Nerd Font
-font-style = Medium
-font-size = 11.5
-font-feature = -liga
+font-family = CommitMono Nerd Font
+font-family-bold = CommitMono Nerd Font
+font-family-italic = CommitMono Nerd Font
+font-family-bold-italic = CommitMono Nerd Font
+font-size = 12
+# font-feature = -liga
 
-adjust-cell-height = 65%
+adjust-cell-height = 85%
 
 #window-colorspace = display-p3
 window-padding-x = 8
@@ -16,15 +18,14 @@ window-inherit-font-size = false
 font-thicken = false
 unfocused-split-opacity = 0.85
 
-cursor-color = #607487
-background = #252b37
-background-opacity = 0.97
+
+background-opacity = 1
 background-blur-radius = 20
 
 window-save-state = always
 
 cursor-style = block
-adjust-cursor-height = 65%
+adjust-cursor-height = 85%
 
 title = " "
 macos-titlebar-proxy-icon= hidden
@@ -37,6 +38,10 @@ shell-integration = zsh
 shell-integration-features = no-cursor
 
 # Poimandres Storm theme
+
+cursor-color = #607487
+background = #252b37
+
 # black
 palette = 0=#1B1E28
 palette = 8=#506477

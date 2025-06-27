@@ -8,7 +8,7 @@ font-family-bold-italic = CommitMono Nerd Font
 font-size = 12
 # font-feature = -liga
 
-adjust-cell-height = 85%
+adjust-cell-height = 75%
 
 #window-colorspace = display-p3
 window-padding-x = 8
@@ -25,7 +25,7 @@ background-blur-radius = 20
 window-save-state = always
 
 cursor-style = block
-adjust-cursor-height = 85%
+adjust-cursor-height = 75%
 
 title = " "
 macos-titlebar-proxy-icon= hidden

@@ -158,6 +158,16 @@ return {
           },
         },
       },
+      harper_ls = {
+        settings = {
+          ['harper_ls'] = {
+            linters = {
+              SentenceCapitalization = false,
+              SpellCheck = false,
+            },
+          },
+        },
+      },
       jsonls = {
         settings = {
           json = {

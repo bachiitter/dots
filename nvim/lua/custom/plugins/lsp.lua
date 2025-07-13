@@ -128,7 +128,7 @@ return {
           },
         },
       },
-      biome = {},
+      -- biome = {},
       cssls = {},
       emmet_language_server = {
         init_options = {

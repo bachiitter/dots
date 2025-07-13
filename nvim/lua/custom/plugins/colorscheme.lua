@@ -36,16 +36,24 @@ return {
   --       ]]
   --   end,
   -- },
+  -- {
+  --   'jasonlong/poimandres.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   opts = {
+  --     transparent = true,
+  --     style = "storm"
+  --   },
+  --   init = function()
+  --     vim.cmd 'colorscheme poimandres'
+  --   end,
+  -- },
   {
-    'jasonlong/poimandres.nvim',
+    'stevedylandev/darkmatter-nvim',
     lazy = false,
     priority = 1000,
-    opts = {
-      transparent = true,
-      style = "storm"
-    },
-    init = function()
-      vim.cmd 'colorscheme poimandres'
+    config = function()
+      vim.cmd 'colorscheme darkmatter'
     end,
   },
   -- {

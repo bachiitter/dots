@@ -1,57 +1,70 @@
 return {
-  'hrsh7th/nvim-cmp',
-  event = 'InsertEnter',
+  'saghen/blink.cmp',
+  event = 'VimEnter',
+  version = '1.*',
   dependencies = {
     {
       'L3MON4D3/LuaSnip',
-      version = 'v2.*',
-      build = 'make install_jsregexp',
+      version = '2.*',
+      build = (function()
+        if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
+          return
+        end
+        return 'make install_jsregexp'
+      end)(),
+      dependencies = {},
+      opts = {},
     },
-    'saadparwaiz1/cmp_luasnip',
-    'hrsh7th/cmp-nvim-lsp',
-    'hrsh7th/cmp-path',
+    'folke/lazydev.nvim',
   },
-  config = function()
-    local cmp = require 'cmp'
-    local luasnip = require 'luasnip'
-    luasnip.config.setup {}
-    luasnip.filetype_extend("javascriptreact", { "html" })
-    luasnip.filetype_extend("typescriptreact", { "html" })
-
-    cmp.setup {
-      snippet = {
-        expand = function(args)
-          luasnip.lsp_expand(args.body)
-        end,
+  --- @module 'blink.cmp'
+  --- @type blink.cmp.Config
+  opts = {
+    keymap = {
+      preset = 'enter',
+    },
+    appearance = {
+      nerd_font_variant = 'mono',
+    },
+    accept = {
+      auto_brackets = {
+        enabled = true,
       },
-      completion = { completeopt = 'menuone,noinsert' },
-      mapping = cmp.mapping.preset.insert {
-        ['<C-n>'] = cmp.mapping.select_next_item(),
-        ['<C-p>'] = cmp.mapping.select_prev_item(),
-        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<CR>'] = cmp.mapping.confirm { select = true },
-        ['<C-Space>'] = cmp.mapping.complete(),
-        ['<C-l>'] = cmp.mapping(function()
-          if luasnip.expand_or_locally_jumpable() then
-            luasnip.expand_or_jump()
-          end
-        end, { 'i', 's' }),
-        ['<C-h>'] = cmp.mapping(function()
-          if luasnip.locally_jumpable(-1) then
-            luasnip.jump(-1)
-          end
-        end, { 'i', 's' }),
-      },
-      sources = {
-        {
-          name = 'lazydev',
-          group_index = 0,
+    },
+    completion = {
+      documentation = {
+        auto_show = true,
+        auto_show_delay_ms = 250,
+        treesitter_highlighting = true,
+        window = {
+          border = 'none',
         },
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-        { name = 'path' },
       },
-    }
-  end,
+      menu = {
+        border = 'none',
+        -- Equivalent to 'menuone,noinsert'
+        auto_show = true,
+        draw = {
+          columns = { { 'label', 'label_description', gap = 1 }, { 'kind_icon', 'kind', gap = 1 } },
+        },
+      },
+      ghost_text = {
+        enabled = true,
+      },
+    },
+    sources = {
+      default = { 'lsp', 'path', 'snippets', 'lazydev' },
+      providers = {
+        lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
+      },
+    },
+    snippets = { preset = 'luasnip' },
+    fuzzy = { implementation = 'lua' },
+    signature = {
+      enabled = false,
+      window = {
+        show_documentation = false,
+      },
+    },
+  },
 }

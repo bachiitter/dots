@@ -35,7 +35,7 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 
 -- Decrease update time
-vim.o.signcolumn = 'no'
+vim.o.signcolumn = 'yes'
 vim.o.updatetime = 100
 
 -- Decrease mapped sequence wait time
@@ -48,11 +48,6 @@ vim.o.splitbelow = true
 
 -- Disable text wrap
 vim.o.wrap = false
-
--- Code Folding
-vim.o.foldmethod = 'expr'
-vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
-vim.o.foldenable = false -- Disable folding by default
 
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
@@ -81,19 +76,14 @@ vim.o.softtabstop = 2
 vim.o.shiftwidth = 2
 
 -- Set completeopt to have better completion experience
-vim.o.completeopt = 'menuone,noinsert'
+-- vim.o.completeopt = 'menuone,noinsert'
 
 -- Removes ~
 vim.o.fillchars = 'eob: '
 
 -- Change the window title
-vim.opt.title = true -- set the title of window to the value of the titlestring
+vim.opt.title = false -- set the title of window to the value of the titlestring
 vim.opt.titlestring = '%<%F' -- what the title of the window will be set to
-
--- never hide stuff, like the ticks in markdown files
-vim.opt.conceallevel = 0
-vim.opt_local.conceallevel = 0
-vim.opt_global.conceallevel = 0
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>e', function()
@@ -126,21 +116,28 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
-    vim.highlight.on_yank()
+    vim.hl.on_yank()
   end,
 })
 
 -- [[ Install `lazy.nvim` plugin manager ]]
+--    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
-  vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
-end ---@diagnostic disable-next-line: undefined-field
-vim.opt.rtp:prepend(lazypath)
+  local out = vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
+  if vim.v.shell_error ~= 0 then
+    error('Error cloning lazy.nvim:\n' .. out)
+  end
+end
+
+---@type vim.Option
+local rtp = vim.opt.rtp
+rtp:prepend(lazypath)
 
 -- [[ Configure and install plugins ]]
 require('lazy').setup({
-  'tpope/vim-sleuth',
+  'NMAC427/guess-indent.nvim',
   {
     'folke/lazydev.nvim',
     ft = 'lua',
@@ -153,23 +150,8 @@ require('lazy').setup({
   { import = 'custom.plugins' },
 }, {
   ui = {
-    icons = vim.g.have_nerd_font and {} or {
-      cmd = '⌘',
-      config = '🛠',
-      event = '📅',
-      ft = '📂',
-      init = '⚙',
-      keys = '🗝',
-      plugin = '🔌',
-      runtime = '💻',
-      require = '🌙',
-      source = '📄',
-      start = '🚀',
-      task = '📌',
-      lazy = '💤 ',
-    },
+    icons = vim.g.have_nerd_font and {},
     border = 'single',
-    backdrop = 100,
   },
   performance = {
     rtp = {

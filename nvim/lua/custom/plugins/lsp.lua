@@ -117,7 +117,22 @@ return {
         },
       },
       biome = {},
-      cssls = {},
+      cssls = {
+        settings = {
+          css = {
+            validate = true,
+            lint = {
+              unknownAtRules = 'ignore',
+            },
+          },
+          scss = {
+            validate = true,
+            lint = {
+              unknownAtRules = 'ignore',
+            },
+          },
+        },
+      },
       emmet_language_server = {
         init_options = {
           syntaxProfiles = {
@@ -173,6 +188,9 @@ return {
           },
           tailwindCSS = {
             classFunctions = { 'cn', 'cva', 'cx' },
+            lint = {
+              invalidApply = false,
+            },
           },
         },
       },

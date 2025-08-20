@@ -37,7 +37,7 @@ return {
         auto_show_delay_ms = 250,
         treesitter_highlighting = true,
         window = {
-          border = 'none',
+          border = 'single',
         },
       },
       menu = {

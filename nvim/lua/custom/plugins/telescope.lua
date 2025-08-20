@@ -1,7 +1,6 @@
 return {
   'nvim-telescope/telescope.nvim',
   event = 'VimEnter',
-  branch = '0.1.x',
   dependencies = {
     'nvim-lua/plenary.nvim',
     {
@@ -12,13 +11,16 @@ return {
       end,
     },
     { 'nvim-telescope/telescope-ui-select.nvim' },
-    { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
+    { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
   },
   config = function()
     require('telescope').setup {
       defaults = {
         file_ignore_patterns = {
-          "node_modules", "build", "dist", ".git"
+          'node_modules',
+          'build',
+          'dist',
+          '.git',
         },
       },
       pickers = {
@@ -26,14 +28,14 @@ return {
           theme = 'ivy',
           hidden = true,
           find_command = {
-            "rg",
-            "--files",
-            "--hidden",
-            "--glob=!**/.git/*",
-            "--glob=!**/.idea/*",
-            "--glob=!**/.vscode/*",
-            "--glob=!**/build/*",
-            "--glob=!**/dist/*",
+            'rg',
+            '--files',
+            '--hidden',
+            '--glob=!**/.git/*',
+            '--glob=!**/.idea/*',
+            '--glob=!**/.vscode/*',
+            '--glob=!**/build/*',
+            '--glob=!**/dist/*',
           },
         },
       },

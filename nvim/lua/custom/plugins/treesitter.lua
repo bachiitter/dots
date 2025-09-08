@@ -15,10 +15,14 @@ return {
       'tsx',
       'typescript',
     },
-    auto_install = true,
     highlight = {
       enable = true,
     },
-    indent = { enable = true },
+  },
+  {
+    'nvim-treesitter/nvim-treesitter-context',
+    opts = {
+      max_lines = 1,
+    },
   },
 }

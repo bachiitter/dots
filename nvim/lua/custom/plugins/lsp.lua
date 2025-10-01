@@ -70,16 +70,7 @@ return {
     local servers = {
       astro = {},
       biome = {},
-      cssls = {
-        settings = {
-          css = {
-            validate = true,
-            lint = {
-              unknownAtRules = 'ignore',
-            },
-          },
-        },
-      },
+      cssls = {},
       gopls = {
         settings = {
           gopls = {
@@ -96,6 +87,7 @@ return {
           },
         },
       },
+      html = {},
       jsonls = {
         settings = {
           json = {
@@ -129,20 +121,21 @@ return {
           },
         },
       },
-      vtsls = {
-        settings = {
-          typescript = {
-            tsserver = {
-              maxTsServerMemory = 2048,
-            },
-          },
-          experimental = {
-            completion = {
-              entriesLimit = 3,
-            },
-          },
-        },
-      },
+      -- vtsls = {
+      --   settings = {
+      --     autoUseWorkspaceTsdk = true,
+      --     typescript = {
+      --       tsserver = {
+      --         maxTsServerMemory = 2048,
+      --       },
+      --     },
+      --     experimental = {
+      --       completion = {
+      --         entriesLimit = 3,
+      --       },
+      --     },
+      --   },
+      -- },
     }
 
     local ensure_installed = vim.tbl_keys(servers or {})

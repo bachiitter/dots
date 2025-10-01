@@ -12,6 +12,7 @@ return {
     },
     { 'nvim-telescope/telescope-ui-select.nvim' },
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+    'isak102/telescope-git-file-history.nvim',
   },
   config = function()
     require('telescope').setup {
@@ -20,6 +21,7 @@ return {
           'node_modules/*',
           'build',
           'dist',
+          'routeTree%.gen%.ts$',
         },
       },
       pickers = {
@@ -41,6 +43,7 @@ return {
 
     pcall(require('telescope').load_extension 'fzf')
     pcall(require('telescope').load_extension, 'ui-select')
+    pcall(require('telescope').load_extension, 'git_file_history')
 
     local builtin = require 'telescope.builtin'
     vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })

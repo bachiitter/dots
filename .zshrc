@@ -9,6 +9,8 @@ fi
 
 ZSH_THEME=""
 
+DISABLE_AUTO_TITLE="true"
+
 #path
 if [ -d "$HOME/.bin" ] ;
   then PATH="$HOME/.bin:$PATH"
@@ -51,25 +53,6 @@ source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 alias cd="z"
 alias ls="eza --icons=always"
 
-alias web="cd ~/personal/portfolio && tmux new -s web"
-alias sweb="tmux attach-session -t web"
-
-alias ui="cd ~/analog/orphos && tmux new -s orphos"
-alias sui="tmux attach-session -t orphos"
-
-
-alias bmrks="cd ~/analog/bookmarks && tmux new -s bmrks"
-alias sbmrks="tmux attach-session -t bmrks"
-
-alias cms="cd ~/analog/cms && tmux new -s cms"
-alias scms="tmux attach-session -t cms"
-
-alias gdt="cd ~/analog/digest && tmux new -s digest"
-alias sgdt="tmux attach-session -t digest"
-
-
-#alias tmux='TERM=xterm-256color tmux'
-
 eval "$(zoxide init zsh)"
 
 #starship settings
@@ -100,3 +83,11 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # opencode
 export PATH=/Users/bachitter/.opencode/bin:$PATH
+
+# pnpm
+export PNPM_HOME="/Users/bachitter/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

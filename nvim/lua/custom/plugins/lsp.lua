@@ -21,31 +21,42 @@ return {
     },
     -- JSON schemas
     'b0o/schemastore.nvim',
-    -- TypeScript type checking
-    {
-      'dmmulroy/tsc.nvim',
-      opts = {
-        run_as_monorepo = true,
-        use_trouble_qflist = true,
-      },
-    },
   },
   config = function()
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
       callback = function(event)
-        local map = function(keys, func, desc)
-          vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+        local map = function(keys, func, desc, mode)
+          mode = mode or 'n'
+
+          vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
         end
         map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
         map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-        map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+        map('gi', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
         map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
         map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
         map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
         map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
         map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
         map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+        map('<C-k>', vim.lsp.buf.signature_help, 'Signature Help')
+
+        local function client_supports_method(client, method, bufnr)
+          if vim.fn.has 'nvim-0.11' == 1 then
+            return client:supports_method(method, bufnr)
+          else
+            return client.supports_method(method, { bufnr = bufnr })
+          end
+        end
+
+        local client = vim.lsp.get_client_by_id(event.data.client_id)
+        if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
+          vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
+          map('<leader>th', function()
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
+          end, '[T]oggle Inlay [H]ints')
+        end
       end,
     })
 
@@ -121,21 +132,40 @@ return {
           },
         },
       },
-      -- vtsls = {
-      --   settings = {
-      --     autoUseWorkspaceTsdk = true,
-      --     typescript = {
-      --       tsserver = {
-      --         maxTsServerMemory = 2048,
-      --       },
-      --     },
-      --     experimental = {
-      --       completion = {
-      --         entriesLimit = 3,
-      --       },
-      --     },
-      --   },
-      -- },
+      vtsls = {
+        settings = {
+          autoUseWorkspaceTsdk = true,
+          typescript = {
+            updateImportsOnFileMove = { enabled = 'always' },
+            suggest = {
+              completeFunctionCalls = true,
+            },
+            inlayHints = {
+              parameterNames = { enabled = 'literals' },
+              parameterTypes = { enabled = true },
+              variableTypes = { enabled = true },
+              propertyDeclarationTypes = { enabled = true },
+              functionLikeReturnTypes = { enabled = true },
+              enumMemberValues = { enabled = true },
+            },
+            preferences = {
+              importModuleSpecifier = 'non-relative',
+              disableSuggestions = true,
+              preferTypeOnlyAutoImports = true,
+              useAliasesForRenames = false,
+              renameShorthandProperties = false,
+            },
+            tsserver = {
+              maxTsServerMemory = 2048,
+            },
+          },
+          experimental = {
+            completion = {
+              enableServerSideFuzzyMatch = true,
+            },
+          },
+        },
+      },
     }
 
     local ensure_installed = vim.tbl_keys(servers or {})

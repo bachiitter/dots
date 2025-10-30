@@ -24,7 +24,8 @@ return {
       preset = 'enter',
     },
     appearance = {
-      nerd_font_variant = 'mono',
+      use_nvim_cmp_as_default = false,
+      nerd_font_variant = 'normal',
     },
     accept = {
       auto_brackets = {
@@ -53,7 +54,7 @@ return {
       },
     },
     sources = {
-      default = { 'lsp', 'path', 'snippets', 'lazydev' },
+      default = { 'lsp', 'path', 'snippets', 'lazydev', 'buffer' },
       providers = {
         lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
       },

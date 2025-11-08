@@ -31,9 +31,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
     end
 
-    map('<leader>e', vim.diagnostic.open_float { scope = 'line' }, 'Show diagnostic [E]rror messages')
-    map('<leader>q', vim.diagnostic.setloclist, 'Open diagnostic [Q]uickfix list')
-
     map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
     map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
     map('gi', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')

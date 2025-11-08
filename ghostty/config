@@ -6,6 +6,7 @@ font-feature = -liga
 
 adjust-cell-height = 35%
 
+window-colorspace = display-p3
 window-padding-x = 8
 window-padding-y = 0
 window-padding-balance = true
@@ -28,6 +29,7 @@ macos-non-native-fullscreen = true
 macos-icon = "xray"
 macos-icon-frame = "beige"
 macos-titlebar-style = "transparent"
+
 
 mouse-hide-while-typing = true
 

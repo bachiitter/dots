@@ -3,7 +3,7 @@ return {
   lazy = false,
   build = ':TSUpdate',
   branch = 'main',
-  main = 'nvim-treesitter.configs',
+  main = 'nvim-treesitter.config',
   config = function()
     local parsers = { 'astro', 'bash', 'css', 'go', 'html', 'javascript', 'json', 'lua', 'tsx', 'typescript' }
     require('nvim-treesitter').install(parsers)

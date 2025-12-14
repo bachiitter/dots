@@ -1,24 +1,10 @@
 return {
   'neovim/nvim-lspconfig',
   dependencies = {
-    { 'mason-org/mason.nvim', opts = {
-      ui = {
-        border = 'single',
-      },
-    } },
+    'mason-org/mason.nvim',
     'mason-org/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     'saghen/blink.cmp',
-    {
-      'j-hui/fidget.nvim',
-      opts = {
-        notification = {
-          window = {
-            winblend = 0,
-          },
-        },
-      },
-    },
     -- JSON schemas
     'b0o/schemastore.nvim',
   },
@@ -48,7 +34,7 @@ return {
       },
     }
 
-    local capabilities = require('blink.cmp').get_lsp_capabilities()
+    -- local capabilities = require('blink.cmp').get_lsp_capabilities()
 
     local servers = {
       astro = {},
@@ -70,7 +56,6 @@ return {
           },
         },
       },
-      html = {},
       jsonls = {
         settings = {
           json = {
@@ -97,53 +82,52 @@ return {
             autoClosingQuotes = 'always',
           },
           tailwindCSS = {
-            classFunctions = { 'cn', 'cva', 'cx' },
+            classFunctions = { 'cva', 'cx' },
             lint = {
               invalidApply = false,
             },
           },
         },
       },
-      vtsls = {
-        settings = {
-          autoUseWorkspaceTsdk = true,
-          typescript = {
-            updateImportsOnFileMove = { enabled = 'always' },
-            suggest = {
-              completeFunctionCalls = true,
-            },
-            inlayHints = {
-              parameterNames = { enabled = 'literals' },
-              parameterTypes = { enabled = true },
-              variableTypes = { enabled = true },
-              propertyDeclarationTypes = { enabled = true },
-              functionLikeReturnTypes = { enabled = true },
-              enumMemberValues = { enabled = true },
-            },
-            preferences = {
-              importModuleSpecifier = 'non-relative',
-              disableSuggestions = true,
-              preferTypeOnlyAutoImports = true,
-              useAliasesForRenames = false,
-              renameShorthandProperties = false,
-            },
-            tsserver = {
-              maxTsServerMemory = 2048,
-            },
-          },
-          experimental = {
-            completion = {
-              enableServerSideFuzzyMatch = true,
-            },
-          },
-        },
-      },
+      -- vtsls = {
+      --   settings = {
+      --     autoUseWorkspaceTsdk = true,
+      --     typescript = {
+      --       updateImportsOnFileMove = { enabled = 'always' },
+      --       suggest = {
+      --         completeFunctionCalls = true,
+      --       },
+      --       inlayHints = {
+      --         parameterNames = { enabled = 'literals' },
+      --         parameterTypes = { enabled = true },
+      --         variableTypes = { enabled = true },
+      --         propertyDeclarationTypes = { enabled = true },
+      --         functionLikeReturnTypes = { enabled = true },
+      --         enumMemberValues = { enabled = true },
+      --       },
+      --       preferences = {
+      --         importModuleSpecifier = 'non-relative',
+      --         disableSuggestions = true,
+      --         preferTypeOnlyAutoImports = true,
+      --         useAliasesForRenames = false,
+      --         renameShorthandProperties = false,
+      --       },
+      --       tsserver = {
+      --         maxTsServerMemory = 2048,
+      --       },
+      --     },
+      --     experimental = {
+      --       completion = {
+      --         enableServerSideFuzzyMatch = true,
+      --       },
+      --     },
+      --   },
+      -- },
     }
 
     -- Now setup those configurations
     for name, config in pairs(servers) do
-      local config = config or {}
-      config.capabilities = vim.tbl_deep_extend('force', {}, capabilities, config.capabilities or {})
+      -- config.capabilities = vim.tbl_deep_extend('force', {}, capabilities, config.capabilities or {})
       vim.lsp.config(name, config)
     end
 
@@ -151,6 +135,8 @@ return {
     vim.list_extend(ensure_installed, {
       'stylua',
     })
+
+    require('mason').setup()
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
     require('mason-lspconfig').setup {

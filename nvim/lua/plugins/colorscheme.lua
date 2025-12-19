@@ -17,4 +17,12 @@ return {
   --   lazy = false,
   --   priority = 1000,
   -- },
+  {
+    'bachiitter/orng.nvim',
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require('orng').setup { style = 'dark', transparent = true }
+    end,
+  },
 }

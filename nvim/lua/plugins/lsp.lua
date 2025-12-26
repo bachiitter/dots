@@ -44,14 +44,20 @@ return {
         settings = {
           gopls = {
             gofumpt = true,
+            staticcheck = true,
+            usePlaceholders = true,
+            directoryFilters = { '-.git', '-.vscode', '-.idea', '-.venv', '-node_modules' },
+            semanticTokens = true,
+            analyses = {
+              nilness = true,
+              unusedparams = true,
+              unusedwrite = true,
+              useany = true,
+              shadow = true,
+            },
             hints = {
-              assignVariableTypes = false,
-              compositeLiteralFields = false,
-              compositeLiteralTypes = false,
-              constantValues = false,
               functionTypeParameters = true,
               parameterNames = true,
-              rangeVariableTypes = false,
             },
           },
         },
@@ -165,6 +171,11 @@ return {
     local ensure_installed = vim.tbl_keys(servers or {})
     vim.list_extend(ensure_installed, {
       'stylua',
+      -- Go tools
+      'goimports',
+      'gofumpt',
+      'gomodifytags',
+      'impl',
     })
 
     require('mason').setup()

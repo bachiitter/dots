@@ -5,7 +5,7 @@ return {
     branch = 'main',
     build = ':TSUpdate',
     config = function()
-      require('nvim-treesitter').install { 'astro', 'bash', 'css', 'go', 'html', 'javascript', 'json', 'lua', 'markdown', 'tsx', 'typescript' }
+      require('nvim-treesitter').install { 'astro', 'bash', 'css', 'go', 'gomod', 'gosum', 'gowork', 'html', 'javascript', 'json', 'lua', 'markdown', 'tsx', 'typescript' }
     end,
   },
   {

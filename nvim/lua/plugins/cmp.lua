@@ -5,7 +5,6 @@ return {
   dependencies = {
     'L3MON4D3/LuaSnip',
     'rafamadriz/friendly-snippets',
-    'folke/lazydev.nvim',
   },
   --- @module 'blink.cmp'
   --- @type blink.cmp.Config
@@ -45,14 +44,8 @@ return {
       nerd_font_variant = 'mono',
     },
     sources = {
-      default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+      default = { 'lsp', 'path', 'snippets', 'buffer' },
       providers = {
-        lazydev = {
-          name = 'LazyDev',
-          module = 'lazydev.integrations.blink',
-          score_offset = 100,
-          fallbacks = { 'lsp' },
-        },
         lsp = {
           score_offset = 1000,
         },

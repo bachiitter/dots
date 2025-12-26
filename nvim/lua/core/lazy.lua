@@ -14,16 +14,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-  'NMAC427/guess-indent.nvim',
-  {
-    'folke/lazydev.nvim',
-    ft = 'lua',
-    opts = {
-      library = {
-        { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
-      },
-    },
-  },
   { import = 'plugins' },
 }, {
   ui = {

@@ -5,8 +5,6 @@ return {
     'mason-org/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     'saghen/blink.cmp',
-    -- JSON schemas
-    'b0o/schemastore.nvim',
   },
   config = function()
     vim.diagnostic.config {
@@ -62,14 +60,7 @@ return {
           },
         },
       },
-      jsonls = {
-        settings = {
-          json = {
-            schemas = require('schemastore').json.schemas(),
-            validate = { enable = false },
-          },
-        },
-      },
+      jsonls = {},
       lua_ls = {
         settings = {
           Lua = {

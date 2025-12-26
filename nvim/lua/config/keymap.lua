@@ -1,4 +1,4 @@
-local opts = { noremap = true, silent = true }
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 vim.keymap.set('n', '<leader>e', function()
   vim.diagnostic.open_float { scope = 'line' }
@@ -10,7 +10,7 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true })
 
 -- Replace current selection without yanking it
-vim.keymap.set('v', 'p', '"_dP', opts)
+vim.keymap.set('v', 'p', '"_dP', { noremap = true, silent = true })
 
 -- Navigate splits
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })

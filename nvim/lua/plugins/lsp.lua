@@ -89,46 +89,65 @@ return {
           },
         },
       },
-      vtsls = {
-        settings = {
-          complete_function_calls = true,
-          vtsls = {
-            autoUseWorkspaceTsdk = true,
-          },
-          typescript = {
-            updateImportsOnFileMove = { enabled = 'always' },
-            suggest = {
-              completeFunctionCalls = true,
-            },
-            preferences = {
-              importModuleSpecifier = 'shortest',
-              importModuleSpecifierEnding = 'minimal',
-              includePackageJsonAutoImports = 'on',
-            },
-            inlayHints = {
-              parameterNames = { enabled = 'literals' },
-              parameterTypes = { enabled = true },
-              variableTypes = { enabled = false },
-              propertyDeclarationTypes = { enabled = true },
-              functionLikeReturnTypes = { enabled = true },
-              enumMemberValues = { enabled = true },
-            },
-          },
-          javascript = {
-            updateImportsOnFileMove = { enabled = 'always' },
-            preferences = {
-              importModuleSpecifier = 'shortest',
-              importModuleSpecifierEnding = 'minimal',
-              includePackageJsonAutoImports = 'on',
-            },
-          },
+      tsgo = {
+        cmd = { 'tsgo', '--lsp', '--stdio' },
+        filetypes = {
+          'javascript',
+          'javascriptreact',
+          'javascript.jsx',
+          'typescript',
+          'typescriptreact',
+          'typescript.tsx',
+        },
+        root_markers = {
+          'tsconfig.json',
+          'jsconfig.json',
+          'package.json',
+          '.git',
+          'tsconfig.base.json',
         },
       },
+      -- vtsls = {
+      --   settings = {
+      --     complete_function_calls = true,
+      --     vtsls = {
+      --       autoUseWorkspaceTsdk = true,
+      --     },
+      --     typescript = {
+      --       updateImportsOnFileMove = { enabled = 'always' },
+      --       suggest = {
+      --         completeFunctionCalls = true,
+      --       },
+      --       preferences = {
+      --         importModuleSpecifier = 'shortest',
+      --         importModuleSpecifierEnding = 'minimal',
+      --         includePackageJsonAutoImports = 'on',
+      --       },
+      --       inlayHints = {
+      --         parameterNames = { enabled = 'literals' },
+      --         parameterTypes = { enabled = true },
+      --         variableTypes = { enabled = false },
+      --         propertyDeclarationTypes = { enabled = true },
+      --         functionLikeReturnTypes = { enabled = true },
+      --         enumMemberValues = { enabled = true },
+      --       },
+      --     },
+      --     javascript = {
+      --       updateImportsOnFileMove = { enabled = 'always' },
+      --       preferences = {
+      --         importModuleSpecifier = 'shortest',
+      --         importModuleSpecifierEnding = 'minimal',
+      --         includePackageJsonAutoImports = 'on',
+      --       },
+      --     },
+      --   },
+      --     },
     }
 
     -- Now setup those configurations
     for name, config in pairs(servers) do
       -- config.capabilities = vim.tbl_deep_extend('force', {}, capabilities, config.capabilities or {})
+      vim.lsp.enable(name)
       vim.lsp.config(name, config)
     end
 

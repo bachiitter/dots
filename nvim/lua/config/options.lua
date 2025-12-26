@@ -27,7 +27,6 @@ vim.o.inccommand = 'split'
 vim.o.cursorline = true
 vim.o.scrolloff = 10
 vim.o.hlsearch = true
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.cmd 'set expandtab'
 vim.o.tabstop = 2
 vim.o.softtabstop = 2

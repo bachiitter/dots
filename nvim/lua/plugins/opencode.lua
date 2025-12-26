@@ -7,11 +7,6 @@ return {
         input = {},
         picker = {},
         terminal = {},
-        explorer = {
-          win = {
-            position = 'right',
-          },
-        },
       },
       keys = {
         { '<leader>sf', function() Snacks.picker.git_files() end, desc = '[S]earch [F]iles (git)' },
@@ -21,7 +16,6 @@ return {
         { '<leader>sd', function() Snacks.picker.diagnostics() end, desc = '[S]earch [D]iagnostics' },
         { '<leader>sr', function() Snacks.picker.resume() end, desc = '[S]earch [R]esume' },
         { '<leader><leader>', function() Snacks.picker.buffers() end, desc = 'Buffers' },
-        { '<leader>-', function() Snacks.explorer() end, desc = 'File Explorer' },
       },
     },
   },

@@ -4,14 +4,19 @@ return {
     lazy = false,
     branch = 'main',
     build = ':TSUpdate',
-    config = function()
-      require('nvim-treesitter').install { 'astro', 'bash', 'css', 'go', 'gomod', 'gosum', 'gowork', 'html', 'javascript', 'json', 'lua', 'markdown', 'tsx', 'typescript' }
-    end,
+    opts = {
+      ensure_installed = { 'astro', 'bash', 'css', 'go', 'gomod', 'gosum', 'gowork', 'html', 'javascript', 'json', 'lua', 'luadoc', 'markdown', 'tsx', 'typescript', 'vim', 'vimdoc' },
+      auto_install = true,
+    },
   },
   {
     'nvim-treesitter/nvim-treesitter-context',
     opts = {
       max_lines = 1,
     },
+  },
+  {
+    'windwp/nvim-ts-autotag',
+    opts = {},
   },
 }

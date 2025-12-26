@@ -45,18 +45,24 @@ return {
       nerd_font_variant = 'mono',
     },
     sources = {
-      default = { 'lsp', 'path', 'snippets', 'buffer' },
+      default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
       providers = {
+        lazydev = {
+          name = 'LazyDev',
+          module = 'lazydev.integrations.blink',
+          score_offset = 100,
+          fallbacks = { 'lsp' },
+        },
         lsp = {
-          score_offset = 1000, -- Extreme priority to override fuzzy matching
+          score_offset = 1000,
         },
         path = {
-          score_offset = 3, -- File paths moderate priority
+          score_offset = 3,
         },
         snippets = {
-          score_offset = -100, -- Much lower priority
-          max_items = 2, -- Limit snippet suggestions
-          min_keyword_length = 3, -- Don't show for single chars
+          score_offset = -100,
+          max_items = 2,
+          min_keyword_length = 3,
         },
         buffer = {
           score_offset = -150,

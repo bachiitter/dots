@@ -85,21 +85,12 @@ return {
         filetypes = {
           'html',
           'css',
-          'javascriptreact',
-          'typescriptreact',
           'astro',
         },
         init_options = {
           html = {
             options = {
               ['bem.enabled'] = true,
-            },
-          },
-          jsx = {
-            options = {
-              ['jsx.enabled'] = true,
-              ['markup.attributes'] = { class = 'className' },
-              ['markup.valuePrefix'] = { class = 'className' },
             },
           },
         },

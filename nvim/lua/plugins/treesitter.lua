@@ -2,18 +2,10 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     lazy = false,
-    build = ':TSUpdate astro bash css go html javascript json lua markdown tsx typescript',
     branch = 'main',
+    build = ':TSUpdate',
     config = function()
-      local parsers = { 'astro', 'bash', 'css', 'go', 'html', 'javascript', 'json', 'lua', 'markdown', 'tsx', 'typescript' }
-
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern = parsers,
-        callback = function()
-          vim.treesitter.start()
-          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-        end,
-      })
+      require('nvim-treesitter').install { 'astro', 'bash', 'css', 'go', 'html', 'javascript', 'json', 'lua', 'markdown', 'tsx', 'typescript' }
     end,
   },
   {

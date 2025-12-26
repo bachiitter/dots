@@ -2,10 +2,7 @@ return {
   'saghen/blink.cmp',
   event = 'VimEnter',
   version = '1.*',
-  dependencies = {
-    'L3MON4D3/LuaSnip',
-    'rafamadriz/friendly-snippets',
-  },
+
   --- @module 'blink.cmp'
   --- @type blink.cmp.Config
   opts = {
@@ -44,7 +41,7 @@ return {
       nerd_font_variant = 'mono',
     },
     sources = {
-      default = { 'lsp', 'path', 'snippets', 'buffer' },
+      default = { 'lsp', 'path', 'buffer' },
       providers = {
         lsp = {
           score_offset = 1000,
@@ -52,19 +49,11 @@ return {
         path = {
           score_offset = 3,
         },
-        snippets = {
-          score_offset = -100,
-          max_items = 2,
-          min_keyword_length = 3,
-        },
         buffer = {
           score_offset = -150,
           min_keyword_length = 4,
         },
       },
-    },
-    snippets = {
-      preset = 'luasnip',
     },
     signature = {
       enabled = true,
@@ -98,7 +87,6 @@ return {
                   lsp = '[LSP]',
                   buffer = '[Buffer]',
                   path = '[Path]',
-                  snippets = '[Snippet]',
                 }
                 return (source_names[ctx.source_name] or '[') .. ctx.source_name .. ']'
               end,

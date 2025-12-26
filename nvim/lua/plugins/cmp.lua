@@ -59,8 +59,8 @@ return {
           min_keyword_length = 3, -- Don't show for single chars
         },
         buffer = {
-          score_offset = -150, -- Lowest priority
-          min_keyword_length = 3, -- Only show after 3 chars
+          score_offset = -150,
+          min_keyword_length = 4,
         },
       },
     },

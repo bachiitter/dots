@@ -38,7 +38,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
     map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
     map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
     map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-    map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+    map('<leader>ca', function()
+      vim.lsp.buf.code_action {
+        range = {
+          start = { 1, 0 },
+          ['end'] = { vim.api.nvim_buf_line_count(0), 0 },
+        },
+      }
+    end, '[C]ode [A]ction', { 'n', 'v' })
     map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
     map('<C-k>', vim.lsp.buf.signature_help, 'Signature Help')
 

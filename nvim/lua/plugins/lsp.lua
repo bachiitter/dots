@@ -75,6 +75,29 @@ return {
           },
         },
       },
+      emmet_ls = {
+        filetypes = {
+          'html',
+          'css',
+          'javascriptreact',
+          'typescriptreact',
+          'astro',
+        },
+        init_options = {
+          html = {
+            options = {
+              ['bem.enabled'] = true,
+            },
+          },
+          jsx = {
+            options = {
+              ['jsx.enabled'] = true,
+              ['markup.attributes'] = { class = 'className' },
+              ['markup.valuePrefix'] = { class = 'className' },
+            },
+          },
+        },
+      },
       tailwindcss = {
         settings = {
           editor = {
@@ -83,65 +106,53 @@ return {
           },
           tailwindCSS = {
             classFunctions = { 'cva', 'cx' },
+            experimental = {
+              classRegex = {
+                { 'cva\\(([^)]*)\\)', '["\'`]([^"\'`]*).*?["\'`]' },
+                { 'cx\\(([^)]*)\\)', "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+              },
+            },
             lint = {
               invalidApply = false,
             },
           },
         },
       },
-      tsgo = {
-        cmd = { 'tsgo', '--lsp', '--stdio' },
-        filetypes = {
-          'javascript',
-          'javascriptreact',
-          'javascript.jsx',
-          'typescript',
-          'typescriptreact',
-          'typescript.tsx',
-        },
-        root_markers = {
-          'tsconfig.json',
-          'jsconfig.json',
-          'package.json',
-          '.git',
-          'tsconfig.base.json',
+      vtsls = {
+        settings = {
+          complete_function_calls = true,
+          vtsls = {
+            autoUseWorkspaceTsdk = true,
+          },
+          typescript = {
+            updateImportsOnFileMove = { enabled = 'always' },
+            suggest = {
+              completeFunctionCalls = true,
+            },
+            preferences = {
+              importModuleSpecifier = 'shortest',
+              importModuleSpecifierEnding = 'minimal',
+              includePackageJsonAutoImports = 'on',
+            },
+            inlayHints = {
+              parameterNames = { enabled = 'literals' },
+              parameterTypes = { enabled = true },
+              variableTypes = { enabled = false },
+              propertyDeclarationTypes = { enabled = true },
+              functionLikeReturnTypes = { enabled = true },
+              enumMemberValues = { enabled = true },
+            },
+          },
+          javascript = {
+            updateImportsOnFileMove = { enabled = 'always' },
+            preferences = {
+              importModuleSpecifier = 'shortest',
+              importModuleSpecifierEnding = 'minimal',
+              includePackageJsonAutoImports = 'on',
+            },
+          },
         },
       },
-      -- vtsls = {
-      --   settings = {
-      --     complete_function_calls = true,
-      --     vtsls = {
-      --       autoUseWorkspaceTsdk = true,
-      --     },
-      --     typescript = {
-      --       updateImportsOnFileMove = { enabled = 'always' },
-      --       suggest = {
-      --         completeFunctionCalls = true,
-      --       },
-      --       preferences = {
-      --         importModuleSpecifier = 'shortest',
-      --         importModuleSpecifierEnding = 'minimal',
-      --         includePackageJsonAutoImports = 'on',
-      --       },
-      --       inlayHints = {
-      --         parameterNames = { enabled = 'literals' },
-      --         parameterTypes = { enabled = true },
-      --         variableTypes = { enabled = false },
-      --         propertyDeclarationTypes = { enabled = true },
-      --         functionLikeReturnTypes = { enabled = true },
-      --         enumMemberValues = { enabled = true },
-      --       },
-      --     },
-      --     javascript = {
-      --       updateImportsOnFileMove = { enabled = 'always' },
-      --       preferences = {
-      --         importModuleSpecifier = 'shortest',
-      --         importModuleSpecifierEnding = 'minimal',
-      --         includePackageJsonAutoImports = 'on',
-      --       },
-      --     },
-      --   },
-      --     },
     }
 
     -- Now setup those configurations

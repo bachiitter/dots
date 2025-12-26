@@ -45,9 +45,12 @@ bindkey '^[[B' history-search-forward
 bindkey '^k' history-search-backward
 bindkey '^j' history-search-forward
 
+# Cache brew prefix for performance
+BREW_PREFIX=$(brew --prefix)
+
 # Source zsh plugins
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Alias / keyboard shortcuts
 alias cd="z"
@@ -56,8 +59,8 @@ alias ls="eza --icons=always"
 eval "$(zoxide init zsh)"
 
 #starship settings
-eval "$(starship init zsh)"
 export STARSHIP_CONFIG=~/dots/starship.toml
+eval "$(starship init zsh)"
 
 # fzf
 source <(fzf --zsh)
@@ -65,32 +68,31 @@ source <(fzf --zsh)
 #nvm
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 #golang
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 # sst
-export PATH=/home/bachitter/.sst/bin:$PATH
+export PATH=$HOME/.sst/bin:$PATH
 
 # bun completions
-[ -s "/home/bachitter/.bun/_bun" ] && source "/home/bachitter/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # opencode
-export PATH=/Users/bachitter/.opencode/bin:$PATH
+export PATH=$HOME/.opencode/bin:$PATH
 
 # pnpm
-export PNPM_HOME="/Users/bachitter/Library/pnpm"
+export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
-# pnpm end
 
-# Added by Antigravity
-export PATH="/Users/bachitter/.antigravity/antigravity/bin:$PATH"
+# Antigravity
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"

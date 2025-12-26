@@ -19,7 +19,24 @@
   editor = nvim
 
 [diff]
-  tool = nvim -d
+  tool = nvimdiff
+
+[difftool]
+  prompt = false
+
+[difftool "nvimdiff"]
+  cmd = nvim -d \"$LOCAL\" \"$REMOTE\"
+
+[merge]
+  tool = nvimdiff
+  conflictstyle = diff3
+
+[mergetool]
+  prompt = false
+  keepBackup = false
+
+[mergetool "nvimdiff"]
+  cmd = nvim -d \"$LOCAL\" \"$MERGED\" \"$REMOTE\"
 
 [color]
   diff = auto

@@ -64,7 +64,7 @@ alias ls="eza --icons=always"
 eval "$(zoxide init zsh)"
 
 #starship settings
-export STARSHIP_CONFIG=~/.dots/starship.toml
+export STARSHIP_CONFIG=~/dots/starship.toml
 eval "$(starship init zsh)"
 
 # fzf

@@ -78,7 +78,7 @@ map('n', '<C-h>', '<C-w><C-h>', { desc = 'Focus left' })
 map('n', '<C-l>', '<C-w><C-l>', { desc = 'Focus right' })
 map('n', '<C-j>', '<C-w><C-j>', { desc = 'Focus down' })
 map('n', '<C-k>', '<C-w><C-k>', { desc = 'Focus up' })
-map('n', '<leader>oc', '<cmd>e ~/.config/nvim/init.lua<CR>', { desc = 'Open config' })
+map('n', '<leader>ec', '<cmd>e ~/.config/nvim/init.lua<CR>', { desc = 'Edit config' })
 
 -- Search (Snacks picker)
 map('n', '<leader>sf', function() Snacks.picker.git_files() end, { desc = 'Search Files (git)' })

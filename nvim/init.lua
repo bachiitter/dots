@@ -1,9 +1,32 @@
 --------------------------------------------------------------------------------
+-- Disable unused built-in plugins
+--------------------------------------------------------------------------------
+vim.g.loaded_gzip = 1
+vim.g.loaded_zip = 1
+vim.g.loaded_zipPlugin = 1
+vim.g.loaded_tar = 1
+vim.g.loaded_tarPlugin = 1
+vim.g.loaded_getscript = 1
+vim.g.loaded_getscriptPlugin = 1
+vim.g.loaded_vimball = 1
+vim.g.loaded_vimballPlugin = 1
+vim.g.loaded_2html_plugin = 1
+vim.g.loaded_matchit = 1
+vim.g.loaded_matchparen = 1
+vim.g.loaded_logiPat = 1
+vim.g.loaded_rrhelper = 1
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrwSettings = 1
+vim.g.loaded_netrwFileHandlers = 1
+vim.g.loaded_tutor_mode_plugin = 1
+vim.g.loaded_rplugin = 1
+vim.g.loaded_spellfile_plugin = 1
+
+--------------------------------------------------------------------------------
 -- Options
 --------------------------------------------------------------------------------
 vim.g.mapleader = ' '
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
 vim.g.have_nerd_font = true
 
 local o = vim.o
@@ -45,22 +68,34 @@ vim.opt.winborder = 'single'
 local map = vim.keymap.set
 
 -- General
-map('n', '<Esc>', '<cmd>nohlsearch<CR>') -- Clear search highlight
-map('n', '<leader>e', function() vim.diagnostic.open_float { scope = 'line' } end, { desc = 'Diagnostic float' }) -- Show line diagnostics
-map('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Diagnostic quickfix' }) -- Send diagnostics to quickfix
-
--- Better movement on wrapped lines
+map('n', '<Esc>', '<cmd>nohlsearch<CR>')
+map('n', '<leader>e', function() vim.diagnostic.open_float { scope = 'line' } end, { desc = 'Diagnostic float' })
+map('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Diagnostic quickfix' })
 map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true })
 map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true })
-
--- Paste without yanking selection
 map('v', 'p', '"_dP', { silent = true })
-
--- Window navigation
 map('n', '<C-h>', '<C-w><C-h>', { desc = 'Focus left' })
 map('n', '<C-l>', '<C-w><C-l>', { desc = 'Focus right' })
 map('n', '<C-j>', '<C-w><C-j>', { desc = 'Focus down' })
 map('n', '<C-k>', '<C-w><C-k>', { desc = 'Focus up' })
+map('n', '<leader>oc', '<cmd>e ~/.config/nvim/init.lua<CR>', { desc = 'Open config' })
+
+-- Search (Snacks picker)
+map('n', '<leader>sf', function() Snacks.picker.git_files() end, { desc = 'Search Files (git)' })
+map('n', '<leader>sa', function() Snacks.picker.files() end, { desc = 'Search All Files' })
+map('n', '<leader>sg', function() Snacks.picker.grep() end, { desc = 'Search Grep' })
+map('n', '<leader>sw', function() Snacks.picker.grep_word() end, { desc = 'Search Word' })
+map('n', '<leader>sd', function() Snacks.picker.diagnostics() end, { desc = 'Search Diagnostics' })
+map('n', '<leader>sr', function() Snacks.picker.resume() end, { desc = 'Search Resume' })
+map('n', '<leader><leader>', function() Snacks.picker.buffers() end, { desc = 'Buffers' })
+
+-- Format
+map({ 'n', 'v' }, '<leader>f', function()
+  require('conform').format { async = true, lsp_format = 'never', stop_after_first = true }
+end, { desc = 'Format buffer' })
+
+-- Oil
+map('n', '<leader>-', function() require('oil').toggle_float() end, { desc = 'Oil' })
 
 --------------------------------------------------------------------------------
 -- Autocmds
@@ -68,13 +103,11 @@ map('n', '<C-k>', '<C-w><C-k>', { desc = 'Focus up' })
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
-autocmd('BufEnter', { command = 'set formatoptions-=cro' }) -- Disable auto-comment on new line
-
+autocmd('BufEnter', { command = 'set formatoptions-=cro' })
 autocmd('TextYankPost', {
   group = augroup('highlight-yank', { clear = true }),
-  callback = function() vim.hl.on_yank() end, -- Highlight yanked text
+  callback = function() vim.hl.on_yank() end,
 })
-
 autocmd({ 'BufRead', 'BufNewFile' }, {
   pattern = { '*.txt', '*.md', '*.tex' },
   callback = function()
@@ -118,30 +151,22 @@ autocmd('LspAttach', {
       map(mode or 'n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
     end
 
-    -- Navigation
     lsp_map('gd', function() Snacks.picker.lsp_definitions() end, 'Goto Definition')
     lsp_map('gr', function() Snacks.picker.lsp_references() end, 'Goto References')
     lsp_map('gi', function() Snacks.picker.lsp_implementations() end, 'Goto Implementation')
     lsp_map('gD', vim.lsp.buf.declaration, 'Goto Declaration')
     lsp_map('<leader>D', function() Snacks.picker.lsp_type_definitions() end, 'Type Definition')
-
-    -- Search symbols
     lsp_map('<leader>ds', function() Snacks.picker.lsp_symbols() end, 'Document Symbols')
     lsp_map('<leader>ws', function() Snacks.picker.lsp_workspace_symbols() end, 'Workspace Symbols')
-
-    -- Actions
     lsp_map('<leader>rn', vim.lsp.buf.rename, 'Rename')
     lsp_map('<leader>ca', function()
       vim.lsp.buf.code_action { filter = function(a) return a.disabled == nil end }
     end, 'Code Action', { 'n', 'v' })
-
-    -- Help
     lsp_map('<C-s>', vim.lsp.buf.signature_help, 'Signature Help')
 
     local client = vim.lsp.get_client_by_id(event.data.client_id)
     if not client then return end
 
-    -- Highlight references under cursor
     if client:supports_method('textDocument/documentHighlight', event.buf) then
       local hl_group = augroup('lsp-highlight', { clear = false })
       autocmd({ 'CursorHold', 'CursorHoldI' }, {
@@ -163,7 +188,6 @@ autocmd('LspAttach', {
       })
     end
 
-    -- Inlay hints toggle
     if client:supports_method('textDocument/inlayHint', event.buf) then
       lsp_map('<leader>th', function()
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
@@ -178,7 +202,6 @@ autocmd('LspAttach', {
 vim.pack.add {
   { src = 'https://github.com/bachiitter/orng.nvim' },
   { src = 'https://github.com/folke/snacks.nvim' },
-  { src = 'https://github.com/folke/which-key.nvim' },
   { src = 'https://github.com/lewis6991/gitsigns.nvim' },
   { src = 'https://github.com/nvim-mini/mini.nvim' },
   { src = 'https://github.com/nvim-tree/nvim-web-devicons' },
@@ -190,8 +213,20 @@ vim.pack.add {
   { src = 'https://github.com/windwp/nvim-ts-autotag' },
 }
 
--- Colorscheme
+-- Colorscheme (immediate)
 require('orng').setup { style = 'dark', transparent = true }
+
+-- Mini (immediate - lightweight)
+require('mini.ai').setup { n_lines = 500 }
+require('mini.surround').setup()
+require('mini.pairs').setup()
+require('mini.statusline').setup()
+
+-- Icons
+require('nvim-web-devicons').setup {}
+
+-- Snacks (immediate - needed for keybinds)
+require('snacks').setup { input = {}, picker = {} }
 
 -- Treesitter
 require('nvim-treesitter').setup {
@@ -204,13 +239,6 @@ require('nvim-treesitter').setup {
 require('treesitter-context').setup { max_lines = 1 }
 require('nvim-ts-autotag').setup {}
 
--- Mini
-require('mini.ai').setup { n_lines = 500 }
-require('mini.surround').setup()
-require('mini.pairs').setup()
-require('mini.comment').setup()
-require('mini.statusline').setup()
-
 -- Gitsigns
 require('gitsigns').setup {
   signs = { add = { text = '+' }, change = { text = '~' }, delete = { text = '_' }, topdelete = { text = '‾' }, changedelete = { text = '~' } },
@@ -219,31 +247,7 @@ require('gitsigns').setup {
   current_line_blame_formatter = '<author>, <author_time:%R> - <summary>',
 }
 
--- Which-key
-require('which-key').setup {
-  delay = 0,
-  spec = {
-    { '<leader>c', group = 'Code', mode = { 'n', 'x' } },
-    { '<leader>d', group = 'Document' },
-    { '<leader>r', group = 'Rename' },
-    { '<leader>s', group = 'Search' },
-    { '<leader>w', group = 'Workspace' },
-    { '<leader>t', group = 'Toggle' },
-  },
-}
-
--- Snacks (fuzzy finder, input, terminal)
-require('snacks').setup { input = {}, picker = {}, terminal = {} }
-
-map('n', '<leader>sf', function() Snacks.picker.git_files() end, { desc = 'Search Files (git)' })
-map('n', '<leader>sa', function() Snacks.picker.files() end, { desc = 'Search All Files' })
-map('n', '<leader>sg', function() Snacks.picker.grep() end, { desc = 'Search Grep' })
-map('n', '<leader>sw', function() Snacks.picker.grep_word() end, { desc = 'Search Word' })
-map('n', '<leader>sd', function() Snacks.picker.diagnostics() end, { desc = 'Search Diagnostics' })
-map('n', '<leader>sr', function() Snacks.picker.resume() end, { desc = 'Search Resume' })
-map('n', '<leader><leader>', function() Snacks.picker.buffers() end, { desc = 'Buffers' })
-
--- Conform (formatting)
+-- Conform
 require('conform').setup {
   notify_on_error = false,
   format_on_save = function(bufnr)
@@ -263,12 +267,8 @@ require('conform').setup {
   },
 }
 
-map({ 'n', 'v' }, '<leader>f', function()
-  require('conform').format { async = true, lsp_format = 'never', stop_after_first = true }
-end, { desc = 'Format buffer' })
-
--- Oil (file explorer)
-function _G.OilBar()
+-- Oil
+_G.OilBar = function()
   return '  ' .. vim.fn.fnamemodify(vim.fn.expand('%'):gsub('oil://', ''), ':.')
 end
 
@@ -279,9 +279,7 @@ require('oil').setup {
   view_options = { show_hidden = true },
 }
 
-map('n', '<leader>-', require('oil').toggle_float, { desc = 'Oil' })
-
--- Blink.cmp (completion)
+-- Blink.cmp
 require('blink.cmp').setup {
   keymap = {
     ['<C-p>'] = { 'select_prev', 'fallback' },

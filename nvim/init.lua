@@ -220,12 +220,11 @@ require('orng').setup { style = 'dark', transparent = true }
 require('mini.ai').setup { n_lines = 500 }
 require('mini.surround').setup()
 require('mini.pairs').setup()
-require("mini.git").setup()
 require("mini.diff").setup()
 require('mini.statusline').setup()
 
 -- Icons
-require('nvim-web-devicons').setup {}
+ require('nvim-web-devicons').setup {}
 
 -- Snacks (immediate - needed for keybinds)
 require('snacks').setup { input = {}, picker = {} }
@@ -294,7 +293,7 @@ require('blink.cmp').setup {
     ['<Tab>'] = { function(cmp) return cmp.snippet_active() and cmp.snippet_forward() or cmp.select_next() end, 'fallback' },
     ['<S-Tab>'] = { function(cmp) return cmp.snippet_active() and cmp.snippet_backward() or cmp.select_prev() end, 'fallback' },
   },
-  appearance = { use_nvim_cmp_as_default = false, nerd_font_variant = 'mono' },
+  appearance = { use_nvim_cmp_as_default = false, nerd_font_variant = 'normal' },
   sources = {
     default = { 'lsp', 'path', 'buffer' },
     providers = {

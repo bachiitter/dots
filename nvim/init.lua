@@ -220,6 +220,8 @@ require('orng').setup { style = 'dark', transparent = true }
 require('mini.ai').setup { n_lines = 500 }
 require('mini.surround').setup()
 require('mini.pairs').setup()
+require("mini.git").setup()
+require("mini.diff").setup()
 require('mini.statusline').setup()
 
 -- Icons

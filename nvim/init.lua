@@ -1,29 +1,4 @@
 --------------------------------------------------------------------------------
--- Disable unused built-in plugins
---------------------------------------------------------------------------------
-vim.g.loaded_gzip = 1
-vim.g.loaded_zip = 1
-vim.g.loaded_zipPlugin = 1
-vim.g.loaded_tar = 1
-vim.g.loaded_tarPlugin = 1
-vim.g.loaded_getscript = 1
-vim.g.loaded_getscriptPlugin = 1
-vim.g.loaded_vimball = 1
-vim.g.loaded_vimballPlugin = 1
-vim.g.loaded_2html_plugin = 1
-vim.g.loaded_matchit = 1
-vim.g.loaded_matchparen = 1
-vim.g.loaded_logiPat = 1
-vim.g.loaded_rrhelper = 1
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-vim.g.loaded_netrwSettings = 1
-vim.g.loaded_netrwFileHandlers = 1
-vim.g.loaded_tutor_mode_plugin = 1
-vim.g.loaded_rplugin = 1
-vim.g.loaded_spellfile_plugin = 1
-
---------------------------------------------------------------------------------
 -- Options
 --------------------------------------------------------------------------------
 vim.g.mapleader = ' '
@@ -60,6 +35,7 @@ vim.opt.clipboard = 'unnamedplus'
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 vim.opt.fillchars = { eob = ' ' }
 vim.opt.title = true
+vim.opt.titlestring = '%t%( %M%)%( (%{expand("%:~:h")})%)%a (nvim)'
 vim.opt.winborder = 'single'
 
 --------------------------------------------------------------------------------
@@ -76,6 +52,7 @@ map('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Diagnostic quickfix' 
 map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true })
 map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true })
 map('v', 'p', '"_dP', { silent = true })
+
 map('n', '<C-h>', '<C-w><C-h>', { desc = 'Focus left' })
 map('n', '<C-l>', '<C-w><C-l>', { desc = 'Focus right' })
 map('n', '<C-j>', '<C-w><C-j>', { desc = 'Focus down' })
@@ -162,7 +139,7 @@ vim.diagnostic.config {
 --------------------------------------------------------------------------------
 -- LSP
 --------------------------------------------------------------------------------
-vim.lsp.enable { 'astro', 'biome', 'cssls', 'emmet_ls', 'gopls', 'jsonls', 'lua_ls', 'tailwindcss', 'vtsls' }
+vim.lsp.enable { 'biome', 'cssls', 'emmet_ls', 'gopls', 'jsonls', 'lua_ls', 'tailwindcss', 'vtsls' }
 
 autocmd('LspAttach', {
   group = augroup('lsp-attach', { clear = true }),

@@ -43,7 +43,7 @@ command_timeout = 200
 #
 
 format = """
-$character[](fg:#fff)\
+ $character[](fg:#fff)\
 $directory\
 $git_branch
 """

@@ -88,6 +88,7 @@ end
 local map = vim.keymap.set
 
 -- General
+map('n', '<Esc>', '<cmd>nohlsearch<CR>')
 map('n', '<leader>e', function()
   vim.diagnostic.open_float { scope = 'line' }
 end, { desc = 'Diagnostic float' })

@@ -93,7 +93,7 @@ map('n', '<C-l>', '<C-w><C-l>', { desc = 'Focus right' })
 map('n', '<C-j>', '<C-w><C-j>', { desc = 'Focus down' })
 map('n', '<C-k>', '<C-w><C-k>', { desc = 'Focus up' })
 map('n', '<leader>ec', function()
-  vim.cmd.edit(vim.fn.stdpath('config') .. '/init.lua')
+  vim.cmd.edit(vim.fn.stdpath 'config' .. '/init.lua')
 end, { desc = 'Edit config' })
 
 map('n', '<leader>pc', pack_clean)

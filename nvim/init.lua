@@ -2,15 +2,15 @@
 -- Options
 --------------------------------------------------------------------------------
 vim.g.mapleader = ' '
-vim.g.have_nerd_font = true
+vim.g.have_nerd_font = false
 
 local o = vim.o
 o.termguicolors = true
 o.number = true
 o.relativenumber = true
+o.showmode = false
 o.mouse = ''
 o.breakindent = true
-o.showmode = false
 o.cmdheight = 1
 o.undofile = true
 o.ignorecase = true
@@ -25,8 +25,6 @@ o.list = true
 o.inccommand = 'split'
 o.cursorline = true
 o.scrolloff = 10
-o.hlsearch = true
-o.expandtab = true
 o.tabstop = 2
 o.softtabstop = 2
 o.shiftwidth = 2
@@ -36,8 +34,6 @@ vim.schedule(function()
 end)
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 vim.opt.fillchars = { eob = ' ' }
-vim.opt.title = true
-vim.opt.titlestring = '%t%( %M%)%( (%{expand("%:~:h")})%)%a (nvim)'
 vim.opt.winborder = 'single'
 
 --------------------------------------------------------------------------------

@@ -2,7 +2,6 @@
 -- Options
 --------------------------------------------------------------------------------
 vim.g.mapleader = ' '
-vim.g.have_nerd_font = false
 
 local o = vim.o
 o.termguicolors = true
@@ -11,7 +10,6 @@ o.relativenumber = true
 o.showmode = false
 o.mouse = ''
 o.breakindent = true
-o.cmdheight = 1
 o.undofile = true
 o.ignorecase = true
 o.smartcase = true
@@ -56,22 +54,19 @@ vim.pack.add {
 -- Helper Functions
 --------------------------------------------------------------------------------
 local function pack_clean()
-  local active_plugins = {}
   local unused_plugins = {}
 
   for _, plugin in ipairs(vim.pack.get()) do
-    active_plugins[plugin.spec.name] = plugin.active
-  end
-
-  for _, plugin in ipairs(vim.pack.get()) do
-    if not active_plugins[plugin.spec.name] then
+    if not plugin.active then
       table.insert(unused_plugins, plugin.spec.name)
     end
   end
 
   if #unused_plugins == 0 then
     print 'No unused plugins'
+    return
   end
+
   local choice = vim.fn.confirm('Remove unused plugins', '&Yes\n&No', 2)
   if choice == 1 then
     vim.pack.del(unused_plugins)
@@ -97,7 +92,9 @@ map('n', '<C-h>', '<C-w><C-h>', { desc = 'Focus left' })
 map('n', '<C-l>', '<C-w><C-l>', { desc = 'Focus right' })
 map('n', '<C-j>', '<C-w><C-j>', { desc = 'Focus down' })
 map('n', '<C-k>', '<C-w><C-k>', { desc = 'Focus up' })
-map('n', '<leader>ec', '<cmd>e ~/.config/nvim/init.lua<CR>', { desc = 'Edit config' })
+map('n', '<leader>ec', function()
+  vim.cmd.edit(vim.fn.stdpath('config') .. '/init.lua')
+end, { desc = 'Edit config' })
 
 map('n', '<leader>pc', pack_clean)
 

@@ -1,49 +1,12 @@
 "$schema" = 'https://starship.rs/config-schema.json'
-#palette = "poimandres-storm"
 
 add_newline = false
 
 command_timeout = 200
-# format = "[$directory$git_branch]($style)$character"
-#
-# [character]
-# error_symbol = "[✗](bold red)"
-# success_symbol = "[❯](bold #A5D6A7)[❯](bold #FFF59D)[❯](bold #FFAB91)"
-#
-# [directory]
-# truncation_length = 2
-# truncation_symbol = "…/"
-# repo_root_style = "bold cyan"
-# repo_root_format = "[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) "
-#
-# [git_branch]
-# format = "[$branch]($style) "
-# style = "bold"
 
-# [palettes.poimandres-storm]
-# bright-yellow = "#fffac2"
-# bright-mint = "#5de4c7"
-# lower-mint = "#5fb3a1"
-# blueish-green = "#42675a"
-# lower-blue = "#89ddff"
-# light-blue = "#add7ff"
-# desaturated-blue = "#91b4d5"
-# bluishGray-brighter = "#7390aa"
-# hot-red = "#d0679d"
-# pink = "#f087bd"
-# gray = "#a6accd"
-# white = "#ffffff"
-# off-white = "#e4f0fb"
-# darker-gray = "#868cad"
-# bluish-gray = "#607487"
-# selection = "#33394a"
-# focus = "#404350"
-# bg = "#252b37"
-# black = "#101010"
-#
 
 format = """
- $character[](fg:#fff)\
+$character[](fg:#fff)\
 $directory\
 $git_branch
 """

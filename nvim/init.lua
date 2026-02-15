@@ -57,6 +57,32 @@ vim.pack.add {
 }
 
 --------------------------------------------------------------------------------
+-- Helper Functions
+--------------------------------------------------------------------------------
+local function pack_clean()
+  local active_plugins = {}
+  local unused_plugins = {}
+
+  for _, plugin in ipairs(vim.pack.get()) do
+    active_plugins[plugin.spec.name] = plugin.active
+  end
+
+  for _, plugin in ipairs(vim.pack.get()) do
+    if not active_plugins[plugin.spec.name] then
+      table.insert(unused_plugins, plugin.spec.name)
+    end
+  end
+
+  if #unused_plugins == 0 then
+    print 'No unused plugins'
+  end
+  local choice = vim.fn.confirm('Remove unused plugins', '&Yes\n&No', 2)
+  if choice == 1 then
+    vim.pack.del(unused_plugins)
+  end
+end
+
+--------------------------------------------------------------------------------
 -- Keymaps
 --------------------------------------------------------------------------------
 local map = vim.keymap.set
@@ -75,6 +101,8 @@ map('n', '<C-l>', '<C-w><C-l>', { desc = 'Focus right' })
 map('n', '<C-j>', '<C-w><C-j>', { desc = 'Focus down' })
 map('n', '<C-k>', '<C-w><C-k>', { desc = 'Focus up' })
 map('n', '<leader>ec', '<cmd>e ~/.config/nvim/init.lua<CR>', { desc = 'Edit config' })
+
+map('n', '<leader>pc', pack_clean)
 
 -- Search (Snacks picker)
 map('n', '<leader>sf', function()

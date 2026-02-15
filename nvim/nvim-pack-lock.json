@@ -1,20 +1,8 @@
 {
   "plugins": {
-    "SchemaStore.nvim": {
-      "rev": "ff73799fc8df725d51eada87a113581ba4d3717b",
-      "src": "ssh://git@github.com/b0o/SchemaStore.nvim"
-    },
-    "aura-theme": {
-      "rev": "c607be79c8eeaa5a5d7ac66421f8b5c51d936fe8",
-      "src": "ssh://git@github.com/baliestri/aura-theme"
-    },
     "blink.cmp": {
       "rev": "f9e855c4d96e1264f7c818844f5a0166ad48c212",
       "src": "https://github.com/saghen/blink.cmp"
-    },
-    "cloak.nvim": {
-      "rev": "648aca6d33ec011dc3166e7af3b38820d01a71e4",
-      "src": "https://github.com/laytan/cloak.nvim"
     },
     "conform.nvim": {
       "rev": "c2526f1cde528a66e086ab1668e996d162c75f4f",
@@ -23,10 +11,6 @@
     "gitsigns.nvim": {
       "rev": "1ce96a464fdbc24208e24c117e2021794259005d",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
-    },
-    "lualine.nvim": {
-      "rev": "47f91c416daef12db467145e16bed5bbfe00add8",
-      "src": "https://github.com/nvim-lualine/lualine.nvim"
     },
     "mason.nvim": {
       "rev": "44d1e90e1f66e077268191e3ee9d2ac97cc18e65",
@@ -44,18 +28,6 @@
       "rev": "45a07f869b0cffba342276f2c77ba7c116d35db8",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
-    "nvim-treesitter-context": {
-      "rev": "64dd4cf3f6fd0ab17622c5ce15c91fc539c3f24a",
-      "src": "https://github.com/nvim-treesitter/nvim-treesitter-context"
-    },
-    "nvim-ts-autotag": {
-      "rev": "8e1c0a389f20bf7f5b0dd0e00306c1247bda2595",
-      "src": "https://github.com/windwp/nvim-ts-autotag"
-    },
-    "nvim-web-devicons": {
-      "rev": "746ffbb17975ebd6c40142362eee1b0249969c5c",
-      "src": "https://github.com/nvim-tree/nvim-web-devicons"
-    },
     "oil.nvim": {
       "rev": "f55b25e493a7df76371cfadd0ded5004cb9cd48a",
       "src": "https://github.com/stevearc/oil.nvim"
@@ -67,10 +39,6 @@
     "snacks.nvim": {
       "rev": "fe7cfe9800a182274d0f868a74b7263b8c0c020b",
       "src": "https://github.com/folke/snacks.nvim"
-    },
-    "which-key.nvim": {
-      "rev": "3aab2147e74890957785941f0c1ad87d0a44c15a",
-      "src": "https://github.com/folke/which-key.nvim"
     }
   }
 }

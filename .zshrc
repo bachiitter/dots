@@ -103,3 +103,6 @@ esac
 export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 
 . "/Users/bachitter/.local/share/bob/env/env.sh"
+
+# Added by Antigravity
+export PATH="/Users/bachitter/.antigravity/antigravity/bin:$PATH"

@@ -31,7 +31,9 @@ o.tabstop = 2
 o.softtabstop = 2
 o.shiftwidth = 2
 
-vim.opt.clipboard = 'unnamedplus'
+vim.schedule(function()
+  vim.o.clipboard = 'unnamedplus'
+end)
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 vim.opt.fillchars = { eob = ' ' }
 vim.opt.title = true
@@ -39,12 +41,27 @@ vim.opt.titlestring = '%t%( %M%)%( (%{expand("%:~:h")})%)%a (nvim)'
 vim.opt.winborder = 'single'
 
 --------------------------------------------------------------------------------
+-- Plugins
+--------------------------------------------------------------------------------
+vim.pack.add {
+  { src = 'https://github.com/bachiitter/orng.nvim' },
+  { src = 'https://github.com/folke/snacks.nvim' },
+  { src = 'https://github.com/lewis6991/gitsigns.nvim' },
+  { src = 'https://github.com/neovim/nvim-lspconfig' },
+  { src = 'https://github.com/nvim-mini/mini.nvim' },
+  { src = 'https://github.com/nvim-treesitter/nvim-treesitter' },
+  { src = 'https://github.com/saghen/blink.cmp' },
+  { src = 'https://github.com/stevearc/conform.nvim' },
+  { src = 'https://github.com/stevearc/oil.nvim' },
+  { src = 'https://github.com/mason-org/mason.nvim' },
+}
+
+--------------------------------------------------------------------------------
 -- Keymaps
 --------------------------------------------------------------------------------
 local map = vim.keymap.set
 
 -- General
-map('n', '<Esc>', '<cmd>nohlsearch<CR>')
 map('n', '<leader>e', function()
   vim.diagnostic.open_float { scope = 'line' }
 end, { desc = 'Diagnostic float' })
@@ -69,15 +86,9 @@ end, { desc = 'Search All Files' })
 map('n', '<leader>sg', function()
   Snacks.picker.grep()
 end, { desc = 'Search Grep' })
-map('n', '<leader>sw', function()
-  Snacks.picker.grep_word()
-end, { desc = 'Search Word' })
 map('n', '<leader>sd', function()
   Snacks.picker.diagnostics()
 end, { desc = 'Search Diagnostics' })
-map('n', '<leader>sr', function()
-  Snacks.picker.resume()
-end, { desc = 'Search Resume' })
 map('n', '<leader><leader>', function()
   Snacks.picker.buffers()
 end, { desc = 'Buffers' })
@@ -118,10 +129,11 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
 --------------------------------------------------------------------------------
 vim.diagnostic.config {
   virtual_text = true,
-  underline = true,
+  virtual_lines = false,
+  underline = { severity = vim.diagnostic.severity.ERROR },
   update_in_insert = false,
   severity_sort = true,
-  float = { border = 'rounded', source = true },
+  jump = { float = true },
   signs = {
     text = {
       [vim.diagnostic.severity.ERROR] = '󰅚 ',
@@ -129,17 +141,15 @@ vim.diagnostic.config {
       [vim.diagnostic.severity.INFO] = '󰋽 ',
       [vim.diagnostic.severity.HINT] = '󰌶 ',
     },
-    numhl = {
-      [vim.diagnostic.severity.ERROR] = 'ErrorMsg',
-      [vim.diagnostic.severity.WARN] = 'WarningMsg',
-    },
   },
 }
 
 --------------------------------------------------------------------------------
 -- LSP
 --------------------------------------------------------------------------------
-vim.lsp.enable { 'biome', 'cssls', 'emmet_ls', 'gopls', 'jsonls', 'lua_ls', 'tailwindcss', 'vtsls' }
+vim.lsp.enable { 'biome', 'cssls', 'gopls', 'jsonls', 'lua_ls', 'tailwindcss', 'vtsls' }
+
+require('mason').setup()
 
 autocmd('LspAttach', {
   group = augroup('lsp-attach', { clear = true }),
@@ -211,39 +221,13 @@ autocmd('LspAttach', {
   end,
 })
 
---------------------------------------------------------------------------------
--- Plugins
---------------------------------------------------------------------------------
-vim.pack.add {
-  { src = 'https://github.com/bachiitter/orng.nvim' },
-  { src = 'https://github.com/folke/snacks.nvim' },
-  { src = 'https://github.com/lewis6991/gitsigns.nvim' },
-  { src = 'https://github.com/neovim/nvim-lspconfig' },
-  { src = 'https://github.com/nvim-mini/mini.nvim' },
-  { src = 'https://github.com/nvim-tree/nvim-web-devicons' },
-  { src = 'https://github.com/nvim-treesitter/nvim-treesitter' },
-  { src = 'https://github.com/nvim-treesitter/nvim-treesitter-context' },
-  { src = 'https://github.com/saghen/blink.cmp' },
-  { src = 'https://github.com/stevearc/conform.nvim' },
-  { src = 'https://github.com/stevearc/oil.nvim' },
-  { src = 'https://github.com/windwp/nvim-ts-autotag' },
-}
-
 -- Colorscheme (immediate)
 require('orng').setup { style = 'dark', transparent = true }
 
 -- Mini (immediate - lightweight)
-require('mini.ai').setup { n_lines = 500 }
-require('mini.surround').setup()
 require('mini.pairs').setup()
-require('mini.diff').setup()
 require('mini.statusline').setup()
-
--- Icons
-require('nvim-web-devicons').setup {}
-
--- Snacks (immediate - needed for keybinds)
-require('snacks').setup { input = {}, picker = {} }
+require('mini.icons').setup()
 
 -- Treesitter
 require('nvim-treesitter').setup {
@@ -263,13 +247,9 @@ require('nvim-treesitter').setup {
     'markdown',
     'tsx',
     'typescript',
-    'vim',
-    'vimdoc',
   },
   auto_install = true,
 }
-require('treesitter-context').setup { max_lines = 1 }
-require('nvim-ts-autotag').setup {}
 
 -- Gitsigns
 require('gitsigns').setup {

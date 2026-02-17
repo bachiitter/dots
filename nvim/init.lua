@@ -23,6 +23,7 @@ o.list = true
 o.inccommand = 'split'
 o.cursorline = true
 o.scrolloff = 10
+o.expandtab = true
 o.tabstop = 2
 o.softtabstop = 2
 o.shiftwidth = 2
@@ -114,6 +115,9 @@ end, { desc = 'Search Diagnostics' })
 map('n', '<leader><leader>', function()
   Snacks.picker.buffers()
 end, { desc = 'Buffers' })
+map('n', '<leader>sp', function()
+  Snacks.picker.projects()
+end, { desc = 'Search Projects' })
 
 -- Format
 map({ 'n', 'v' }, '<leader>f', function()
@@ -250,6 +254,12 @@ require('orng').setup { style = 'dark', transparent = true }
 require('mini.pairs').setup()
 require('mini.statusline').setup()
 require('mini.icons').setup()
+
+-- Snacks (immediate - needed for keybinds)
+if not vim.g.snacks_setup then
+  require('snacks').setup { input = { enabled = true }, picker = { enabled = true } }
+  vim.g.snacks_setup = true
+end
 
 -- Treesitter
 require('nvim-treesitter').setup {

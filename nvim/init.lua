@@ -51,6 +51,23 @@ vim.pack.add {
   { src = 'https://github.com/mason-org/mason.nvim' },
 }
 
+-- Colorscheme (immediate)
+require('orng').setup { style = 'dark', transparent = true }
+
+-- Mini (immediate - lightweight)
+require('mini.pairs').setup()
+require('mini.statusline').setup()
+require('mini.icons').setup()
+
+-- Snacks (immediate - needed for keybinds)
+local Snacks = require 'snacks'
+
+-- Guard against double-setup when re-sourcing init.lua
+if not vim.g.snacks_setup_done then
+  Snacks.setup { input = { enabled = true }, picker = { enabled = true } }
+  vim.g.snacks_setup_done = true
+end
+
 --------------------------------------------------------------------------------
 -- Helper Functions
 --------------------------------------------------------------------------------
@@ -246,20 +263,6 @@ autocmd('LspAttach', {
     end
   end,
 })
-
--- Colorscheme (immediate)
-require('orng').setup { style = 'dark', transparent = true }
-
--- Mini (immediate - lightweight)
-require('mini.pairs').setup()
-require('mini.statusline').setup()
-require('mini.icons').setup()
-
--- Snacks (immediate - needed for keybinds)
-if not vim.g.snacks_setup then
-  require('snacks').setup { input = { enabled = true }, picker = { enabled = true } }
-  vim.g.snacks_setup = true
-end
 
 -- Treesitter
 require('nvim-treesitter').setup {

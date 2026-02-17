@@ -3,7 +3,6 @@
         "vim"
     ],
     "diagnostics.disable": [
-        "missing-fields",
-        "undefined-global"
+        "missing-fields"
     ]
 }

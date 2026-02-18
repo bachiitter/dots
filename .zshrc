@@ -57,6 +57,24 @@ BREW_PREFIX=$(brew --prefix)
 source $BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+# tmux - start/attach session named after current directory with default windows
+nic() {
+  local session="$(basename "$PWD")"
+  if command tmux has-session -t "$session" 2>/dev/null; then
+    command tmux attach-session -t "$session"
+  else
+    command tmux new-session -d -s "$session" -n nvim
+    command tmux send-keys -t "$session:1" nvim Enter
+    command tmux new-window -t "$session" -n terminal
+    command tmux new-window -t "$session" -n opencode
+    command tmux send-keys -t "$session:3" opencode Enter
+    command tmux new-window -t "$session" -n lazygit
+    command tmux send-keys -t "$session:4" lazygit Enter
+    command tmux select-window -t "$session:1"
+    command tmux attach-session -t "$session"
+  fi
+}
+
 # Alias / keyboard shortcuts
 alias cd="z"
 alias ls="eza --icons=always"

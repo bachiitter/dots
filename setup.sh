@@ -34,7 +34,7 @@ echo ""
 #-------------------------------------------------------------------------------
 # Install ZSH + Oh My Zsh
 #-------------------------------------------------------------------------------
-echo "[1/5] Setting up ZSH..."
+echo "[1/4] Setting up ZSH..."
 
 install_zsh() {
   if ! command -v zsh &> /dev/null; then
@@ -64,7 +64,7 @@ install_zsh
 # Install packages
 #-------------------------------------------------------------------------------
 echo ""
-echo "[2/5] Installing packages..."
+echo "[2/4] Installing packages..."
 
 install_macos() {
   if ! command -v brew &> /dev/null; then
@@ -78,13 +78,13 @@ install_macos() {
   brew install \
     eza fzf zoxide starship fastfetch tmux git gh ripgrep fd jq bat go lua \
     zsh-autosuggestions zsh-syntax-highlighting \
-    lua-language-server stylua lazygit cloudflared
+    lazygit cloudflared
 
   # Neovim nightly
   brew install neovim --HEAD || brew upgrade neovim --fetch-HEAD || true
 
   # Casks
-  brew install --cask font-jetbrains-mono-nerd-font ghostty || true
+  brew install --cask ghostty || true
 }
 
 install_arch() {
@@ -92,7 +92,7 @@ install_arch() {
   sudo pacman -S --noconfirm --needed \
     eza fzf zoxide starship fastfetch tmux git github-cli ripgrep fd jq bat go lua \
     zsh zsh-autosuggestions zsh-syntax-highlighting \
-    lua-language-server stylua lazygit cloudflared ttf-jetbrains-mono-nerd
+    lazygit cloudflared
 
   # Neovim nightly from AUR
   if command -v yay &> /dev/null; then
@@ -173,7 +173,7 @@ esac
 # Install NVM + Node
 #-------------------------------------------------------------------------------
 echo ""
-echo "[3/5] Installing NVM + Node..."
+echo "[3/4] Installing NVM + Node..."
 
 if [[ ! -d "$HOME/.nvm" ]]; then
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
@@ -201,7 +201,7 @@ fi
 # Create symlinks
 #-------------------------------------------------------------------------------
 echo ""
-echo "[4/5] Creating symlinks..."
+echo "[4/4] Creating symlinks..."
 
 mkdir -p "$HOME/.config"
 
@@ -214,40 +214,10 @@ ln -sf "$DOTS/.gitconfig" "$HOME/.gitconfig"
 ln -sf "$DOTS/nvim" "$HOME/.config/nvim"
 ln -sf "$DOTS/ghostty" "$HOME/.config/ghostty"
 ln -sf "$DOTS/fastfetch" "$HOME/.config/fastfetch"
+ln -sf "$DOTS/opencode" "$HOME/.config/opencode"
 ln -sf "$DOTS/starship.toml" "$HOME/.config/starship.toml"
 
 echo "  Symlinks created"
-
-#-------------------------------------------------------------------------------
-# Install LSP servers & formatters
-#-------------------------------------------------------------------------------
-echo ""
-echo "[5/5] Installing LSP servers..."
-
-# Reload NVM
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
-# npm packages
-if command -v npm &> /dev/null; then
-  npm install -g \
-    @astrojs/language-server \
-    @biomejs/biome \
-    vscode-langservers-extracted \
-    emmet-ls \
-    @tailwindcss/language-server \
-    @vtsls/language-server \
-    2>/dev/null || true
-fi
-
-# Go tools
-if command -v go &> /dev/null; then
-  go install golang.org/x/tools/gopls@latest 2>/dev/null || true
-  go install golang.org/x/tools/cmd/goimports@latest 2>/dev/null || true
-  go install mvdan.cc/gofumpt@latest 2>/dev/null || true
-fi
-
-echo "  LSP servers installed"
 
 #-------------------------------------------------------------------------------
 # Done
@@ -262,7 +232,5 @@ echo "  • Terminal: ghostty"
 echo "  • CLI: eza, fzf, zoxide, tmux, ripgrep, fd, bat, lazygit"
 echo "  • Runtime: nvm, node, bun, go, lua"
 echo "  • Tools: cloudflared, opencode"
-echo "  • LSP: astro, biome, cssls, emmet, gopls, jsonls, lua_ls, tailwindcss, vtsls"
-echo "  • Formatters: biome, goimports, gofumpt, stylua"
 echo ""
 echo "Restart your terminal or run: source ~/.zshrc"

@@ -84,7 +84,7 @@ install_macos() {
   brew install neovim --HEAD || brew upgrade neovim --fetch-HEAD || true
 
   # Casks
-  brew install --cask ghostty || true
+  brew install --cask ghostty zen-browser || true
 }
 
 install_arch() {
@@ -104,18 +104,18 @@ install_arch() {
     sudo pacman -S --noconfirm neovim
   fi
 
-  # Ghostty from AUR
+  # AUR packages (Ghostty, Zen Browser)
   if command -v yay &> /dev/null; then
-    yay -S --noconfirm ghostty || true
+    yay -S --noconfirm ghostty zen-browser-bin || true
   elif command -v paru &> /dev/null; then
-    paru -S --noconfirm ghostty || true
+    paru -S --noconfirm ghostty zen-browser-bin || true
   fi
 }
 
 install_debian() {
   sudo apt update && sudo apt upgrade -y
   sudo apt install -y \
-    fzf tmux git ripgrep fd-find jq bat golang lua5.4 zsh curl build-essential
+    fastfetch fzf tmux git gh ripgrep fd-find jq bat golang lua5.4 zsh curl build-essential
 
   # Neovim nightly
   if ! command -v nvim &> /dev/null; then
@@ -144,7 +144,7 @@ install_debian() {
 install_fedora() {
   sudo dnf upgrade -y
   sudo dnf install -y \
-    eza fzf zoxide tmux git gh ripgrep fd-find jq bat golang lua zsh \
+    eza fzf zoxide fastfetch tmux git gh ripgrep fd-find jq bat golang lua zsh \
     zsh-autosuggestions zsh-syntax-highlighting lazygit
 
   # Neovim nightly
@@ -211,10 +211,10 @@ ln -sf "$DOTS/.tmux.conf" "$HOME/.tmux.conf"
 ln -sf "$DOTS/.gitconfig" "$HOME/.gitconfig"
 
 # XDG config
-ln -sf "$DOTS/nvim" "$HOME/.config/nvim"
-ln -sf "$DOTS/ghostty" "$HOME/.config/ghostty"
-ln -sf "$DOTS/fastfetch" "$HOME/.config/fastfetch"
-ln -sf "$DOTS/opencode" "$HOME/.config/opencode"
+ln -sfn "$DOTS/nvim" "$HOME/.config/nvim"
+ln -sfn "$DOTS/ghostty" "$HOME/.config/ghostty"
+ln -sfn "$DOTS/fastfetch" "$HOME/.config/fastfetch"
+ln -sfn "$DOTS/opencode" "$HOME/.config/opencode"
 ln -sf "$DOTS/starship.toml" "$HOME/.config/starship.toml"
 
 echo "  Symlinks created"

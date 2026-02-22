@@ -2,6 +2,7 @@
 -- Options
 --------------------------------------------------------------------------------
 vim.g.mapleader = ' '
+vim.g.localleader = ' '
 
 local o = vim.o
 o.termguicolors = true
@@ -44,7 +45,7 @@ vim.pack.add {
   { src = 'https://github.com/lewis6991/gitsigns.nvim' },
   { src = 'https://github.com/neovim/nvim-lspconfig' },
   { src = 'https://github.com/nvim-mini/mini.nvim' },
-  { src = 'https://github.com/nvim-treesitter/nvim-treesitter' },
+  { src = 'https://github.com/nvim-treesitter/nvim-treesitter', branch = 'main', build = ':TSUpdate' },
   { src = 'https://github.com/saghen/blink.cmp' },
   { src = 'https://github.com/stevearc/conform.nvim' },
   { src = 'https://github.com/stevearc/oil.nvim' },
@@ -265,25 +266,22 @@ autocmd('LspAttach', {
 })
 
 -- Treesitter
-require('nvim-treesitter').setup {
-  ensure_installed = {
-    'astro',
-    'bash',
-    'css',
-    'go',
-    'gomod',
-    'gosum',
-    'gowork',
-    'html',
-    'javascript',
-    'json',
-    'lua',
-    'luadoc',
-    'markdown',
-    'tsx',
-    'typescript',
-  },
-  auto_install = true,
+require('nvim-treesitter').install {
+  'astro',
+  'bash',
+  'css',
+  'go',
+  'gomod',
+  'gosum',
+  'gowork',
+  'html',
+  'javascript',
+  'json',
+  'lua',
+  'luadoc',
+  'markdown',
+  'tsx',
+  'typescript',
 }
 
 -- Gitsigns

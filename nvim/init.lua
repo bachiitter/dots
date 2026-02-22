@@ -153,7 +153,10 @@ end, { desc = 'Oil' })
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
-autocmd('BufEnter', { command = 'set formatoptions-=cro' })
+autocmd('BufEnter', {
+  group = augroup('no-auto-comment', { clear = true }),
+  command = 'set formatoptions-=cro',
+})
 autocmd('TextYankPost', {
   group = augroup('highlight-yank', { clear = true }),
   callback = function()
@@ -191,7 +194,7 @@ vim.diagnostic.config {
 --------------------------------------------------------------------------------
 -- LSP
 --------------------------------------------------------------------------------
-vim.lsp.enable { 'biome', 'cssls', 'gopls', 'jsonls', 'lua_ls', 'tailwindcss', 'vtsls' }
+vim.lsp.enable { 'astro', 'biome', 'cssls', 'gopls', 'jsonls', 'lua_ls', 'tailwindcss', 'vtsls' }
 
 require('mason').setup()
 
@@ -280,8 +283,10 @@ require('nvim-treesitter').install {
   'lua',
   'luadoc',
   'markdown',
+  'toml',
   'tsx',
   'typescript',
+  'yaml',
 }
 
 -- Gitsigns
@@ -295,12 +300,7 @@ require('gitsigns').setup {
 -- Conform
 require('conform').setup {
   notify_on_error = false,
-  format_on_save = function(bufnr)
-    if vim.tbl_contains({ 'c', 'cpp' }, vim.bo[bufnr].filetype) then
-      return nil
-    end
-    return { timeout_ms = 500, lsp_format = 'never' }
-  end,
+  format_on_save = { timeout_ms = 500, lsp_format = 'never' },
   formatters_by_ft = {
     astro = { 'biome' },
     css = { 'biome' },

@@ -27,7 +27,7 @@ Skips desktop apps (Ghostty, Zen Browser) and their configs. Installs only CLI t
 
 ### Editor
 - **Neovim** (nightly build)
-- LSP servers: astro, biome, cssls, emmet, gopls, jsonls, lua_ls, tailwindcss, vtsls
+- LSP servers: astro, biome, cssls, gopls, jsonls, lua_ls, tailwindcss, vtsls
 - Formatters: biome, goimports, gofumpt, stylua
 
 ### Terminal

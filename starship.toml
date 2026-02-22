@@ -8,7 +8,9 @@ command_timeout = 200
 format = """
 $character[](fg:#fff)\
 $directory\
-$git_branch
+$git_branch\
+$hostname\
+$username
 """
 
 # Enabled Modules
@@ -103,7 +105,9 @@ disabled = true
 [helm]
 disabled = true
 [hostname]
-disabled = true
+disabled = false
+ssh_only = true
+format = '[$hostname]($style) '
 [java]
 disabled = true
 [jobs]
@@ -195,7 +199,9 @@ disabled = true
 [typst]
 disabled = true
 [username]
-disabled = true
+disabled = false
+show_always = false
+format = '[$user]($style)@'
 [vagrant]
 disabled = true
 [vlang]

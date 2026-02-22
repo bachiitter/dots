@@ -10,6 +10,14 @@ cd ~/dots
 ./setup.sh
 ```
 
+### Headless (servers / SSH dev environments)
+
+```bash
+./setup.sh --headless
+```
+
+Skips desktop apps (Ghostty, Zen Browser) and their configs. Installs only CLI tools, runtimes, and shell setup — everything you need for a remote dev environment.
+
 ## What Gets Installed
 
 ### Shell
@@ -36,7 +44,6 @@ cd ~/dots
 | fd | Fast find |
 | bat | Cat with syntax highlighting |
 | lazygit | Git TUI |
-| jq | JSON processor |
 
 ### Runtimes & Languages
 - **Node.js** via nvm
@@ -72,9 +79,11 @@ dots/
 | `dots/.tmux.conf` | `~/.tmux.conf` |
 | `dots/.gitconfig` | `~/.gitconfig` |
 | `dots/nvim` | `~/.config/nvim` |
-| `dots/ghostty` | `~/.config/ghostty` |
+| `dots/ghostty` | `~/.config/ghostty` | * |
 | `dots/fastfetch` | `~/.config/fastfetch` |
 | `dots/starship.toml` | `~/.config/starship.toml` |
+
+\* Skipped in `--headless` mode
 
 ## Supported OS
 

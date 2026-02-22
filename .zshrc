@@ -1,11 +1,6 @@
 export ZSH="$HOME/.oh-my-zsh"
 
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR='nvim'
-fi
+export EDITOR='nvim'
 
 ZSH_THEME=""
 
@@ -50,12 +45,20 @@ bindkey '^[[B' history-search-forward
 bindkey '^k' history-search-backward
 bindkey '^j' history-search-forward
 
-# Cache brew prefix for performance
-BREW_PREFIX=$(brew --prefix)
-
-# Source zsh plugins
-source $BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# Source zsh plugins (OS-aware paths)
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  BREW_PREFIX=$(brew --prefix)
+  source $BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  source $BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+elif [[ -d /usr/share/zsh/plugins ]]; then
+  # Arch
+  source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+elif [[ -d /usr/share/zsh-autosuggestions ]]; then
+  # Debian/Fedora
+  source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
 
 # tmux - start/attach session named after current directory with default windows
 nic() {
@@ -111,7 +114,11 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH=$HOME/.opencode/bin:$PATH
 
 # pnpm
-export PNPM_HOME="$HOME/Library/pnpm"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  export PNPM_HOME="$HOME/Library/pnpm"
+else
+  export PNPM_HOME="$HOME/.local/share/pnpm"
+fi
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
@@ -120,7 +127,5 @@ esac
 # Antigravity
 export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 
-. "/Users/bachitter/.local/share/bob/env/env.sh"
-
-# Added by Antigravity
-export PATH="/Users/bachitter/.antigravity/antigravity/bin:$PATH"
+# bob (neovim version manager)
+[ -f "$HOME/.local/share/bob/env/env.sh" ] && . "$HOME/.local/share/bob/env/env.sh"

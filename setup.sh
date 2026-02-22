@@ -2,12 +2,37 @@
 
 # Dotfiles Setup
 # Works on macOS, Debian/Ubuntu, Arch, Fedora
+#
+# Usage:
+#   ./setup.sh              Full install (CLI + desktop apps)
+#   ./setup.sh --headless   CLI tools only (no desktop apps, for servers/SSH dev envs)
 
 set -e
 
 DOTS="$(cd "$(dirname "$0")" && pwd)"
+LOG="/tmp/dots-setup.log"
 
-echo "=== Dotfiles Setup ==="
+# Log all output
+exec > >(tee -a "$LOG") 2>&1
+
+#-------------------------------------------------------------------------------
+# Parse flags
+#-------------------------------------------------------------------------------
+HEADLESS=false
+
+for arg in "$@"; do
+  case $arg in
+    --headless) HEADLESS=true ;;
+    *) echo "Unknown flag: $arg"; exit 1 ;;
+  esac
+done
+
+if $HEADLESS; then
+  echo "=== Dotfiles Setup (headless) ==="
+  echo "  Skipping desktop apps: ghostty, zen-browser"
+else
+  echo "=== Dotfiles Setup ==="
+fi
 echo ""
 
 #-------------------------------------------------------------------------------
@@ -29,6 +54,10 @@ detect_os() {
 
 OS=$(detect_os)
 echo "Detected OS: $OS"
+
+# Detect architecture
+ARCH=$(uname -m)
+echo "Detected Arch: $ARCH"
 echo ""
 
 #-------------------------------------------------------------------------------
@@ -76,23 +105,27 @@ install_macos() {
   brew tap neovim/neovim || true
 
   brew install \
-    eza fzf zoxide starship fastfetch tmux git gh ripgrep fd jq bat go lua \
+    eza fzf zoxide starship fastfetch tmux git gh ripgrep fd bat go lua \
     zsh-autosuggestions zsh-syntax-highlighting \
     lazygit cloudflared
 
   # Neovim nightly
   brew install neovim --HEAD || brew upgrade neovim --fetch-HEAD || true
 
-  # Casks
-  brew install --cask ghostty zen-browser || true
+  # Desktop apps (skip in headless mode)
+  if ! $HEADLESS; then
+    echo "  Installing desktop apps..."
+    brew install mole || true
+    brew install --cask ghostty zen-browser || true
+  fi
 }
 
 install_arch() {
   sudo pacman -Syu --noconfirm
   sudo pacman -S --noconfirm --needed \
-    eza fzf zoxide starship fastfetch tmux git github-cli ripgrep fd jq bat go lua \
+    eza fzf zoxide starship fastfetch tmux git github-cli ripgrep fd bat go lua \
     zsh zsh-autosuggestions zsh-syntax-highlighting \
-    lazygit cloudflared
+    lazygit cloudflared htop
 
   # Neovim nightly from AUR
   if command -v yay &> /dev/null; then
@@ -104,27 +137,34 @@ install_arch() {
     sudo pacman -S --noconfirm neovim
   fi
 
-  # AUR packages (Ghostty, Zen Browser)
-  if command -v yay &> /dev/null; then
-    yay -S --noconfirm ghostty zen-browser-bin || true
-  elif command -v paru &> /dev/null; then
-    paru -S --noconfirm ghostty zen-browser-bin || true
+  # Desktop apps (skip in headless mode)
+  if ! $HEADLESS; then
+    echo "  Installing desktop apps..."
+    if command -v yay &> /dev/null; then
+      yay -S --noconfirm ghostty zen-browser-bin || true
+    elif command -v paru &> /dev/null; then
+      paru -S --noconfirm ghostty zen-browser-bin || true
+    fi
   fi
 }
 
 install_debian() {
   sudo apt update && sudo apt upgrade -y
   sudo apt install -y \
-    fastfetch fzf tmux git gh ripgrep fd-find jq bat golang lua5.4 zsh curl build-essential
+    fastfetch fzf tmux git gh ripgrep fd-find bat golang lua5.4 zsh curl build-essential htop
 
   # Neovim nightly
   if ! command -v nvim &> /dev/null; then
     echo "  Installing Neovim nightly..."
-    curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz
+    case $ARCH in
+      aarch64|arm64) NVIM_ARCHIVE="nvim-linux-arm64.tar.gz" ;;
+      *) NVIM_ARCHIVE="nvim-linux-x86_64.tar.gz" ;;
+    esac
+    curl -LO "https://github.com/neovim/neovim/releases/download/nightly/$NVIM_ARCHIVE"
     sudo rm -rf /opt/nvim
-    sudo tar -C /opt -xzf nvim-linux64.tar.gz
-    sudo ln -sf /opt/nvim-linux64/bin/nvim /usr/local/bin/nvim
-    rm nvim-linux64.tar.gz
+    sudo tar -C /opt -xzf "$NVIM_ARCHIVE"
+    sudo ln -sf /opt/nvim-linux-*/bin/nvim /usr/local/bin/nvim
+    rm "$NVIM_ARCHIVE"
   fi
 
   # Tools not in apt
@@ -135,17 +175,19 @@ install_debian() {
 
   # Cloudflared
   if ! command -v cloudflared &> /dev/null; then
-    curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb -o /tmp/cloudflared.deb
-    sudo dpkg -i /tmp/cloudflared.deb || true
-    rm /tmp/cloudflared.deb
+    sudo mkdir -p --mode=0755 /usr/share/keyrings
+    curl -fsSL https://pkg.cloudflare.com/cloudflare-main.gpg | sudo tee /usr/share/keyrings/cloudflare-main.gpg > /dev/null
+    echo "deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/cloudflared $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflared.list
+    sudo apt update
+    sudo apt install -y cloudflared
   fi
 }
 
 install_fedora() {
   sudo dnf upgrade -y
   sudo dnf install -y \
-    eza fzf zoxide fastfetch tmux git gh ripgrep fd-find jq bat golang lua zsh \
-    zsh-autosuggestions zsh-syntax-highlighting lazygit
+    eza fzf zoxide fastfetch tmux git gh ripgrep fd-find bat golang lua zsh \
+    zsh-autosuggestions zsh-syntax-highlighting lazygit htop
 
   # Neovim nightly
   sudo dnf copr enable agriffis/neovim-nightly -y || true
@@ -155,9 +197,9 @@ install_fedora() {
 
   # Cloudflared
   if ! command -v cloudflared &> /dev/null; then
-    curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-x86_64.rpm -o /tmp/cloudflared.rpm
-    sudo rpm -i /tmp/cloudflared.rpm || true
-    rm /tmp/cloudflared.rpm
+    sudo rpm --import https://pkg.cloudflare.com/cloudflare-main.gpg
+    curl -fsSL https://pkg.cloudflare.com/cloudflared-ascii.repo | sudo tee /etc/yum.repos.d/cloudflared.repo
+    sudo dnf install -y cloudflared
   fi
 }
 
@@ -183,7 +225,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 nvm install node || true
-nvm use node || true
+nvm install --lts || true
+nvm use --lts || true
 
 # Bun
 if ! command -v bun &> /dev/null; then
@@ -212,12 +255,22 @@ ln -sf "$DOTS/.gitconfig" "$HOME/.gitconfig"
 
 # XDG config
 ln -sfn "$DOTS/nvim" "$HOME/.config/nvim"
-ln -sfn "$DOTS/ghostty" "$HOME/.config/ghostty"
 ln -sfn "$DOTS/fastfetch" "$HOME/.config/fastfetch"
 ln -sfn "$DOTS/opencode" "$HOME/.config/opencode"
 ln -sf "$DOTS/starship.toml" "$HOME/.config/starship.toml"
 
+# Desktop app configs (skip in headless mode)
+if ! $HEADLESS; then
+  ln -sfn "$DOTS/ghostty" "$HOME/.config/ghostty"
+fi
+
 echo "  Symlinks created"
+
+# Install TPM (Tmux Plugin Manager)
+if [[ ! -d "$HOME/.tmux/plugins/tpm" ]]; then
+  echo "  Installing TPM..."
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
 
 #-------------------------------------------------------------------------------
 # Done
@@ -228,9 +281,18 @@ echo ""
 echo "Installed:"
 echo "  • Shell: zsh, oh-my-zsh, starship"
 echo "  • Editor: neovim (nightly)"
-echo "  • Terminal: ghostty"
+if ! $HEADLESS; then
+  echo "  • Terminal: ghostty"
+  echo "  • Browser: zen-browser"
+fi
 echo "  • CLI: eza, fzf, zoxide, tmux, ripgrep, fd, bat, lazygit"
 echo "  • Runtime: nvm, node, bun, go, lua"
 echo "  • Tools: cloudflared, opencode"
+if $HEADLESS; then
+  echo ""
+  echo "  (headless mode — desktop apps skipped)"
+fi
+
 echo ""
+echo "Log saved to: $LOG"
 echo "Restart your terminal or run: source ~/.zshrc"

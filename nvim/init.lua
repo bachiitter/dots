@@ -45,7 +45,7 @@ vim.pack.add {
   { src = 'https://github.com/lewis6991/gitsigns.nvim' },
   { src = 'https://github.com/neovim/nvim-lspconfig' },
   { src = 'https://github.com/nvim-mini/mini.nvim' },
-  { src = 'https://github.com/nvim-treesitter/nvim-treesitter', branch = 'main', build = ':TSUpdate' },
+  { src = 'https://github.com/nvim-treesitter/nvim-treesitter', branch = 'main' },
   { src = 'https://github.com/saghen/blink.cmp' },
   { src = 'https://github.com/stevearc/conform.nvim' },
   { src = 'https://github.com/stevearc/oil.nvim' },
@@ -53,7 +53,11 @@ vim.pack.add {
 }
 
 -- Colorscheme (immediate)
-require('orng').setup { style = 'dark', transparent = true }
+require('orng').setup {
+  transparent = true, -- Enable transparent background
+}
+
+vim.cmd.colorscheme 'orng'
 
 -- Mini (immediate - lightweight)
 require('mini.pairs').setup()
@@ -136,6 +140,9 @@ end, { desc = 'Buffers' })
 map('n', '<leader>sp', function()
   Snacks.picker.projects()
 end, { desc = 'Search Projects' })
+map('n', '<leader>s/', function()
+  Snacks.picker.lines()
+end, { desc = 'Search Projects' })
 
 -- Format
 map({ 'n', 'v' }, '<leader>f', function()
@@ -157,17 +164,34 @@ autocmd('BufEnter', {
   group = augroup('no-auto-comment', { clear = true }),
   command = 'set formatoptions-=cro',
 })
+
+-- Highlight when yanking (copying) text
 autocmd('TextYankPost', {
   group = augroup('highlight-yank', { clear = true }),
   callback = function()
-    vim.hl.on_yank()
+    vim.hl.on_yank { timeout = 200 }
   end,
 })
+
+-- Enable spell check for md and texg files
 autocmd({ 'BufRead', 'BufNewFile' }, {
-  pattern = { '*.txt', '*.md', '*.tex' },
+  pattern = { '*.txt', '*.md', '*.mdx', '*.tex' },
   callback = function()
     vim.opt_local.spell = true
     vim.opt_local.spelllang = 'en'
+  end,
+})
+
+-- Restore cursor position on file open
+vim.api.nvim_create_autocmd('BufReadPost', {
+  desc = 'Restore cursor position on file open',
+  group = vim.api.nvim_create_augroup('kickstart-restore-cursor', { clear = true }),
+  pattern = '*',
+  callback = function()
+    local line = vim.fn.line '\'"'
+    if line > 1 and line <= vim.fn.line '$' then
+      vim.cmd 'normal! g\'"'
+    end
   end,
 })
 
@@ -288,6 +312,26 @@ require('nvim-treesitter').install {
   'typescript',
   'yaml',
 }
+
+vim.api.nvim_create_autocmd('FileType', {
+  callback = function(args)
+    local buf, filetype = args.buf, args.match
+
+    local language = vim.treesitter.language.get_lang(filetype)
+    if not language then
+      return
+    end
+
+    -- check if parser exists and load it
+    if not vim.treesitter.language.add(language) then
+      return
+    end
+    -- enables syntax highlighting and other treesitter features
+    vim.treesitter.start(buf, language)
+
+    -- vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+  end,
+})
 
 -- Gitsigns
 require('gitsigns').setup {

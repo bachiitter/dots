@@ -218,6 +218,14 @@ vim.diagnostic.config {
 --------------------------------------------------------------------------------
 -- LSP
 --------------------------------------------------------------------------------
+vim.lsp.config('tailwindcss', {
+  settings = {
+    tailwindCSS = {
+      classFunctions = { 'cva', 'cx', 'cn' },
+    },
+  },
+})
+
 vim.lsp.enable { 'astro', 'biome', 'cssls', 'gopls', 'jsonls', 'lua_ls', 'tailwindcss', 'vtsls' }
 
 require('mason').setup()

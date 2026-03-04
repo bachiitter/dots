@@ -5,3 +5,4 @@ __pycache__
 zed/prompts
 zed/embeddings
 zed/conversations
+nvim/nvim-pack-lock.json

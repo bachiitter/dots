@@ -2,6 +2,17 @@
   "$schema": "https://opencode.ai/config.json",
   "plugin": [],
   "autoupdate": true,
+  "permission": {
+    "read": {
+      "*": "allow",
+      "*.env": "deny",
+      "*.env.*": "deny",
+      "*.envrc": "deny",
+      "secrets/*": "deny",
+      ".dev.vars": "ask",
+      "~/.local/share/opencode/mcp-auth.json": "deny"
+    },
+  },
   "instructions": ["{env:HOME}/.config/opencode/INSTRUCTIONS.md"],
   "mcp": {
     "cloudflare-docs": {

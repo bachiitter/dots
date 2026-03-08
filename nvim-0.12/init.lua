@@ -39,29 +39,18 @@ vim.opt.winborder = 'single'
 --------------------------------------------------------------------------------
 -- Plugins
 --------------------------------------------------------------------------------
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
-  local out = vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
-  if vim.v.shell_error ~= 0 then
-    error('Error cloning lazy.nvim:\n' .. out)
-  end
-end
-
-local rtp = vim.opt.rtp
-rtp:prepend(lazypath)
-require('lazy').setup({
-  { 'bachiitter/orng.nvim', priority = 1000 },
-  { 'folke/snacks.nvim' },
-  { 'lewis6991/gitsigns.nvim' },
-  { 'neovim/nvim-lspconfig' },
-  { 'nvim-mini/mini.nvim' },
-  { 'nvim-treesitter/nvim-treesitter', branch = 'main' },
-  { 'saghen/blink.cmp' },
-  { 'stevearc/conform.nvim' },
-  { 'stevearc/oil.nvim' },
-  { 'mason-org/mason.nvim' },
-}, {})
+vim.pack.add {
+  { src = 'https://github.com/bachiitter/orng.nvim' },
+  { src = 'https://github.com/folke/snacks.nvim' },
+  { src = 'https://github.com/lewis6991/gitsigns.nvim' },
+  { src = 'https://github.com/neovim/nvim-lspconfig' },
+  { src = 'https://github.com/nvim-mini/mini.nvim' },
+  { src = 'https://github.com/nvim-treesitter/nvim-treesitter', branch = 'main' },
+  { src = 'https://github.com/saghen/blink.cmp' },
+  { src = 'https://github.com/stevearc/conform.nvim' },
+  { src = 'https://github.com/stevearc/oil.nvim' },
+  { src = 'https://github.com/mason-org/mason.nvim' },
+}
 
 -- Colorscheme (immediate)
 require('orng').setup {
@@ -84,6 +73,30 @@ if not vim.g.snacks_setup_done then
   vim.g.snacks_setup_done = true
 end
 
+--------------------------------------------------------------------------------
+-- Helper Functions
+--------------------------------------------------------------------------------
+local function pack_clean()
+  local unused_plugins = {}
+
+  for _, plugin in ipairs(vim.pack.get()) do
+    if not plugin.active then
+      table.insert(unused_plugins, plugin.spec.name)
+    end
+  end
+
+  if #unused_plugins == 0 then
+    print 'No unused plugins'
+    return
+  end
+
+  local choice = vim.fn.confirm('Remove unused plugins', '&Yes\n&No', 2)
+  if choice == 1 then
+    vim.pack.del(unused_plugins)
+  end
+end
+
+--------------------------------------------------------------------------------
 -- Keymaps
 --------------------------------------------------------------------------------
 local map = vim.keymap.set
@@ -106,7 +119,7 @@ map('n', '<leader>ec', function()
   vim.cmd.edit(vim.fn.stdpath 'config' .. '/init.lua')
 end, { desc = 'Edit config' })
 
-map('n', '<leader>pc', '<cmd>Lazy clean<CR>', { desc = 'Clean plugins' })
+map('n', '<leader>pc', pack_clean)
 
 -- Search (Snacks picker)
 map('n', '<leader>sf', function()

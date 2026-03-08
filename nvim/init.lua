@@ -52,13 +52,13 @@ local rtp = vim.opt.rtp
 rtp:prepend(lazypath)
 require('lazy').setup({
   { 'bachiitter/orng.nvim', priority = 1000 },
-  { 'folke/snacks.nvim' },
+  { 'folke/snacks.nvim', priority = 1000, lazy = false },
   { 'lewis6991/gitsigns.nvim' },
   { 'neovim/nvim-lspconfig' },
   { 'nvim-mini/mini.nvim' },
-  { 'nvim-treesitter/nvim-treesitter', branch = 'main' },
-  { 'saghen/blink.cmp' },
-  { 'stevearc/conform.nvim' },
+  { 'nvim-treesitter/nvim-treesitter', branch = 'main', build = ':TSUpdate', lazy = false },
+  { 'saghen/blink.cmp', event = 'VimEnter' },
+  { 'stevearc/conform.nvim', event = { 'BufWritePre' }, cmd = { 'ConformInfo' } },
   { 'stevearc/oil.nvim' },
   { 'mason-org/mason.nvim' },
 }, {})

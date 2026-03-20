@@ -2,7 +2,7 @@
 # window-theme = light
 
 font-family = Berkeley Mono Variable
-font-size = 12.25
+font-size = 12
 font-feature = -liga
 
 adjust-cell-height = 55%

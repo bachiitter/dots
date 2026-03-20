@@ -213,7 +213,7 @@ vim.lsp.config('tailwindcss', {
   },
 })
 
-vim.lsp.enable { 'astro', 'biome', 'cssls', 'gopls', 'jsonls', 'lua_ls', 'tailwindcss', 'vtsls' }
+vim.lsp.enable { 'astro', 'biome', 'cssls', 'gopls', 'jsonls', 'lua_ls', 'tailwindcss', 'tsgo' }
 
 require('mason').setup()
 

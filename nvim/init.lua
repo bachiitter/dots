@@ -36,6 +36,19 @@ vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 vim.opt.fillchars = { eob = ' ' }
 vim.opt.winborder = 'single'
 
+-- Run TSUpdate if Treesitter is updated
+vim.api.nvim_create_autocmd('PackChanged', {
+  callback = function(ev)
+    local name, kind = ev.data.spec.name, ev.data.kind
+    if name == 'nvim-treesitter' and kind == 'update' then
+      if not ev.data.active then
+        vim.cmd.packadd 'nvim-treesitter'
+      end
+      vim.cmd 'TSUpdate'
+    end
+  end,
+})
+
 --------------------------------------------------------------------------------
 -- Plugins
 --------------------------------------------------------------------------------
@@ -60,7 +73,9 @@ require('orng').setup {
 vim.cmd.colorscheme 'orng'
 
 -- Mini (immediate - lightweight)
-require('mini.pairs').setup()
+require('mini.pairs').setup {
+  modes = { command = true },
+}
 require('mini.statusline').setup()
 require('mini.icons').setup()
 

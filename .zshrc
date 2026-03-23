@@ -100,6 +100,8 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
+export PATH="/opt/homebrew/bin:$PATH"
+
 # sst
 export PATH=$HOME/.sst/bin:$PATH
 
@@ -123,9 +125,6 @@ case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
-
-# Antigravity
-export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 
 # bob (neovim version manager)
 [ -f "$HOME/.local/share/bob/env/env.sh" ] && . "$HOME/.local/share/bob/env/env.sh"

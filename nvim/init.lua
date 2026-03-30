@@ -4,6 +4,10 @@
 vim.g.mapleader = ' '
 vim.g.localleader = ' '
 
+-- Disable netrw (immediate)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 local o = vim.o
 o.termguicolors = true
 o.number = true
@@ -11,7 +15,8 @@ o.relativenumber = true
 o.showmode = false
 o.mouse = ''
 o.breakindent = true
-o.undofile = true
+o.undofile = false
+o.swapfile = false
 o.ignorecase = true
 o.smartcase = true
 o.signcolumn = 'yes:1'

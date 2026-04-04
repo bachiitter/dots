@@ -9,36 +9,52 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
 local o = vim.o
-o.termguicolors = true
-o.number = true
-o.relativenumber = true
-o.showmode = false
-o.mouse = ''
+
+-- Basic settings
+o.mouse = '' -- Disable mouse input
+o.number = true -- Line numbers
+o.relativenumber = true -- Relative line numbers
+o.cursorline = true -- Highlight current line
+o.wrap = false -- Don't wrap lines
+o.scrolloff = 10 -- Keep 10 lines above/below cursor
+o.sidescrolloff = 8 -- Keep 8 columns left/right of cursor
+
+-- Indentation
+o.tabstop = 2 -- Tab width
+o.shiftwidth = 2 -- Indent width
+o.softtabstop = 2 -- Soft tab stop
+o.expandtab = true -- Use spaces instead of tabs
+o.smartindent = true -- Smart auto-indenting
+o.autoindent = true -- Copy indent from current line
+
+-- Search settings
+o.ignorecase = true -- Case insensitive search
+o.smartcase = true -- Case sensitive if uppercase in search
+o.hlsearch = false -- Don't highlight search results
+o.incsearch = true -- Show matches as you type
+
+-- Visual settings
+o.termguicolors = true -- Enable 24-bit colors
+o.signcolumn = 'yes:1' -- Always show sign column
+o.showmatch = true -- Highlight matching brackets
+o.cmdheight = 1 -- Command line height
+o.showmode = false -- Don't show mode in command line
+
 o.breakindent = true
-o.undofile = false
-o.swapfile = false
-o.ignorecase = true
-o.smartcase = true
-o.signcolumn = 'yes:1'
-o.updatetime = 100
-o.timeoutlen = 300
-o.splitright = true
-o.splitbelow = true
-o.wrap = false
+o.undofile = false -- Don't create undo file
+o.swapfile = false -- Don't create swap files
+o.updatetime = 100 -- Faster completion
+o.timeoutlen = 300 -- Key timeout duration
+o.splitright = true -- Vertical splits go right
+o.splitbelow = true -- Horizontal splits go below
 o.list = true
 o.inccommand = 'split'
-o.cursorline = true
-o.scrolloff = 10
-o.expandtab = true
-o.tabstop = 2
-o.softtabstop = 2
-o.shiftwidth = 2
-
-vim.schedule(function()
+vim.schedule(function() -- Use system clipboard
   vim.o.clipboard = 'unnamedplus'
 end)
-vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
-vim.opt.fillchars = { eob = ' ' }
+o.backspace = 'indent,eol,start' -- Better backspace behavior
+vim.opt.completeopt = { 'menu', 'menuone', 'noselect' } -- Completion options
+vim.opt.fillchars = { eob = ' ' } -- Remove ~
 vim.opt.winborder = 'single'
 
 -- Run TSUpdate if Treesitter is updated

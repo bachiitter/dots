@@ -22,7 +22,7 @@ return {
     typescript = {},
   },
   before_init = function(_, config)
-    if not config.init_options.typescript.tsdk then
+    if config.init_options and config.init_options.typescript and not config.init_options.typescript.tsdk then
       config.init_options.typescript.tsdk = get_tsserver_path(config.root_dir)
     end
   end,

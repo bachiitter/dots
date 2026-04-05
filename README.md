@@ -2,6 +2,9 @@
 
 Personal configuration files for macOS and Linux.
 
+<img width="1822" height="1130" alt="image" src="https://github.com/user-attachments/assets/658f3706-57b6-4aad-9412-178e865e42f2" />
+
+
 ## Quick Start
 
 ```bash

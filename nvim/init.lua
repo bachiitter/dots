@@ -287,21 +287,27 @@ vim.lsp.enable { 'astro', 'biome', 'cssls', 'gopls', 'jsonls', 'lua_ls', 'tailwi
 
 require('mason').setup()
 
-autocmd('LspAttach', {
-  group = augroup('lsp-attach', { clear = true }),
+vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)
     local bufnr = args.buf
-    local map = function(mode, lhs, rhs, desc)
-      vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
+    local map = function(keys, func, desc, mode)
+      mode = mode or 'n'
+      vim.keymap.set(mode, keys, func, { buffer = bufnr, desc = 'LSP: ' .. desc })
     end
 
-    map('n', 'K', vim.lsp.buf.hover, 'LSP Hover')
-    map('n', 'gd', vim.lsp.buf.definition, 'Go to definition')
-    map('n', 'gD', vim.lsp.buf.declaration, 'Go to declaration')
-    map('n', 'gi', vim.lsp.buf.implementation, 'Go to implementation')
-    map('n', 'gr', vim.lsp.buf.references, 'References')
-    map('n', '<leader>rn', vim.lsp.buf.rename, 'Rename symbol')
-    map({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, 'Code action')
+    map('K', vim.lsp.buf.hover, 'LSP Hover')
+    map('gd', function()
+      Snacks.picker.lsp_definitions()
+    end, 'Go to definition')
+    map('gD', vim.lsp.buf.declaration, 'Go to declaration')
+    map('gi', function()
+      Snacks.picker.lsp_implementations()
+    end, 'Go to implementation')
+    map('gr', function()
+      Snacks.picker.lsp_references()
+    end, 'References')
+    map('<leader>rn', vim.lsp.buf.rename, 'Rename symbol')
+    map('<leader>ca', vim.lsp.buf.code_action, 'Code action')
 
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     if not client then

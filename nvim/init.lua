@@ -8,16 +8,29 @@ vim.g.localleader = ' '
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- Disable Providers (silence health check warnings)
+vim.g.loaded_node_provider = 0 -- Disable Node.js provider
+vim.g.loaded_perl_provider = 0 -- Disable Perl provider
+vim.g.loaded_python3_provider = 0 -- Disable Python 3 provider
+vim.g.loaded_ruby_provider = 0 -- Disable Ruby provider
+
 local o = vim.o
 
 -- Basic settings
-o.mouse = '' -- Disable mouse input
+o.mouse = '' -- Disable mouse support
 o.number = true -- Line numbers
 o.relativenumber = true -- Relative line numbers
 o.cursorline = true -- Highlight current line
 o.wrap = false -- Don't wrap lines
 o.scrolloff = 10 -- Keep 10 lines above/below cursor
 o.sidescrolloff = 8 -- Keep 8 columns left/right of cursor
+vim.schedule(function() -- Use system clipboard
+  vim.o.clipboard = 'unnamedplus'
+end)
+o.backspace = 'indent,eol,start' -- Better backspace behavior
+vim.opt.completeopt = { 'menu', 'menuone', 'noselect' } -- Completion options
+o.conceallevel = 0 -- Show all text normally (no concealment)
+o.autoread = true -- Automatically reload files changed outside of Neovim
 
 -- Indentation
 o.tabstop = 2 -- Tab width
@@ -32,6 +45,7 @@ o.ignorecase = true -- Case insensitive search
 o.smartcase = true -- Case sensitive if uppercase in search
 o.hlsearch = false -- Don't highlight search results
 o.incsearch = true -- Show matches as you type
+o.inccommand = 'split' -- Show matches in a split
 
 -- Visual settings
 o.termguicolors = true -- Enable 24-bit colors
@@ -39,23 +53,14 @@ o.signcolumn = 'yes:1' -- Always show sign column
 o.showmatch = true -- Highlight matching brackets
 o.cmdheight = 1 -- Command line height
 o.showmode = false -- Don't show mode in command line
-
-o.breakindent = true
 o.undofile = false -- Don't create undo file
 o.swapfile = false -- Don't create swap files
 o.updatetime = 100 -- Faster completion
 o.timeoutlen = 300 -- Key timeout duration
 o.splitright = true -- Vertical splits go right
 o.splitbelow = true -- Horizontal splits go below
-o.list = true
-o.inccommand = 'split'
-vim.schedule(function() -- Use system clipboard
-  vim.o.clipboard = 'unnamedplus'
-end)
-o.backspace = 'indent,eol,start' -- Better backspace behavior
-vim.opt.completeopt = { 'menu', 'menuone', 'noselect' } -- Completion options
-vim.opt.fillchars = { eob = ' ' } -- Remove ~
-vim.opt.winborder = 'single'
+vim.opt.fillchars = { eob = ' ' } -- Hide ~ characters on empty lines
+vim.opt.winborder = 'single' -- Set popup border to single line
 
 -- Run TSUpdate if Treesitter is updated
 vim.api.nvim_create_autocmd('PackChanged', {
@@ -146,58 +151,57 @@ end
 --------------------------------------------------------------------------------
 -- Keymaps
 --------------------------------------------------------------------------------
-local map = vim.keymap.set
 
 -- General
-map('n', '<Esc>', '<cmd>nohlsearch<CR>')
-map('n', '<leader>e', function()
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('n', '<leader>e', function()
   vim.diagnostic.open_float { scope = 'line' }
 end, { desc = 'Diagnostic float' })
-map('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Diagnostic quickfix' })
-map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true })
-map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true })
-map('v', 'p', '"_dP', { silent = true })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Diagnostic quickfix' })
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true })
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true })
+vim.keymap.set('v', 'p', '"_dP', { silent = true })
 
-map('n', '<C-h>', '<C-w><C-h>', { desc = 'Focus left' })
-map('n', '<C-l>', '<C-w><C-l>', { desc = 'Focus right' })
-map('n', '<C-j>', '<C-w><C-j>', { desc = 'Focus down' })
-map('n', '<C-k>', '<C-w><C-k>', { desc = 'Focus up' })
-map('n', '<leader>ec', function()
+vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Focus left' })
+vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Focus right' })
+vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Focus down' })
+vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Focus up' })
+vim.keymap.set('n', '<leader>ec', function()
   vim.cmd.edit(vim.fn.stdpath 'config' .. '/init.lua')
 end, { desc = 'Edit config' })
 
-map('n', '<leader>pc', pack_clean)
+vim.keymap.set('n', '<leader>pc', pack_clean)
 
 -- Search (Snacks picker)
-map('n', '<leader>sf', function()
+vim.keymap.set('n', '<leader>sf', function()
   Snacks.picker.git_files()
 end, { desc = 'Search Files (git)' })
-map('n', '<leader>sa', function()
+vim.keymap.set('n', '<leader>sa', function()
   Snacks.picker.files()
 end, { desc = 'Search All Files' })
-map('n', '<leader>sg', function()
+vim.keymap.set('n', '<leader>sg', function()
   Snacks.picker.grep()
 end, { desc = 'Search Grep' })
-map('n', '<leader>sd', function()
+vim.keymap.set('n', '<leader>sd', function()
   Snacks.picker.diagnostics()
 end, { desc = 'Search Diagnostics' })
-map('n', '<leader><leader>', function()
+vim.keymap.set('n', '<leader><leader>', function()
   Snacks.picker.buffers()
 end, { desc = 'Buffers' })
-map('n', '<leader>sp', function()
+vim.keymap.set('n', '<leader>sp', function()
   Snacks.picker.projects()
 end, { desc = 'Search Projects' })
-map('n', '<leader>s/', function()
+vim.keymap.set('n', '<leader>s/', function()
   Snacks.picker.lines()
 end, { desc = 'Search Projects' })
 
 -- Format
-map({ 'n', 'v' }, '<leader>f', function()
+vim.keymap.set({ 'n', 'v' }, '<leader>f', function()
   require('conform').format { async = true, lsp_format = 'never', stop_after_first = true }
 end, { desc = 'Format buffer' })
 
 -- Oil
-map('n', '<leader>-', function()
+vim.keymap.set('n', '<leader>-', function()
   require('oil').toggle_float()
 end, { desc = 'Oil' })
 
@@ -246,12 +250,18 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 -- Diagnostics
 --------------------------------------------------------------------------------
 vim.diagnostic.config {
-  virtual_text = true,
-  virtual_lines = false,
-  underline = { severity = vim.diagnostic.severity.ERROR },
-  update_in_insert = false,
   severity_sort = true,
-  jump = { float = true },
+  update_in_insert = false,
+  float = {
+    border = 'rounded',
+    source = 'if_many',
+  },
+  underline = true,
+  virtual_text = {
+    spacing = 2,
+    source = 'if_many',
+    prefix = '●',
+  },
   signs = {
     text = {
       [vim.diagnostic.severity.ERROR] = '󰅚 ',
@@ -279,54 +289,34 @@ require('mason').setup()
 
 autocmd('LspAttach', {
   group = augroup('lsp-attach', { clear = true }),
-  callback = function(event)
-    local function lsp_map(keys, func, desc, mode)
-      map(mode or 'n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+  callback = function(args)
+    local bufnr = args.buf
+    local map = function(mode, lhs, rhs, desc)
+      vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
     end
 
-    lsp_map('gd', function()
-      Snacks.picker.lsp_definitions()
-    end, 'Goto Definition')
-    lsp_map('gr', function()
-      Snacks.picker.lsp_references()
-    end, 'Goto References')
-    lsp_map('gi', function()
-      Snacks.picker.lsp_implementations()
-    end, 'Goto Implementation')
-    lsp_map('gD', vim.lsp.buf.declaration, 'Goto Declaration')
-    lsp_map('<leader>D', function()
-      Snacks.picker.lsp_type_definitions()
-    end, 'Type Definition')
-    lsp_map('<leader>ds', function()
-      Snacks.picker.lsp_symbols()
-    end, 'Document Symbols')
-    lsp_map('<leader>ws', function()
-      Snacks.picker.lsp_workspace_symbols()
-    end, 'Workspace Symbols')
-    lsp_map('<leader>rn', vim.lsp.buf.rename, 'Rename')
-    lsp_map('<leader>ca', function()
-      vim.lsp.buf.code_action {
-        filter = function(a)
-          return a.disabled == nil
-        end,
-      }
-    end, 'Code Action', { 'n', 'v' })
-    lsp_map('<C-s>', vim.lsp.buf.signature_help, 'Signature Help')
+    map('n', 'K', vim.lsp.buf.hover, 'LSP Hover')
+    map('n', 'gd', vim.lsp.buf.definition, 'Go to definition')
+    map('n', 'gD', vim.lsp.buf.declaration, 'Go to declaration')
+    map('n', 'gi', vim.lsp.buf.implementation, 'Go to implementation')
+    map('n', 'gr', vim.lsp.buf.references, 'References')
+    map('n', '<leader>rn', vim.lsp.buf.rename, 'Rename symbol')
+    map({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, 'Code action')
 
-    local client = vim.lsp.get_client_by_id(event.data.client_id)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
     if not client then
       return
     end
 
-    if client:supports_method('textDocument/documentHighlight', event.buf) then
+    if client:supports_method('textDocument/documentHighlight', args.buf) then
       local hl_group = augroup('lsp-highlight', { clear = false })
       autocmd({ 'CursorHold', 'CursorHoldI' }, {
-        buffer = event.buf,
+        buffer = args.buf,
         group = hl_group,
         callback = vim.lsp.buf.document_highlight,
       })
       autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-        buffer = event.buf,
+        buffer = args.buf,
         group = hl_group,
         callback = vim.lsp.buf.clear_references,
       })
@@ -339,9 +329,9 @@ autocmd('LspAttach', {
       })
     end
 
-    if client:supports_method('textDocument/inlayHint', event.buf) then
-      lsp_map('<leader>th', function()
-        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
+    if client:supports_method('textDocument/inlayHint', args.buf) then
+      map('<leader>th', function()
+        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = args.buf })
       end, 'Toggle Inlay Hints')
     end
   end,
@@ -384,7 +374,7 @@ vim.api.nvim_create_autocmd('FileType', {
     -- enables syntax highlighting and other treesitter features
     vim.treesitter.start(buf, language)
 
-    -- vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    vim.opt.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
   end,
 })
 

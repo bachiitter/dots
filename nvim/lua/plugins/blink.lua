@@ -16,12 +16,12 @@ cmp.setup {
     trigger = { show_on_trigger_character = false },
     window = { border = 'rounded', show_documentation = true },
   },
+  keymap = {
+    preset = 'enter',
+  },
   cmdline = {
     enabled = false,
     completion = { menu = { auto_show = true } },
-    keymap = {
-      ['<CR>'] = { 'accept_and_enter', 'fallback' },
-    },
   },
   completion = {
     trigger = { show_on_trigger_character = true },
@@ -38,7 +38,7 @@ cmp.setup {
     },
     documentation = { auto_show = true, window = { border = 'rounded' } },
     ghost_text = { enabled = true },
-    list = { selection = { preselect = true } },
+    list = { selection = { preselect = false } },
   },
   fuzzy = { implementation = 'prefer_rust_with_warning' },
 }

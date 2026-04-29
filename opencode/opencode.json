@@ -12,6 +12,24 @@
       ".dev.vars": "ask",
       "~/.local/share/opencode/mcp-auth.json": "deny"
     },
+    "edit": {
+      "*": "allow",
+      "*.env": "deny",
+      "*.env.*": "deny",
+      "*.envrc": "deny",
+      "secrets/*": "deny",
+      ".dev.vars": "ask",
+      "~/.local/share/opencode/mcp-auth.json": "deny"
+    },
+    "grep": {
+      "*": "allow",
+      "*.env": "deny",
+      "*.env.*": "deny",
+      "*.envrc": "deny",
+      "secrets/*": "deny",
+      ".dev.vars": "ask",
+      "~/.local/share/opencode/mcp-auth.json": "deny"
+    },
   },
   "instructions": ["{env:HOME}/.config/opencode/INSTRUCTIONS.md"],
   "mcp": {

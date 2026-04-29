@@ -78,6 +78,39 @@ nic() {
   fi
 }
 
+killport() {
+  local port="$1"
+
+  if [ -z "$port" ]; then
+    echo "usage: killport <port>"
+    return 1
+  fi
+
+  local pids
+  pids="$(lsof -ti :"$port")"
+
+  if [ -z "$pids" ]; then
+    echo "nothing is using port $port"
+    return 0
+  fi
+
+  echo "stopping process(es) on port $port: $pids"
+  kill $pids
+
+  sleep 1
+
+  local remaining
+  remaining="$(lsof -ti :"$port")"
+  if [ -n "$remaining" ]; then
+    echo "force killing remaining process(es): $remaining"
+    kill -9 $remaining
+  fi
+}
+
+killds() {
+  killport "${1:-4983}"
+}
+
 # Alias / keyboard shortcuts
 alias cd="z"
 alias ls="eza --icons=always"

@@ -6,6 +6,16 @@ local Snacks = require 'snacks'
 -- Guard against double-setup when re-sourcing init.lua
 if not vim.g.snacks_setup_done then
   Snacks.setup {
+    image = {
+      enabled = true,
+      doc = {
+        enabled = true,
+        inline = true,
+        float = true,
+        max_width = 80,
+        max_height = 40,
+      },
+    },
     input = { enabled = true },
     picker = {
       enabled = true,
@@ -20,7 +30,9 @@ if not vim.g.snacks_setup_done then
   vim.g.snacks_setup_done = true
 end
 
--- Search (Snacks picker)
+vim.keymap.set('n', '<leader>q', function()
+  Snacks.picker.diagnostics()
+end)
 vim.keymap.set('n', '<leader>sf', function()
   Snacks.picker.git_files()
 end, { desc = 'Search Files (git)' })
@@ -30,9 +42,6 @@ end, { desc = 'Search All Files' })
 vim.keymap.set('n', '<leader>sg', function()
   Snacks.picker.grep()
 end, { desc = 'Search Grep' })
-vim.keymap.set('n', '<leader>sd', function()
-  Snacks.picker.diagnostics()
-end, { desc = 'Search Diagnostics' })
 vim.keymap.set('n', '<leader><leader>', function()
   Snacks.picker.buffers()
 end, { desc = 'Buffers' })
@@ -41,4 +50,4 @@ vim.keymap.set('n', '<leader>sp', function()
 end, { desc = 'Search Projects' })
 vim.keymap.set('n', '<leader>s/', function()
   Snacks.picker.lines()
-end, { desc = 'Search Projects' })
+end, { desc = 'Search Lines' })

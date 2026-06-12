@@ -16,7 +16,7 @@ if [ -d "$HOME/.local/bin" ] ;
 fi
 
 #plugins
-plugins=(git nvm)
+plugins=(git fnm)
 
 # Completion system
 autoload -Uz compinit && compinit
@@ -112,6 +112,7 @@ killds() {
 }
 
 # Alias / keyboard shortcuts
+alias bun="pnpm"
 alias cd="z"
 alias ls="eza --icons=always"
 
@@ -124,11 +125,6 @@ eval "$(starship init zsh)"
 # fzf
 source <(fzf --zsh)
 
-#nvm
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 #golang
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
@@ -137,13 +133,6 @@ export PATH="/opt/homebrew/bin:$PATH"
 
 # sst
 export PATH=$HOME/.sst/bin:$PATH
-
-# bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
 
 # opencode
 export PATH=$HOME/.opencode/bin:$PATH
@@ -158,6 +147,8 @@ case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
+# fnm
+eval "$(fnm env --use-on-cd --shell zsh)"
 
 # bob (neovim version manager)
 [ -f "$HOME/.local/share/bob/env/env.sh" ] && . "$HOME/.local/share/bob/env/env.sh"

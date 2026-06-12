@@ -52,5 +52,51 @@
         "Authorization": "Bearer ts_e9f78ca837bba447b0a778b9bf8c8371ade7d530f82f11563b84e6db2ffbe4a0"
       }
     }
-  }
+  },
+ "references": {
+    "sst": {
+      "repository": "anomalyco/sst",
+      "branch": "dev",
+    },
+    "trpc": {
+      "repository": "trpc/trpc",
+      "branch": "main",
+    },
+    "drizzle-orm": {
+      "repository": "drizzle-team/drizzle-orm",
+      "branch": "main",
+    },
+    "tanstack-router": {
+      "repository": "TanStack/router",
+      "branch": "main"
+    },
+     "tanstack-query": {
+      "repository": "TanStack/query",
+      "branch": "main"
+    },
+    "tanstack-db": {
+      "repository": "TanStack/db",
+      "branch": "main"
+    },
+     "tanstack-form": {
+      "repository": "TanStack/query",
+      "branch": "main"
+    },
+    "tanstack-hotkeys": {
+      "repository": "TanStack/hotkeys",
+      "branch": "main"
+    },
+     "zod": {
+      "repository": "colinhacks/zod",
+      "branch": "main"
+    },
+    "effect": {
+      "repository": "Effect-TS/effect-smol",
+      "branch": "main"
+    },
+    "orphos": {
+      "repository": "theasterism/ui",
+      "branch": "main"
+    },
+  }, 
 }

@@ -1,7 +1,7 @@
  theme = orng-dark
 # window-theme = light
 
-font-family = "TX-02"
+# font-family = "TX-02"
 font-size = 12
 font-feature = -liga
 
@@ -17,7 +17,6 @@ font-thicken = false
 unfocused-split-opacity = 0.85
 
 background-opacity = 1
-background-blur-radius = 20
 
 window-save-state = always
 

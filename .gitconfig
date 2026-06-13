@@ -1,7 +1,7 @@
 [user]
   name = Bachitter
   email = 143877686+bachiitter@users.noreply.github.com
-  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFVTSKvNaoTKfc/xHIn0CLhHTbELwMI/LYbQ13OGCB5S
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID57heatk/FAS9eo+ODVxOdp+0KgiTfEiAD94/g/fLiW
 
 [alias]
   unstage = reset HEAD --

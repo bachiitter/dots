@@ -55,7 +55,7 @@
 
 [commit]
   verbose = true
-	gpgsign = false
+	gpgsign = true
 
 [init]
   defaultBranch = main

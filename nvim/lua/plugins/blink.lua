@@ -40,5 +40,5 @@ cmp.setup {
     ghost_text = { enabled = true },
     list = { selection = { preselect = false } },
   },
-  fuzzy = { implementation = 'prefer_rust_with_warning' },
+  fuzzy = { implementation = 'lua' },
 }

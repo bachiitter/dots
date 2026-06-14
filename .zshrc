@@ -1,8 +1,4 @@
-export ZSH="$HOME/.oh-my-zsh"
-
 export EDITOR='nvim'
-
-ZSH_THEME=""
 
 DISABLE_AUTO_TITLE="true"
 
@@ -14,16 +10,6 @@ fi
 if [ -d "$HOME/.local/bin" ] ;
   then PATH="$HOME/.local/bin:$PATH"
 fi
-
-#plugins
-plugins=(git fnm)
-
-# Completion system
-autoload -Uz compinit && compinit
-zstyle ':completion:*' menu select
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-
-source $ZSH/oh-my-zsh.sh
 
 #zsh
 alias reload="source ~/.zshrc"
@@ -44,21 +30,7 @@ bindkey '^[[B' history-search-forward
 # completion using vim keys
 bindkey '^k' history-search-backward
 bindkey '^j' history-search-forward
-
-# Source zsh plugins (OS-aware paths)
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  BREW_PREFIX=$(brew --prefix)
-  source $BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-  source $BREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-elif [[ -d /usr/share/zsh/plugins ]]; then
-  # Arch
-  source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-elif [[ -d /usr/share/zsh-autosuggestions ]]; then
-  # Debian/Fedora
-  source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-  source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-fi
+#
 
 # tmux - start/attach session named after current directory with default windows
 nic() {
@@ -118,9 +90,27 @@ alias ls="eza --icons=always"
 
 eval "$(zoxide init zsh)"
 
-#starship settings
-export STARSHIP_CONFIG=~/dots/starship.toml
-eval "$(starship init zsh)"
+autoload -Uz colors vcs_info
+colors
+
+zstyle ':vcs_info:git:*' formats ' %b '
+zstyle ':vcs_info:*' enable git
+
+precmd() {
+  vcs_info
+}
+
+prompt_hostname() {
+  [[ -n "$SSH_CONNECTION" ]] && print -n "%F{green}%m%f "
+}
+
+prompt_username() {
+  [[ -n "$SSH_CONNECTION" ]] && print -n "%F{yellow}%n%f@"
+}
+
+setopt PROMPT_SUBST
+
+PROMPT='%F{white}%f %F{blue}%~%f %F{purple}${vcs_info_msg_0_}%f$(prompt_hostname)$(prompt_username)'
 
 # fzf
 source <(fzf --zsh)
@@ -149,6 +139,3 @@ case ":$PATH:" in
 esac
 # fnm
 eval "$(fnm env --use-on-cd --shell zsh)"
-
-# bob (neovim version manager)
-[ -f "$HOME/.local/share/bob/env/env.sh" ] && . "$HOME/.local/share/bob/env/env.sh"

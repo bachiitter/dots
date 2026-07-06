@@ -3,6 +3,8 @@ vim.pack.add {
   { src = 'https://github.com/mason-org/mason.nvim' },
 }
 
+require('mason').setup()
+
 -- Format
 
 --------------------------------------------------------------------------------
@@ -17,8 +19,6 @@ vim.lsp.config('tailwindcss', {
 })
 
 vim.lsp.enable { 'astro', 'biome', 'cssls', 'gopls', 'jsonls', 'lua_ls', 'tailwindcss', 'tsgo' }
-
-require('mason').setup()
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', { clear = true }),

@@ -27,4 +27,7 @@ return {
       config.init_options.typescript.tsdk = get_tsserver_path(config.root_dir)
     end
   end,
+  on_attach = function(client)
+    client.server_capabilities.semanticTokensProvider = nil
+  end,
 }

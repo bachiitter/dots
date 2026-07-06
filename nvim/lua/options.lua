@@ -32,6 +32,7 @@ o.backspace = 'indent,eol,start' -- Better backspace behavior
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' } -- Completion options
 o.conceallevel = 0 -- Show all text normally (no concealment)
 o.autoread = true -- Automatically reload files changed outside of Neovim
+o.confirm = true -- Ask before failing commands due to unsaved changes
 
 -- Indentation
 o.tabstop = 2 -- Tab width

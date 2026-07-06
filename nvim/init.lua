@@ -1,6 +1,6 @@
+require 'options'
 require 'autocmds'
 require 'keymaps'
 require 'lsp'
-require 'options'
 require 'plugins'
 require 'theme'

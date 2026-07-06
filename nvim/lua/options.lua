@@ -3,7 +3,7 @@ vim.loader.enable()
 
 -- Set <space> as the leader key
 vim.g.mapleader = ' '
-vim.g.localleader = ' '
+vim.g.maplocalleader = ' '
 
 -- Disable netrw (immediate)
 vim.g.loaded_netrw = 1
@@ -76,7 +76,7 @@ vim.diagnostic.config {
     source = 'if_many',
     prefix = '●',
   },
-  virtual_line = false,
+  virtual_lines = false,
   signs = {
     text = {
       [vim.diagnostic.severity.ERROR] = '󰅚 ',

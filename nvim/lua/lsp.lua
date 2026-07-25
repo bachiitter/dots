@@ -18,7 +18,7 @@ vim.lsp.config('tailwindcss', {
   },
 })
 
-vim.lsp.enable { 'astro', 'biome', 'cssls', 'gopls', 'jsonls', 'lua_ls', 'oxlint', 'tailwindcss', 'tsgo' }
+vim.lsp.enable { 'astro', 'cssls', 'gopls', 'jsonls', 'lua_ls', 'oxlint', 'tailwindcss', 'tsc' }
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', { clear = true }),

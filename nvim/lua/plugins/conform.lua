@@ -5,14 +5,15 @@ require('conform').setup {
   format_on_save = { timeout_ms = 500, lsp_format = 'never' },
   formatters_by_ft = {
     astro = { 'biome' },
-    css = { 'biome' },
+    css = { 'oxfmt' },
     go = { 'goimports', 'gofumpt' },
     html = { 'biome' },
-    javascript = { 'biome' },
-    json = { 'biome' },
+    javascript = { 'oxfmt' },
+    javascriptreact = { 'oxfmt' },
+    json = { 'oxfmt' },
     lua = { 'stylua' },
-    typescript = { 'biome' },
-    typescriptreact = { 'biome' },
+    typescript = { 'oxfmt' },
+    typescriptreact = { 'oxfmt' },
   },
 }
 

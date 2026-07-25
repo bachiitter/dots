@@ -2,6 +2,19 @@
   "$schema": "https://opencode.ai/config.json",
   "plugin": [],
   "autoupdate": true,
+  "provider": {
+    "openai": {
+      "models": {
+        "gpt-5.6-sol": {
+          "options": {
+            "text": {
+              "verbosity": "low"
+            }
+          }
+        }
+      }
+    }
+  },
   "permission": {
     "read": {
       "*": "allow",
@@ -29,7 +42,7 @@
       "secrets/*": "deny",
       ".dev.vars": "ask",
       "~/.local/share/opencode/mcp-auth.json": "deny"
-    },
+    }
   },
   "instructions": ["{env:HOME}/.config/opencode/INSTRUCTIONS.md"],
   "mcp": {
@@ -53,24 +66,24 @@
       }
     }
   },
- "references": {
+  "references": {
     "sst": {
       "repository": "anomalyco/sst",
-      "branch": "dev",
+      "branch": "dev"
     },
     "trpc": {
       "repository": "trpc/trpc",
-      "branch": "main",
+      "branch": "main"
     },
     "drizzle-orm": {
       "repository": "drizzle-team/drizzle-orm",
-      "branch": "main",
+      "branch": "main"
     },
     "tanstack-router": {
       "repository": "TanStack/router",
       "branch": "main"
     },
-     "tanstack-query": {
+    "tanstack-query": {
       "repository": "TanStack/query",
       "branch": "main"
     },
@@ -78,7 +91,7 @@
       "repository": "TanStack/db",
       "branch": "main"
     },
-     "tanstack-form": {
+    "tanstack-form": {
       "repository": "TanStack/query",
       "branch": "main"
     },
@@ -86,7 +99,7 @@
       "repository": "TanStack/hotkeys",
       "branch": "main"
     },
-     "zod": {
+    "zod": {
       "repository": "colinhacks/zod",
       "branch": "main"
     },
@@ -97,6 +110,6 @@
     "orphos": {
       "repository": "theasterism/ui",
       "branch": "main"
-    },
-  }, 
+    }
+  }
 }

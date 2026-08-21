@@ -24,12 +24,10 @@ Skips desktop apps (Ghostty, Zen Browser) and their configs. Installs only CLI t
 ## What Gets Installed
 
 ### Shell
-- **ZSH** with Oh My Zsh
-- **Starship** prompt
-- **zsh-autosuggestions** & **zsh-syntax-highlighting**
+- **ZSH** with the prompt defined in `.zshrc`
 
 ### Editor
-- **Neovim** (nightly build)
+- **Neovim** stable
 - LSP servers: astro, biome, cssls, gopls, jsonls, lua_ls, tailwindcss, vtsls
 - Formatters: biome, goimports, gofumpt, stylua
 
@@ -47,10 +45,11 @@ Skips desktop apps (Ghostty, Zen Browser) and their configs. Installs only CLI t
 | fd | Fast find |
 | bat | Cat with syntax highlighting |
 | lazygit | Git TUI |
+| tree-sitter-cli | Parser generator CLI |
 
 ### Runtimes & Languages
-- **Node.js** via nvm
-- **Bun**
+- **Node.js LTS** via fnm
+- **pnpm**
 - **Go**
 - **Lua**
 
@@ -70,7 +69,6 @@ dots/
 ├── .zshrc             # ZSH config
 ├── .tmux.conf         # Tmux config
 ├── .gitconfig         # Git config
-├── starship.toml      # Starship prompt
 └── setup.sh           # Install script
 ```
 
@@ -84,7 +82,6 @@ dots/
 | `dots/nvim` | `~/.config/nvim` |
 | `dots/ghostty` | `~/.config/ghostty` | * |
 | `dots/fastfetch` | `~/.config/fastfetch` |
-| `dots/starship.toml` | `~/.config/starship.toml` |
 
 \* Skipped in `--headless` mode
 

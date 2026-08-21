@@ -84,7 +84,6 @@ killds() {
 }
 
 # Alias / keyboard shortcuts
-alias bun="pnpm"
 alias cd="z"
 alias ls="eza --icons=always"
 

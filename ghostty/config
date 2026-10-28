@@ -6,6 +6,7 @@ font-size = 12
 font-feature = -liga
 
 adjust-cell-height = 55%
+adjust-cursor-height = 55%
 
 # window-colorspace = display-p3
 window-padding-x = 8
